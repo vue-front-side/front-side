@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <van-button   type="danger">默认按钮</van-button>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -14,7 +9,8 @@ import { Button } from 'vant';
 
 export default {
  components: {
-   [Button.name]:Button
+   [Button.name]:Button,
+    
  }
   
 }
@@ -27,6 +23,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 40px;
 }
 
 #nav {
@@ -40,5 +37,8 @@ export default {
       color: #ffa400;
     }
   }
+}
+.van-notice-bar__wrap {
+  width: 60px;
 }
 </style>
