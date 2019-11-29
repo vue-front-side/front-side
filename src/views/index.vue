@@ -196,7 +196,7 @@ export default {
 .pos_content {
   display: inline-block;
   height: 100%;
-  float: left;
+  // float: left;
   margin-left: 20px;
   font-size: 32px;
 }
