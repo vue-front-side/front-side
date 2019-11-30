@@ -50,6 +50,11 @@ const routes = [
     name:'dynamic',
     component:()=>import('../views/Dynamic')
   },
+  {
+    path:'/login',
+    name:'login',
+    component:()=>import('../views/Login')
+  }
 ]
 
 const router = new VueRouter({

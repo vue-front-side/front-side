@@ -26,18 +26,7 @@ export default {
   margin-top: 40px;
 }
 
-#nav {
-  padding: 30px;
 
-  a {
-    font-weight: bold;
-    color:  #fc9629;;
-
-    &.router-link-exact-active {
-      color: #ffa400;
-    }
-  }
-}
 .van-notice-bar__wrap {
   width: 60px;
 }
