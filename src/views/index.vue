@@ -184,6 +184,7 @@ export default {
   height: 88px;
   line-height: 88px;
   background-color: transparent;
+  text-align: left;
 }
 .row {
   height: 320px;

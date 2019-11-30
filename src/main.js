@@ -7,6 +7,34 @@ import 'amfe-flexible'
 import 'vant/lib/index.css';
 import './assets/font-awesome-4.7.0/css/font-awesome.min.css'
 import './assets/less/reset.less'
+import './assets/icon/font_inoi7rxcu4j/iconfont.css'
+import './assets/icon/font_alszihkajvj/iconfont.css'
+
+import VueRouter from 'vue-router'
+
+import {Row, Col} from 'vant';
+import { Icon } from 'vant';
+import { NavBar } from 'vant';
+
+import { NumberKeyboard } from 'vant';
+import { Field } from 'vant';
+import { Button } from 'vant';
+import { Cell, CellGroup } from 'vant';
+import { Search } from 'vant';
+import { Grid, GridItem } from 'vant';
+import { Tab, Tabs } from 'vant';
+
+Vue.use(VueRouter);
+Vue.use(Row).use(Col);
+Vue.use(Icon);
+Vue.use(NavBar);
+
+Vue.use(Field).use(NumberKeyboard);
+Vue.use(Button);
+Vue.use(Cell).use(CellGroup);
+Vue.use(Search);
+Vue.use(Grid).use(GridItem);
+Vue.use(Tab).use(Tabs);
 
 
 import { Lazyload } from 'vant';
