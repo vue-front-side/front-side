@@ -1,20 +1,19 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <van-button   type="danger">默认按钮</van-button>
+      <!-- <van-Icon   type="danger">默认按钮</van-Icon> -->
+      
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import { Button } from 'vant';
+import { Icon } from 'vant';
 
 export default {
  components: {
-   [Button.name]:Button
+   [Icon.name]:Icon
  }
   
 }
@@ -27,10 +26,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top:40px; 
 }
 
 #nav {
-  padding: 30px;
+  background: #eee;
 
   a {
     font-weight: bold;
@@ -41,4 +41,5 @@ export default {
     }
   }
 }
+
 </style>
