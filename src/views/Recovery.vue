@@ -26,7 +26,7 @@
         placeholder="请输入用户名"
         label-width="60"
         label-align="left"
-        size="large"
+       
         border
         type="textarea"
       />
@@ -36,7 +36,7 @@
         placeholder="请输入用户名"
         label-width="60"
         label-align="left"
-        size="large"
+        
         type="tel"
       />
       <van-field
@@ -47,7 +47,7 @@
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
-        size="large"
+        
         disabled="true"
         @click="showPopup"
       />
@@ -59,7 +59,7 @@
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
-        size="large"
+        
         disabled="true"
       />
       <van-field placeholder="请填写详细地址，不少于5个字" size="large" />
@@ -75,7 +75,7 @@
       @click-right-icon="$toast('question')"
       label-width="60"
       label-align="left"
-      size="large"
+      
       disabled="true"
       class="time"
       @click="showPopupTime"
@@ -247,24 +247,24 @@ export default {
   font-size: 32px;
 }
 
-.van-nav-bar__title,
-.van-nav-bar {
-  height: 88px;
-  line-height: 88px;
+// .van-nav-bar__title,
+// .van-nav-bar {
+//   height: 44px;
+//   line-height: 44px;
   
-}
+// }
 .logo {
-  font-size: 36px;
+  font-size: 18px;
   color: green;
   vertical-align: middle;
-  margin: 0 28px;
+  margin: 0 14px;
 }
 .people_title {
-  height: 70px;
-  line-height: 70px;
-  font-size: 32px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 16px;
   text-align: left;
-  background-color: #d3d3d3;
+  // background-color: #d3d3d3;
 }
 // 地址
 // .van-cell {
@@ -275,42 +275,42 @@ export default {
 //   // display: flex;
 //   // justify-content: center;
 // }
-.van-cell--large {
-  height: 100px;
-  line-height: 100px;
-}
+// .van-cell--large {
+//   height: 100px;
+//   line-height: 100px;
+// }
 .van-field__label {
   text-align: left;
 }
 .time {
-  margin-top: 24px;
+  margin-top: 12px;
 }
 .catergary{
-  font-size: 32px;
-  padding: 40px 0;
+  font-size: 16px;
+  padding: 20px 0;
   .van-col {
     border: 1px solid #d3d3d3;
-    padding: 8px 0;
+    padding: 4px 0;
   }
   .catergary_col {
     border: none;
   } 
   .second_row {
-    margin-top: 40px;
+    margin-top: 20px;
   }
 }
 .tips {
-  margin-top: 20px; 
-  line-height: 60px;
-  font-size: 28px;
+  margin-top: 10px; 
+  line-height: 30px;
+  font-size: 14px;
   text-align: left;
   background-color: #fff;
   p{
-    margin-left: 28px;
+    margin-left: 14px;
     color: #858585;
   }
   .van-col {
-    padding: 20px 0;
+    padding: 10px 0;
   }
 }
 .photo,
@@ -318,18 +318,18 @@ export default {
   background-color: #fff;
 }
 .photo {
-  height: 140px;
-  padding: 20px 0;
+  height: 80px;
+  padding: 10px 0;
   .van-col {
     display: flex;
     justify-content: start;
   }
 }
 .van-button{
-  width: 70%;
-  height: 80px;
-  font-size: 40px;
-  margin: 40px 0;
+  width: 90%;
+  // height: 40px;
+  font-size: 20px;
+  margin: 20px 0;
 }
  
 </style>

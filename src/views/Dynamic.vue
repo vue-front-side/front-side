@@ -16,7 +16,7 @@
     <van-row class="head">
       <van-col span="4">
         <div class="head_box">
-          <van-image width="40" height="40" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
         </div>
       </van-col>
       <van-col span="20" class="msg">
@@ -38,6 +38,16 @@
         <span class="thumbs-up"><van-icon name="chat-o" /></span>
       </van-col>
     </van-row>
+    <van-row class="comment_text">
+      <van-col span="24">
+        <span class="comment"><van-icon name="good-job-o" /></span>
+        <span>3人觉得很赞</span>
+      </van-col>
+    </van-row>
+    
+   <van-field v-model="value" placeholder="评论" />
+
+   
   </div>
 </template>
 
@@ -92,55 +102,63 @@ export default {
 <style lang="less" scoped>
 //导航
 .top_nav {
-  font-size: 32px;
+  font-size: 16px;
 }
 
-.van-nav-bar__title,
-.van-nav-bar {
-  height: 88px;
-  line-height: 88px;
-}
+// .van-nav-bar__title,
+// .van-nav-bar {
+//   height: 44px;
+//   line-height: 44px;
+// }
 
 //头像
 .head {
   text-align: left;
   .head_box {
-    margin: 24px 20px;
+    margin: 12px 10px 0 10px;
   }
 }
 .msg {
-  line-height: 1.6;
-  margin-top: 26px;
+  line-height: 1.8;
+  margin-top: 14px;
   span {
-    font-size: 30px;
+    font-size: 15px;
     display: block;
   }
   .time {
-    font-size: 24px;
+    font-size: 12px;
     color: rgb(177, 177, 177);
   }
 }
 .text {
   // margin: 20px 0;
 
-  padding: 0 20px;
+  padding: 0 10px;
   p {
-    font-size: 28px;
+    font-size: 14px;
     text-align: justify;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 }
 //评论
 .comment_box {
   
-  padding: 0 20px;
+  padding: 0 10px;
   text-align: right;
   .comment {
-    margin: 0 20px;
+    margin: 0 10px;
   }
   .van-col {
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #DDD;
+  }
+}
+.comment_text{
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 0 10px 10px;
+  .comment {
+    margin-right: 6px;
   }
 }
 </style>

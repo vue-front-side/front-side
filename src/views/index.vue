@@ -173,7 +173,7 @@ export default {
   clear: both;
 }
 .swipe_box {
-  height: 400px;
+  height: 200px;
   z-index: -1;
 }
 .swipe_box img {
@@ -181,61 +181,57 @@ export default {
 }
 .position {
   overflow: hidden;
-  height: 88px;
-  line-height: 88px;
+  height: 44px;
+  line-height: 44px;
   background-color: transparent;
   text-align: left;
 }
 .row {
-  height: 320px;
+  height: 160px;
 }
 .col {
   position: absolute;
-  top: 40px;
+  top: 20px;
   width: 100%;
 }
 .pos_content {
   display: inline-block;
   height: 100%;
   // float: left;
-  margin-left: 20px;
-  font-size: 32px;
+  margin-left: 10px;
+  font-size: 16px;
 }
 .pos_content .icon {
-  margin-left: 6px;
+  margin-left: 3px;
   vertical-align: text-bottom;
 }
 .notice {
-  height: 60px;
-  line-height: 60px;
-  font-size: 36px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
   border: 1px solid black;
 }
 .notice_content {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 .swipe_item {
   height: 100%;
   text-align: left;
 }
-.nav {
-  border: 1px solid black;
-  padding: 8px 0;
-}
 // 百科
 .encyclopedia_box {
-  height: 80px;
-  margin-top: 20px;
-  line-height: 80px;
-  font-size: 36px;
+  height: 40px;
+  margin-top: 10px;
+  line-height: 40px;
+  font-size: 18px;
   text-align: left;
 }
 .encyclopedia::before {
   content: "";
   display: inline-block;
-  width: 20px;
-  height: 40px;
-  margin-right: 16px;
+  width: 10px;
+  height: 20px;
+  margin-right: 8px;
   background-color: #ffa400;
   vertical-align: text-bottom;
 }
@@ -246,10 +242,10 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 40px 20px;
+  padding: 20px 10px;
 }
 .article div {
-  height: 360px;
+  height: 180px;
   text-align: center;
 }
 .article img {
@@ -258,22 +254,22 @@ export default {
 .tag {
   display: inline-block;
   color: #fff;
-  font-size: 28px;
-  padding: 10px 20px;
-  border-radius: 18px 0 18px 0;
+  font-size: 14px;
+  padding: 2px 10px;
+  border-radius: 9px 0 9px 0;
   background-color: rgba(0, 0, 0, 0.24);
   position: absolute;
-  top: 340px;
+  top: 170px;
 }
 .title {
-  margin: 20px 0;
+  margin: 10px 0;
   color: #000;
-  font-size: 36px;
+  font-size: 16px;
 }
 .info {
   display: inline-block;
   color: #5e5d5d;
-  font-size: 28px;
+  font-size: 14px;
 }
 
 </style>
