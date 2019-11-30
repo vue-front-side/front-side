@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
+import http from './utils/http'
+import vueAxios from 'vue-axios'
 import store from './store'
 import 'amfe-flexible'
 import 'vant/lib/index.css';
@@ -44,6 +46,8 @@ Vue.use(Lazyload, {
   loading: 'static/img/loading.gif',
   attempt: 3
 })
+
+Vue.use(http,vueAxios);
 Vue.config.productionTip = false
 
 new Vue({

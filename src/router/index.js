@@ -49,7 +49,7 @@ const routes = [
     component:()=>import('../views/Login')
   },
   {
-    path: '/srvice',
+    path: '/service',
     name: 'service',
     component: () => import('../views/Service.vue')
   },
