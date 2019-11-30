@@ -18,13 +18,13 @@
         <div class="icons"><span class="iconfont icon-jiazhengfuwu"></span></div>
         <p class="letters">家政</p>
       </div>
-      <div class="repair inner-box">
-        <div class="icons"><span class="iconfont icon-niunai"></span></div>
-        <p class="letters">牛奶预定</p>
-      </div>
       <div class="unlock inner-box">
         <div class="icons"><span class="iconfont icon-huishou"></span></div>
         <p class="letters">回收</p>
+      </div>
+      <div class="repair inner-box1">
+        <div class="icons"></div>
+        <p class="letters"></p>
       </div>
     </div>
   </div>
@@ -76,6 +76,12 @@ p{
 .inner-box {
   /* background-color: rgb(245, 240, 223); */
   background-color: #fff4e4;
+  width: 200px;
+  height: 200px;
+  margin: 30px 0 0;
+}
+.inner-box1 {
+  background-color: #fff;
   width: 200px;
   height: 200px;
   margin: 30px 0 0;
