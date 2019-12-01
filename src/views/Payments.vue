@@ -44,54 +44,40 @@ export default {
 
 <style lang="less" scoped>
 @import '../assets/style/base.less';
+@import '../assets/less/nav.less';
 p{
   font-size: 36px;
 }
 h2{
-  font-size: 56px;
+  margin-top: 15px;
+  font-size: 28px;
   font-weight: 600;
 }
 .body{
   height: 1196px;
 }
-.van-nav-bar {
-  background-color: #eee;
-  height: @navgHeight;
-  width:100%;
-  line-height: @navgHeight;
-  margin-top: 40px;
-}
-.van-nav-bar__title {
-  max-width: 100%;
-  font-size:  40px;
-  font-weight: 500;
-}
-.van-icon-arrow-left {
-  color: #444;
-  font-size: 34px;
-}
 .history {
   position: absolute;
-  top: 60px;
-  right: 20px;
+  top: 30px;
+  right: 10px;
   z-index: 2;
 }
 .banner {
   background-color: #beeef7;
 }
 .banner img{
-  width: 375*2px;
+  width: 375px;
 }
 .title {
   color: #373a6d;
   position: absolute;
-  top: 160px;
-  right: 40px;
+  top: 80px;
+  right: 20px;
 }
 .box {
-  width: 500px;
+  width: 250px;
   display: flex;
-  margin: 30px auto 0;
+  margin: 15px auto 0;
   justify-content: space-around;
   flex-direction: row;
   text-align: center;
@@ -101,16 +87,16 @@ h2{
 .inner-box {
   /* background-color: rgb(245, 240, 223); */
   background-color: #fff4e4;
-  border-radius: 12px;
-  width: 220px;
-  height: 220px;
-  margin: 30px 0 0;
+  border-radius: 6px;
+  width: 110px;
+  height: 110px;
+  margin: 15px 0 0;
 }
 .icons {
-  padding: 20px 0 10px;
+  padding: 10px 0 5px;
 }
 .iconfont{
-  font-size: 100px;
+  font-size: 50px;
   color: @themeColor;
 }
 .letters {
@@ -119,11 +105,11 @@ h2{
 button {
   background-color: #111;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #fff4e4;
-  font-size: 36px;
-  width: 160px;
-  height: 56px;
+  font-size: 18px;
+  width: 80px;
+  height: 28px;
 }
 
 </style>
