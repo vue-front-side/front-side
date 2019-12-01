@@ -37,7 +37,7 @@
             </van-cell-group>
           </div>
           <div class="btn-box">
-            <button type="submit" class="confrim">确认</button>
+            <button class="confrim" @click="getLogin">确认</button>
           </div>
         </form>
       </van-tab>
@@ -99,7 +99,44 @@ export default {
       alert('返回');
     },
     onClickRight() {
-      alert('注册')
+      this.$router.replace("/register");
+    },
+    getLogin() {
+      console.log("登录");
+    
+      this.axios
+        .post("http://172.16.6.18:8080/login", {
+          accName: this.username,
+          accPwd: this.userpass
+        },
+        {
+        headers: {
+           'content-type': 'application/json'  ,
+           "id":1,
+           "token":this.tokens
+        }
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.code == "200") {
+            // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
+            var token = res.data.data.token;
+            sessionStorage.setItem("token", token);
+           
+            // 获取参数（未登录时想访问的路由）
+            var url = this.$route.query.redirect;
+
+            url = url ? url : "/home";
+            // 切换路由
+            this.$router.replace(url);
+            // this.axios.post("/test")
+          } else {
+            console.log("登陆失败");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 }
