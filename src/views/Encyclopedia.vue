@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      alert('返回');
+       this.$router.go(-1);
     }
   }
 }

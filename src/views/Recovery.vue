@@ -1,6 +1,6 @@
 <template>
   <div class="recovery">
-    <van-row>
+    <!-- <van-row>
       <van-col span="24">
         <van-nav-bar
           title="上门回收"
@@ -12,7 +12,8 @@
           class="top_nav"
         />
       </van-col>
-    </van-row>
+    </van-row> -->
+    <ReturnNav><span slot="slot">报修记录</span></ReturnNav>
     <van-row class="people_title">
       <van-col span="24">
         <span class="fa fa-newspaper-o logo"></span>
@@ -132,6 +133,7 @@
 </template>
 
 <script>
+import ReturnNav from '../components/ReturnNav'
 import {
   Row,
   Col,
@@ -159,15 +161,16 @@ export default {
     [Popup.name]: Popup,
     [DatetimePicker.name]: DatetimePicker,
     [Uploader.name]:Uploader,
-    [Button.name]:Button
+    [Button.name]:Button,
+    ReturnNav
   },
   methods: {
-    onClickLeft() {
-      Toast("返回");
-    },
-    onClickRight() {
-      Toast("按钮");
-    },
+    // onClickLeft() {
+    //   this.$router.go(-1);
+    // },
+    // onClickRight() {
+    //   Toast("按钮");
+    // },
     showPopup() {
       this.show = true;
     },

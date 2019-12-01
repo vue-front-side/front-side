@@ -39,10 +39,11 @@
     <van-row class="nav">
       <van-col span="24">
         <van-grid class="grid" :border="false" icon-size="42px">
-          <van-grid-item class="grid_item" icon="photo-o" text="物业缴费" />
-          <van-grid-item class="grid_item" icon="photo-o" text="上门回收" to="/recovery"/>
-          <van-grid-item class="grid_item" icon="photo-o" text="报修" to="/repair" />
-          <van-grid-item class="grid_item" icon="photo-o" text="服务" />
+          <van-grid-item class="grid_item iconfont icon-wuyejiaofei" text="物业缴费" to="/payments"/>
+          
+          <van-grid-item class="grid_item iconfont icon-huishou" text="上门回收" to="/recovery" />
+          <van-grid-item class="grid_item iconfont icon-baoxiu"  text="报修" to="/repair"/>
+          <van-grid-item class="grid_item iconfont icon-ruanjianfuwu"  text="服务" to="/service"/>
         </van-grid>
       </van-col>
     </van-row>
@@ -60,6 +61,7 @@
         <van-tabs v-model="activeName" sticky :offset-top="44">
           <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index" class="article_box">
             <div>
+              <router-link :to="{ name: 'encyclopdia'}">
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -68,6 +70,7 @@
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
               </div>
+              </router-link>
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -164,6 +167,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../assets/style/base.less';
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -218,6 +222,7 @@ export default {
   height: 100%;
   text-align: left;
 }
+
 // 百科
 .encyclopedia_box {
   height: 40px;
@@ -270,6 +275,13 @@ export default {
   display: inline-block;
   color: #5e5d5d;
   font-size: 14px;
+}
+.icons {
+  padding: 10px 0 5px;
+}
+.iconfont{
+  font-size: 50px;
+  color: @themeColor;
 }
 
 </style>

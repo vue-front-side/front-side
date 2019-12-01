@@ -11,6 +11,8 @@ import './assets/font-awesome-4.7.0/css/font-awesome.min.css'
 import './assets/less/reset.less'
 import './assets/icon/font_inoi7rxcu4j/iconfont.css'
 import './assets/icon/font_alszihkajvj/iconfont.css'
+import './assets/icon/font_zl3of1q20f/iconfont.css'
+import 'vant/lib/icon/local.css';
 
 import VueRouter from 'vue-router'
 
