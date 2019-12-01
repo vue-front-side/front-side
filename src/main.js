@@ -26,6 +26,7 @@ import { Search } from 'vant';
 import { Grid, GridItem } from 'vant';
 import { Tab, Tabs } from 'vant';
 
+Vue.use(http,vueAxios);
 Vue.use(VueRouter);
 Vue.use(Row).use(Col);
 Vue.use(Icon);
@@ -47,7 +48,7 @@ Vue.use(Lazyload, {
   attempt: 3
 })
 
-Vue.use(http,vueAxios);
+
 Vue.config.productionTip = false
 
 new Vue({
