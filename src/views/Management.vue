@@ -67,6 +67,7 @@
     </van-row>
 
     <van-button type="info" @click="login">添加成员</van-button>
+    
   </div>
 </template>
 
@@ -143,6 +144,7 @@ export default {
       })
       .then(res=>{
         console.log(res.data);
+        
       })
       .catch(err=>{
         console.log(err);
