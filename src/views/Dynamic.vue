@@ -13,31 +13,126 @@
         />
       </van-col>
     </van-row>
-    <van-row class="head">
-      <van-col span="4">
-        <div class="head_box">
-          <van-image width="40" height="40" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        </div>
-      </van-col>
-      <van-col span="20" class="msg">
-        <span class="name">王思聪</span>
-        <span class="time">今天12:22</span>
-      </van-col>
-    </van-row>
-    <van-row class="text">
-      <van-col span="24">
-        <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
-        <div class="img_box">
-          <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        </div>
-      </van-col>
-    </van-row>
-    <van-row class="comment_box">
-      <van-col span="24">
-        <span class="comment"><van-icon name="good-job-o" /></span>
-        <span class="thumbs-up"><van-icon name="chat-o" /></span>
-      </van-col>
-    </van-row>
+    <div class="contents">
+      <van-row class="head">
+        <van-col span="4">
+          <div class="head_box">
+            <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+        <van-col span="20" class="msg">
+          <span class="name">王思聪</span>
+          <span class="time">今天12:22</span>
+        </van-col>
+      </van-row>
+      <van-row class="text">
+        <van-col span="24">
+          <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
+          <div class="img_box">
+            <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+      </van-row>
+      <van-row class="comment_box">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span class="thumbs-up">
+            <van-icon name="chat-o" />
+          </span>
+        </van-col>
+      </van-row>
+      <van-row class="comment_text">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span>3人觉得很赞</span>
+        </van-col>
+      </van-row>
+      <van-field v-model="value" placeholder="评论" class="com_input" />
+    </div>
+     <div class="contents">
+      <van-row class="head">
+        <van-col span="4">
+          <div class="head_box">
+            <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+        <van-col span="20" class="msg">
+          <span class="name">王思聪</span>
+          <span class="time">今天12:22</span>
+        </van-col>
+      </van-row>
+      <van-row class="text">
+        <van-col span="24">
+          <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
+          <div class="img_box">
+            <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+      </van-row>
+      <van-row class="comment_box">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span class="thumbs-up">
+            <van-icon name="chat-o" />
+          </span>
+        </van-col>
+      </van-row>
+      <van-row class="comment_text">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span>3人觉得很赞</span>
+        </van-col>
+      </van-row>
+      <van-field v-model="value" placeholder="评论" class="com_input" />
+    </div>
+     <div class="contents">
+      <van-row class="head">
+        <van-col span="4">
+          <div class="head_box">
+            <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+        <van-col span="20" class="msg">
+          <span class="name">王思聪</span>
+          <span class="time">今天12:22</span>
+        </van-col>
+      </van-row>
+      <van-row class="text">
+        <van-col span="24">
+          <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
+          <div class="img_box">
+            <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+          </div>
+        </van-col>
+      </van-row>
+      <van-row class="comment_box">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span class="thumbs-up">
+            <van-icon name="chat-o" />
+          </span>
+        </van-col>
+      </van-row>
+      <van-row class="comment_text">
+        <van-col span="24">
+          <span class="comment">
+            <van-icon name="good-job-o" />
+          </span>
+          <span>3人觉得很赞</span>
+        </van-col>
+      </van-row>
+      <van-field v-model="value" placeholder="评论" class="com_input" />
+    </div>
   </div>
 </template>
 
@@ -73,7 +168,7 @@ export default {
     [Uploader.name]: Uploader,
     [Button.name]: Button,
     [Image.name]: Image,
-    [Icon.name]:Icon
+    [Icon.name]: Icon
   },
   methods: {
     onClickLeft() {
@@ -92,55 +187,62 @@ export default {
 <style lang="less" scoped>
 //导航
 .top_nav {
-  font-size: 32px;
+  font-size: 16px;
 }
 
-.van-nav-bar__title,
-.van-nav-bar {
-  height: 88px;
-  line-height: 88px;
-}
+// .van-nav-bar__title,
+// .van-nav-bar {
+//   height: 44px;
+//   line-height: 44px;
+// }
 
 //头像
 .head {
   text-align: left;
   .head_box {
-    margin: 24px 20px;
+    margin: 12px 10px 0 10px;
   }
 }
 .msg {
-  line-height: 1.6;
-  margin-top: 26px;
+  line-height: 1.8;
+  margin-top: 14px;
   span {
-    font-size: 30px;
+    font-size: 15px;
     display: block;
   }
   .time {
-    font-size: 24px;
+    font-size: 12px;
     color: rgb(177, 177, 177);
   }
 }
 .text {
   // margin: 20px 0;
 
-  padding: 0 20px;
+  padding: 0 10px;
   p {
-    font-size: 28px;
+    font-size: 14px;
     text-align: justify;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 }
 //评论
 .comment_box {
-  
-  padding: 0 20px;
+  padding: 0 10px;
   text-align: right;
   .comment {
-    margin: 0 20px;
+    margin: 0 10px;
   }
   .van-col {
-    padding: 20px 0;
-    border-bottom: 1px solid #DDD;
+    padding: 10px 0;
+    border-bottom: 1px solid #f3f3f3;
+  }
+}
+.comment_text {
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 0 10px 10px;
+  .comment {
+    margin-right: 6px;
   }
 }
 </style>

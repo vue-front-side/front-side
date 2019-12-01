@@ -34,7 +34,7 @@ export default {
 
 <style lang="less">
   .nav-bottom {
-  height: 100px;
-   font-size: 30px;
+  height: 60px;
+   font-size: 16px;
 }
 </style>
