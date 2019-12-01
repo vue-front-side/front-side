@@ -92,6 +92,16 @@ const routes = [
     path: '/manage',
     name: 'manage',
     component: () => import('../views/Management.vue')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/forgetpass',
+    name: 'forgetpass',
+    component: () => import('../views/ForgetPass.vue')
   }
 ]
 
