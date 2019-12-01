@@ -3,7 +3,7 @@
     <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
     <div class="details">
       <div class="de-innerbox">
-        <h2><span>{{catigorys}}</span>缴费</h2>
+        <h4><span>{{catigorys}}</span>缴费</h4>
         <hr>
         <ul>
           <li class="clearfix">
@@ -62,37 +62,26 @@ export default {
 
 <style lang="less" scoped>
 @import '../assets/style/base.less';
+@import '../assets/less/nav.less';
 p{
-  font-size: 32px;
+  font-size: 16px;
   color: #666;
+}
+h4 {
+  font-weight: 500;
+  text-align: left;
 }
 hr {
   border-width: 1px;
   border-color: #ccc;
-  margin-top: 12px;
-}
-.van-nav-bar {
-  background-color: #eee;
-  height: @navgHeight;
-  width:100%;
-  line-height: @navgHeight;
-  margin-top: 40px;
-}
-.van-nav-bar__title {
-  max-width: 100%;
-  font-size:  40px;
-  font-weight: 500;
-}
-.van-icon-arrow-left {
-  color: #444;
-  font-size: 34px;
+  margin-top: 6px;
 }
 .de-innerbox {
   width: 86%;
-  margin: 100px auto 0;
+  margin: 20px auto 0;
 }
 .clearfix {
-  padding-top: 36px;
+  padding-top: 14px;
 }
 .left{
   float: left;
@@ -101,25 +90,23 @@ hr {
   float: right;
 }
 .inputs {
-  margin-top: 100px;
+  margin-top: 30px;
 }
 .van-cell {
-  line-height: 80px; 
-  padding-left: 20px;
-  font-size: 30px;
+  font-size: 15px;
   color: #666;
 }
 .btn-box{
   text-align: center;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 .confrim {
-  width: 360px;
-  height: 80px;
+  width: 180px;
+  height: 40px;
   background: @themeColor;
   border: none;
-  border-radius: 4px;
-  font-size: 40px;
+  border-radius: 2px;
+  font-size: 20px;
   color: white;
 }
 </style>
