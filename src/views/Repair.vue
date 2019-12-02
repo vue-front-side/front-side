@@ -27,7 +27,7 @@
         label-align="left"
         
         border
-        type="textarea"
+        type="text"
       />
       <van-field
         clearable
@@ -42,13 +42,14 @@
         clearable
         label="所在区"
         right-icon="arrow"
-        placeholder="请选择地区"
+        :placeholder="areaPlace"
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
       
         disabled="true"
         @click="showPopup"
+        
       />
       <van-field
         clearable
@@ -64,13 +65,13 @@
       <van-field placeholder="请填写详细地址，不少于5个字" size="large" />
     </van-cell-group>
     <van-popup v-model="show" position="bottom">
-      <van-area :area-list="areaList" value="110101" title="请选择区" />
+      <van-area :area-list="areaList" value="110101" title="请选择区" @cancel="show=false" @confirm="onConfirm" />
     </van-popup>
     <van-field
       clearable
       label="预约时间"
       right-icon="arrow"
-      placeholder="请选择"
+      :placeholder="appointment"
       @click-right-icon="$toast('question')"
       label-width="60"
       label-align="left"
@@ -79,31 +80,29 @@
       class="time"
       @click="showPopupTime"
     />
-    <!-- <van-popup v-model="showTime" position="bottom">
+    <van-popup v-model="showTime" position="bottom">
       <van-datetime-picker
         v-model="currentDate"
         type="datetime"
         :min-date="minDate"
         :max-date="maxDate"
+        @cancel="showTime=false"
+        @confirm ="timeConfirm"
       />
-    </van-popup>-->
+    </van-popup>
     <van-row class="people_title">
       <van-col span="24">
         <span class="fa fa-gg-circle logo"></span>
         <span>报修类型</span>
       </van-col>
     </van-row>
-    <van-row class="catergary">
+     <van-row class="catergary">
       <van-col span="24" class="catergary_col">
-        <van-row type="flex" justify="space-around">
-          <van-col span="6">电器</van-col>
-          <van-col span="6">家具</van-col>
-          <van-col span="6">线路</van-col>
+        <van-row type="flex" justify="space-around" >
+          <van-col span="6" v-for="(item,index) in rec" :key="index" @click="item.state=!item.state" :class="{on:item.state}">{{item.name}}</van-col>
         </van-row>
         <van-row type="flex" justify="space-around" class="second_row">
-          <van-col span="6">天然气</van-col>
-          <van-col span="6">下水道</van-col>
-          <van-col span="6">其他</van-col>
+          <van-col span="6" v-for="(item,index) in recSecond" :key="index" @click="item.state=!item.state" :class="{on:item.state}">{{item.name}}</van-col>
         </van-row>
       </van-col>
     </van-row>
@@ -204,11 +203,30 @@ export default {
           resolve();
         }
       });
+    },
+    //获取用户所在区
+    onConfirm(value) {
+      console.log(value);
+      // this.value = value[2].code;
+      this.areaPlace = value[0].name + " " + value[1].name + " " + value[2].name
+      this.show = false;
+    },
+    timeConfirm(value){
+      console.log(value);
+      this.showTime = false;
+      this.formatTime(value);
+    },
+    formatTime(time){
+      var d = new Date(time);  
+      var myTime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+      this.appointment = myTime;
     }
    
   },
   data() {
     return {
+      areaPlace:"请选择区",
+      appointment:"请选择预约时间",
       areaList: {
         province_list: {
           110000: "北京市",
@@ -232,12 +250,42 @@ export default {
           120105: "河北区"
         }
       },
+          rec: [
+        {
+          name: '电器',
+          state: false
+        },
+        {
+          name: '家具',
+          state: false
+        },
+        {
+          name: '线路',
+          state: false
+        },
+        
+
+      ],
+      recSecond:[
+        {
+          name: '天然气',
+          state: false
+        },
+         {
+          name: '下水道',
+          state: false
+        },
+         {
+          name: '其他',
+          state: false
+        },
+      ],
       show: false,
       showTime: false,
       minHour: 10,
       maxHour: 20,
-      minDate: new Date(),
-      maxDate: new Date(2019, 10, 1),
+      minDate: new Date(2019,1,1),
+      maxDate: new Date(2020, 12, 2),
       currentDate: new Date(),
       fileList: [
         { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
@@ -337,5 +385,7 @@ export default {
   font-size: 20px;
   margin: 20px 0;
 }
- 
+ .on {
+  background: green;
+}
 </style>

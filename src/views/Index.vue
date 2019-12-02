@@ -39,11 +39,24 @@
     <van-row class="nav">
       <van-col span="24">
         <van-grid class="grid" :border="false" icon-size="42px">
-          <van-grid-item class="grid_item iconfont icon-wuyejiaofei" text="物业缴费" to="/payments"/>
+          <van-grid-item class="grid_item tabBar" to="/payments">
+            
+            <span class="iconfont icon-wuyejiaofei"></span>
+            <span class="tab_text">物业缴费</span>
+          </van-grid-item>
           
-          <van-grid-item class="grid_item iconfont icon-huishou" text="上门回收" to="/recovery" />
-          <van-grid-item class="grid_item iconfont icon-baoxiu"  text="报修" to="/repair"/>
-          <van-grid-item class="grid_item iconfont icon-ruanjianfuwu"  text="服务" to="/service"/>
+          <van-grid-item class="grid_item tabBar" to="/recovery" >
+             <span class="iconfont icon-huishou"></span>
+              <span class="tab_text">上门回收</span>
+          </van-grid-item>
+          <van-grid-item class="grid_item tabBar" to="/repair">
+            <span class="iconfont icon-baoxiu"></span>
+              <span class="tab_text">报修</span>
+          </van-grid-item>
+          <van-grid-item class="grid_item tabBar" to="/service">
+              <span class="iconfont icon-ruanjianfuwu"></span>
+              <span class="tab_text">服务</span>
+          </van-grid-item>
         </van-grid>
       </van-col>
     </van-row>
@@ -162,6 +175,15 @@ export default {
         inactive: 'https://img.yzcdn.cn/vant/user-inactive.png'
       }
     };
+  },
+  created(){
+    this.axios.get("/communityInfo/showByLike")
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
 };
 </script>
@@ -284,4 +306,8 @@ export default {
   color: @themeColor;
 }
 
+.tab_text {
+  font-size: 14px;
+  color: #838383
+}
 </style>
