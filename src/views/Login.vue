@@ -9,20 +9,12 @@
           <div class="input-box">
             <van-cell-group>
               <van-field
-                readonly
-                clickable
                 label="手机号"
                 placeholder="请输入手机号"
-                :value="phonenumber" 
-                @touchstart.native.stop="show = true"
-                @blur="checkOut"
-              /> 
-              <van-number-keyboard
-                v-model="phonenumber"
-                :show="show"
-                :maxlength="11"
-                @blur="show = false"  
-              /> 
+                v-model="phonenumber" 
+                maxlength="11"
+                @blur="phoneNumCheckOut"
+              />
             </van-cell-group>
             <van-cell-group class="test-code">
               <van-field
@@ -45,19 +37,12 @@
           <div class="input-box">
             <van-cell-group>
               <van-field
-                clickable
-                readonly
                 label="用户名"
                 placeholder="请输入用户名"
-                :value="username" 
-                @touchstart.native.stop="show = true"
-              /> 
-              <van-number-keyboard
+                maxlength="11"
                 v-model="username"
-                :show="show"
-                :maxlength="11"
-                @blur="show = false"  
-              />
+                @blur="userNameCheckOut"
+              /> 
             </van-cell-group>
             <van-cell-group class="test-code">
               <van-field
@@ -67,14 +52,7 @@
                 label="密码"
                 label-width='2rem'
                 placeholder="请输入密码"
-                @touchstart.native.stop="showkey = true"
               >
-              <van-number-keyboard
-                v-model="password"
-                :show="showkey"
-                :maxlength="11"
-                @blur="show = false"  
-              /> 
               </van-field>
             </van-cell-group>
           </div>
@@ -93,13 +71,11 @@ import { Toast } from 'vant';
 export default {
   data() {
     return {
-      show: false,
       active: 0,
       phonenumber: '',    //手机号码
       sms: '',    //短信验证码
       username: '',
       password: '',
-      showkey: '',
       identifyCode: ''
     }
   },
@@ -113,21 +89,49 @@ export default {
     toForgetPass() {        
       this.$router.replace("/forgetpass");
     },
+    phoneNumCheckOut() {
+      if(this.phonenumber != ''){    //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(this.phonenumber)) {
+          Toast('请填写正确手机号码！');
+          console.log(this.phonenumber)
+          this.phonenumber = '';
+        }else {
+          console.log("Yeah you got your correct number!")
+        }
+      }
+    },
+    userNameCheckOut() {
+      if(this.username != ''){    //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(this.username)) {
+          Toast('请填写正确手机号码！');
+          console.log(this.username)
+          this.username = '';
+        }else {
+          console.log("Yeah you got your correct username!")
+        }
+      }
+    },
     sendCode() {    //发送验证码
       console.log(this.phonenumber);
-      this.axios
-      .post("/user/loginSendSms", {
-        telNum: this.phonenumber
-      })
-      .then(res => {
-        console.log(res.data)
-        var code = res.data.code;
-        if(code == 500) {
-          Toast('该手机号暂未注册哦！');
-        } else {
-          Toast('验证码发送成功！');
-        }
-      })
+      if( this.phonenumber == ''){
+        Toast("请输入手机号！")
+      } else {
+        this.axios
+        .post("/user/loginSendSms", {
+          telNum: this.phonenumber
+        })
+        .then(res => {
+          console.log(res.data)
+          var code = res.data.code;
+          if(code == 500) {
+            Toast('该手机号暂未注册哦！');
+          } else {
+            Toast('验证码发送成功！');
+          }
+        })
+      }
     },
     getSmsLogin() {
       console.log("登录");
@@ -147,8 +151,10 @@ export default {
           console.log(res.data);
           if (res.data.code == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            var token = res.data.data.token;
+            var token = res.token;
+            var userId = res.user.userId
             sessionStorage.setItem("token", token);
+            sessionStorage.setItem("userId", userId);
             console.log(this.token);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
@@ -165,41 +171,47 @@ export default {
         });
     },
     getPassLogin() {
-    console.log("密码登录");
-    console.log(this.password);
-    this.axios
-      .post("/user/login", {
-        userName: this.username,
-        userPasswd: this.password
-      },
-      {
-      headers: {
-        'content-type': 'application/json',
-        "validateId": this.validateId
-      }
-      })
-      .then(res => {
-        console.log(res.data);
-        if (res.data.code == "success") {
-          // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-          var token = res.data.data.token;
-          sessionStorage.setItem("token", token);
-          console.log(this.token);
-          // 获取参数（未登录时想访问的路由）
-          var url = this.$route.query.redirect;
-
-          url = url ? url : "/index";
-          // 切换路由
-          this.$router.replace(url);
-          // this.axios.post("/test")
-        } else {
-          console.log("登陆失败");
+      console.log("密码登录");
+      console.log(this.username);
+      if(this.username == '' || this.password == '') {
+        Toast("请输入用户名或者密码！")
+      } else{
+        this.axios
+        .post("/user/login", {
+          userName: this.username,
+          userPasswd: this.password
+        },
+        {
+        headers: {
+          'content-type': 'application/json',
+          "validateId": this.validateId
         }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.code == "success") {
+            // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
+            var token = res.data.data.token;
+            sessionStorage.setItem("token", token);
+            console.log(this.token);
+            // 获取参数（未登录时想访问的路由）
+            var url = this.$route.query.redirect;
+
+            url = url ? url : "/index";
+            // 切换路由
+            this.$router.replace(url);
+            // this.axios.post("/test")
+          } else {
+            console.log("登陆失败");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
     }
+    
+
   }
 }
 </script>

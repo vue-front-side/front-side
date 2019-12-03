@@ -4,18 +4,10 @@
         <div class="input-box">
           <van-cell-group>
             <van-field
-              readonly
-              clickable
               label="手机号"
               placeholder="请输入手机号"
-              :value="phonenumber" 
+              v-model="phonenumber" 
               @touchstart.native.stop="show = true"
-            /> 
-            <van-number-keyboard
-              v-model="phonenumber"
-              :show="show"
-              :maxlength="11"
-              @blur="show = false"  
             /> 
           </van-cell-group>
           <van-cell-group class="test-code">
@@ -32,12 +24,14 @@
           <van-cell-group class="pass-box">
             <van-field
               label="密码"
+              type="password"
               placeholder="请输入密码"
               v-model="password" 
             />
             <van-field
               label="密码"
-              placeholder="请输入密码"
+              type="password"
+              placeholder="请再次输入密码"
             /> 
           </van-cell-group>
         </div>
@@ -70,20 +64,23 @@ export default {
     },
     sendCode() {
       console.log(this.phonenumber);
-
-      this.axios
-      .post("/user/sendSmsCode", {
-        telNum: this.phonenumber
-      })
-      .then(res => {
-        console.log(res.data)
-        var code = res.data.code;
-        if(code == 500) {
-          Toast('该手机号已经了注册哦！');
-        } else {
-          Toast('验证码发送成功！');
-        }
-      })
+      if(this.phonenumber == '') {
+        Toast("请输入手机号！")
+      } else {
+        this.axios
+        .post("/user/sendSmsCode", {
+          telNum: this.phonenumber
+        })
+        .then(res => {
+          console.log(res.data)
+          var code = res.data.code;
+          if(code == 500) {
+            Toast('该手机号已经了注册哦！');
+          } else {
+            Toast('验证码发送成功！');
+          }
+        })
+      }
     },
     getRegister() {
       console.log(this.password)
@@ -106,8 +103,12 @@ export default {
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
             var token = res.data.data.token;
+            var userId = res.data.data.user.userId;
+            var userState = res.data.data.user.userId;
             sessionStorage.setItem("token", token);
-            console.log(token);
+            sessionStorage.setItem("userId", userId);
+            sessionStorage.setItem("userId",userState);
+            console.log(userId);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
 
