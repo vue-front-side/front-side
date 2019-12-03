@@ -5,9 +5,9 @@
         <span>首页</span>
         <img slot="icon" slot-scope="props" :src="props.active ? icon.active : icon.inactive" />
       </van-tabbar-item>
-      <van-tabbar-item name="serve">服务</van-tabbar-item>
+      <van-tabbar-item name="serve" to="/service">服务</van-tabbar-item>
       <van-tabbar-item name="dynamic" to="/dynamic">社区动态</van-tabbar-item>
-      <van-tabbar-item name="personal">我的</van-tabbar-item>
+      <van-tabbar-item name="personal" >我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

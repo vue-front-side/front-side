@@ -40,10 +40,12 @@
           @blur="show = false"
         />
       </van-cell-group>
-
+        <router-link :to="{ name: 'orderdetails'}">
        <div class="btn-box">
         <button type="submit" class="confrim">立即缴费</button>
       </div>
+      </router-link>
+      
     </div>
   </div>
 </template>
@@ -55,6 +57,11 @@ export default {
       catigorys: '电费',
       show: false,
       value: ''
+    }
+  },
+  methods: {
+    onClickLeft(){
+      this.$router.go(-1);
     }
   }
 }

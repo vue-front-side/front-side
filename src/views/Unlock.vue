@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      Toast("返回");
+      this.$router.go(-1);
     },
     onClickRight() {
       Toast("按钮");
@@ -172,23 +172,23 @@ export default {
   float: right;
 }
 .top_nav {
-  font-size: 32px;
+  font-size: 16px;
 }
-.van-nav-bar__title,
-.van-nav-bar {
-  height: 88px;
-  line-height: 88px;
+// .van-nav-bar__title,
+// .van-nav-bar {
+//   height: 88px;
+//   line-height: 88px;
   
-}
+// }
 .van-cell--large {
-  height: 100px;
-  line-height: 100px;
+  height: 500px;
+  line-height: 50px;
 }
 .list {
   position: relative;
   // text-align: left;
   border-top: 1px solid #e3e3e3;
-  padding: 20px;
+  padding: 10px;
   // .tel {
   //   display: inline-block;
   //   font-size: 32px;
@@ -197,8 +197,8 @@ export default {
   //   }
   // }
   .msg {
-    width: 200px;
-    height: 200px;
+    width: 80px;
+    height: 80px;
     img {
       width: 100%;
     }
@@ -208,19 +208,20 @@ export default {
 }
 .adress {
   text-align: left;
-  font-size: 28px;
-  margin-left: 60px;
-  line-height: 50px;
+  font-size: 14px;
+  margin-left: 30px;
+  line-height: 25px;
   .name{
-    font-weight: 600;
-    font-size: 36px;
+    font-weight: 300;
+    font-size: 18px;
   }
   .van-button {
-    width: 120px;
-    height: 60px;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
     position: absolute;
-    right: 20px;
-    top: 32%;
+    right: 10px;
+    top: 16%;
   }
 }
 li:first-child {

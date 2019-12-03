@@ -9,22 +9,30 @@
     </div>
     <h2 class="title">手机缴费<br>快速到账</h2>
     <div class="box">
+      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="payment inner-box">
         <div class="icons"><span class="iconfont icon-chongzhishuifei"></span></div>
         <button @click="toNext" value="1">水费</button>
       </div>
+      </router-link>
+      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="repair inner-box">
         <div class="icons"><span class="iconfont icon-dianfei"></span></div>
         <button @click="toNext" value="2">电费</button>
       </div>
+      </router-link>
+      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="unlock inner-box">
         <div class="icons"><span class="iconfont icon-ranqifei"></span></div>
         <button @click="toNext" value="3">气费</button>
       </div>
+      </router-link>
+      <router-link :to="{ name: 'paymentsdetails'}">
        <div class="housekepping inner-box">
         <div class="icons"><span class="iconfont icon-wuyefei"></span></div>
         <button @click="toNext" value="4">物业费</button>
       </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -38,7 +46,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      alert('返回');
+      this.$router.go(-1);
     },
     changeUrl() {
       alert('history')

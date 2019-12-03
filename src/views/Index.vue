@@ -39,10 +39,24 @@
     <van-row class="nav">
       <van-col span="24">
         <van-grid class="grid" :border="false" icon-size="42px">
-          <van-grid-item class="grid_item" icon="photo-o" text="物业缴费" />
-          <van-grid-item class="grid_item" icon="photo-o" text="上门回收" to="/recovery"/>
-          <van-grid-item class="grid_item" icon="photo-o" text="报修" to="/repair" />
-          <van-grid-item class="grid_item" icon="photo-o" text="服务" />
+          <van-grid-item class="grid_item tabBar" to="/payments">
+            
+            <span class="iconfont icon-wuyejiaofei"></span>
+            <span class="tab_text">物业缴费</span>
+          </van-grid-item>
+          
+          <van-grid-item class="grid_item tabBar" to="/recovery" >
+             <span class="iconfont icon-huishou"></span>
+              <span class="tab_text">上门回收</span>
+          </van-grid-item>
+          <van-grid-item class="grid_item tabBar" to="/repair">
+            <span class="iconfont icon-baoxiu"></span>
+              <span class="tab_text">报修</span>
+          </van-grid-item>
+          <van-grid-item class="grid_item tabBar" to="/service">
+              <span class="iconfont icon-ruanjianfuwu"></span>
+              <span class="tab_text">服务</span>
+          </van-grid-item>
         </van-grid>
       </van-col>
     </van-row>
@@ -60,6 +74,7 @@
         <van-tabs v-model="activeName" sticky :offset-top="44">
           <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index" class="article_box">
             <div>
+              <router-link :to="{ name: 'encyclopdia'}">
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -68,6 +83,7 @@
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
               </div>
+              </router-link>
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -159,11 +175,21 @@ export default {
         inactive: 'https://img.yzcdn.cn/vant/user-inactive.png'
       }
     };
+  },
+  created(){
+    this.axios.get("/communityInfo/showByLike")
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
 };
 </script>
 
 <style lang="less" scoped>
+@import '../assets/style/base.less';
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -218,6 +244,7 @@ export default {
   height: 100%;
   text-align: left;
 }
+
 // 百科
 .encyclopedia_box {
   height: 40px;
@@ -271,5 +298,16 @@ export default {
   color: #5e5d5d;
   font-size: 14px;
 }
+.icons {
+  padding: 10px 0 5px;
+}
+.iconfont{
+  font-size: 50px;
+  color: @themeColor;
+}
 
+.tab_text {
+  font-size: 14px;
+  color: #838383
+}
 </style>
