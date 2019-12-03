@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="注册" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar title="忘记密码" left-arrow @click-left="onClickLeft"/>
     <form action="" class="form-area">
         <div class="input-box">
           <van-cell-group>
