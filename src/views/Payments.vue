@@ -11,19 +11,19 @@
     <div class="box">
       <div class="payment inner-box">
         <div class="icons"><span class="iconfont icon-chongzhishuifei"></span></div>
-        <button>水费</button>
+        <button @click="toNext" value="1">水费</button>
       </div>
       <div class="repair inner-box">
         <div class="icons"><span class="iconfont icon-dianfei"></span></div>
-        <button>电费</button>
+        <button @click="toNext" value="2">电费</button>
       </div>
       <div class="unlock inner-box">
         <div class="icons"><span class="iconfont icon-ranqifei"></span></div>
-        <button>气费</button>
+        <button @click="toNext" value="3">气费</button>
       </div>
        <div class="housekepping inner-box">
         <div class="icons"><span class="iconfont icon-wuyefei"></span></div>
-        <button>物业费</button>
+        <button @click="toNext" value="4">物业费</button>
       </div>
     </div>
   </div>
@@ -31,12 +31,29 @@
 
 <script>
 export default {
+  data() {
+    return {
+      id: 1
+    }
+  },
   methods: {
     onClickLeft() {
       alert('返回');
     },
     changeUrl() {
       alert('history')
+    },
+    toNext() {
+      console.log(event.target.value)
+      var category = event.target.value;
+      this.axios
+      .post("/pay/jiemian", {
+        payUnitId: category,
+        inhabitantId:  this.id
+      })
+      .then(res => {
+        console.log(res.data)
+      })
     }
   }
 }
