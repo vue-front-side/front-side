@@ -1,3 +1,6 @@
 <template>
-  <div>nihao</div>
+  <div>nihao
+    <div>sdadadadas</div>
+  </div>
+  
 </template>
