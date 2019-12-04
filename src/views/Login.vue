@@ -33,7 +33,6 @@
                 size="small"
                 type="primary"
                 color="#999"
-                :disabled="state" 
                 @click="sendCode"
               >发送验证码</van-button>
             </van-field>
@@ -75,6 +74,7 @@
   
 <script>
 import { Toast } from "vant";
+import md5 from 'js-md5';
 export default {
   data() {
     return {
@@ -83,7 +83,8 @@ export default {
       sms: "", //短信验证码
       username: "",
       password: "",
-      state: true
+      state: true,
+      validateId: ''
     };
   },
   methods: {
@@ -167,14 +168,15 @@ export default {
           console.log(res.data);
           if (res.data.code == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
+            this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userId;
             var roleName = res.data.data.user.roles[0].roleName;
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userId", userState);
-            sessionStorage.setItem("userId", roleName);
+            sessionStorage.setItem("userState", userState);
+            sessionStorage.setItem("userName", roleName);
             console.log(userId);
             console.log(roleName);
             console.log(token);
@@ -202,7 +204,7 @@ export default {
         this.axios
         .post("/user/login", {
             userName: this.username,
-            userPasswd: this.password
+            userPasswd: md5(this.password)
           },
           {
             headers: {
@@ -215,6 +217,7 @@ export default {
           console.log(res.data);
           if (res.data.code == "success") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
+            this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userId;
@@ -232,8 +235,13 @@ export default {
             // 切换路由
             this.$router.replace(url);
             // this.axios.post("/test")
-          } else {
-            console.log("登陆失败");
+            Toast("登录成功!");
+          } else if(res.data.code == "user_NotFound") {
+            Toast("用户不存在!");
+          } else if(res.data.code == "pwd_error") {
+            Toast("密码错误!");
+          } else if(res.data.code == "user_invalid") {
+            Toast("用户不可用!");
           }
         })
         .catch(err => {

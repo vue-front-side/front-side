@@ -30,7 +30,6 @@
 </template>
 
 <script>
-/* var id = sessionStorage.getItem(userId); */
 export default {
   data() {
     return {
@@ -45,31 +44,6 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     }
-    /* ,
-    changeUrl() {
-      alert('history')
-    },
-    toNext() {
-      console.log(event.target.value);
-      console.log(this.id);
-      var category = event.target.value;
-      this.axios
-      .post("/pay/jiemian", {
-        payUnitId: category,
-        inhabitantId:  this.id
-      })
-      .then(res => {
-        console.log(res.data)
-        if(res.data.code == "200"){
-          console.log("aaaa");
-        } else {
-          console.log("bbb");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    } */
   }
 }
 </script>

@@ -8,19 +8,19 @@
         <ul>
           <li class="clearfix">
             <p class="left">缴费单位</p>
-            <p class="right" >xxxxxxxxxxxxxx</p>
+            <p class="right" >{{company}}</p>
           </li>
           <li class="clearfix">
             <p class="left">住户号</p>
-            <p class="right">xxxxxxxxxxxxxx</p>
+            <p class="right">{{inhabitantNum}}</p>
           </li>
           <li class="clearfix">
             <p class="left">住户住址</p>
-            <p class="right">xxxxxxxxxxxxxx</p>
+            <p class="right">{{inhabitantAdd}}</p>
           </li>
           <li class="clearfix">
             <p class="left">余额</p>
-            <p class="right">xxxxxxxxxxxxxx</p>
+            <p class="right">{{inhabitantMone}}</p>
           </li>
         </ul>
       </div>
@@ -28,12 +28,13 @@
         <van-field
           label="充值金额"
           placeholder="请输入充值金额"
+          @blur="checkMoney"
           v-model="value"
         />
       </van-cell-group>
       <router-link :to="{ name: 'orderdetails'}">
         <div class="btn-box">
-          <button type="submit" class="confrim" @click="getPay">立即缴费</button>
+          <button type="submit" class="confrim" @click="getPayUrl">立即缴费</button>
         </div>
       </router-link>
       
@@ -46,9 +47,14 @@ export default {
   name: 'paymentDetails',
   data() {
     return {
-      catigorys: '电费',
+      catigorys: '',
       value: '',
-      list: []
+      company: '',
+      inhabitantNum: '',
+      inhabitantAdd: '',
+      inhabitantMone: '',
+      payid: '',
+      location: ''
     }
   },
   created() {
@@ -66,8 +72,14 @@ export default {
     .then(res => {
       console.log(res.data)
       if(res.data.code == "200"){
-        this.list = res.data.data.Pays[0];
-        console.log(res.data.data.Pays[0])
+        this.catigorys = res.data.data.Pays[0].payProject;
+        this.company = res.data.data.Pays[0].company.companyName;
+        this.inhabitantNum = res.data.data.Pays[0].inhabitantAndHousePropertyVO.housePropertyNo;
+        this.inhabitantAdd = res.data.data.Pays[0].inhabitantAndHousePropertyVO.detailAddress;
+        this.inhabitantMone = res.data.data.Pays[0].payMoney;
+        this.payid = res.data.data.Pays[0].payId;
+        console.log(res.data.data.Pays[0]);
+        console.log(this)
       } else {
         console.log("获取数据失败");
       }
@@ -80,24 +92,24 @@ export default {
     onClickLeft(){
       this.$router.go(-1);
     },
-    getPay() {
-      this.payId = '19'
-      this.axios
-      .post("/alipay/shaxiang", {
-        payId: this.payId
-      })
-      .then(res => {
-        console.log(res.data)
-        if(res.data.code == "200"){
-          console.log(res.data);
-        } else {
-          console.log("bbb");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
+    checkMoney() {
+      
+    },
+    getPayUrl() {
+    this.axios
+    .post("/alipay", {
+      payId: this.payid,
+    })
+    .then(res => {
+      console.log(res.data);
+      this.location = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(location);
+    return location;
+  }
   }
 }
 </script>
