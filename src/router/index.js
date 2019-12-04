@@ -99,6 +99,11 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
+    path: '/forgetpass',
+    name: 'forgetpass',
+    component: () => import('../views/ForgetPass.vue')
+  },
+  {
     path:'/jzlist',
     name:'jzlist',
     component: ()=>import('../views/jzlist.vue')

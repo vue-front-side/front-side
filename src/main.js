@@ -25,8 +25,8 @@ import { IndexBar, IndexAnchor } from 'vant';
 import { NumberKeyboard } from 'vant';
 import { Uploader } from 'vant';
 import { Picker } from 'vant';
-import http from './utils/http'
-import vueAxios from 'vue-axios'
+
+
 import { Loading } from 'vant';
 
 Vue.use(Loading);
@@ -70,17 +70,17 @@ import 'vant/lib/icon/local.css';
 
 import VueRouter from 'vue-router'
 
-import {Row, Col} from 'vant';
-import { Icon } from 'vant';
-import { NavBar } from 'vant';
 
-import { NumberKeyboard } from 'vant';
-import { Field } from 'vant';
-import { Button } from 'vant';
-import { Cell, CellGroup } from 'vant';
+
+
+
+
+
+
+
 import { Search } from 'vant';
 import { Grid, GridItem } from 'vant';
-import { Tab, Tabs } from 'vant';
+
 
 Vue.use(vueAxios, http)
 Vue.use(VueRouter);

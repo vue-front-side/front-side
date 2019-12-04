@@ -5,14 +5,10 @@
 </template>
 
 <script>
-import { Icon } from 'vant';
+
 
 export default {
- components: {
-   [Button.name]:Button,
-    
- }
-  
+
 }
 </script>
 
