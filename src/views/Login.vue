@@ -33,6 +33,7 @@
                 size="small"
                 type="primary"
                 color="#999"
+                :disabled="state" 
                 @click="sendCode"
               >发送验证码</van-button>
             </van-field>
@@ -81,7 +82,8 @@ export default {
       phonenumber: "", //手机号码
       sms: "", //短信验证码
       username: "",
-      password: ""
+      password: "",
+      state: true
     };
   },
   methods: {
@@ -101,9 +103,9 @@ export default {
         if (!myreg.test(this.phonenumber)) {
           Toast("请填写正确手机号码！");
           console.log(this.phonenumber);
-          this.phonenumber = "";
         } else {
           console.log("Yeah you got your correct number!");
+          this.state == false;
         }
       }
     },
