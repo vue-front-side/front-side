@@ -71,7 +71,7 @@
     <van-row>
       <van-col span="24">
         <van-tabs v-model="activeName" sticky :offset-top="44">
-          <van-tab v-for="(item,index) in textType" :title="item" :key="index" class="article_box">
+          <van-tab v-for="(item,index) in textType" :title="item" :key="index" class="article_box" background="gray" color="#ffa400">
             <div>
               <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in allText" :key="index">
                 <div class="article">

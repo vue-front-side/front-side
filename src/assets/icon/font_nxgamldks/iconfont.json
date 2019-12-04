@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1203688",
+      "name": "温馨提示",
+      "font_class": "wenxintishi",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "1766503",
+      "name": "符号-图片上传",
+      "font_class": "tupianshangchuan",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "6249916",
+      "name": "预约",
+      "font_class": "yuyue",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "10885270",
+      "name": "标签",
+      "font_class": "biaoqian",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

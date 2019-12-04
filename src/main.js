@@ -13,8 +13,9 @@ import './assets/icon/font_inoi7rxcu4j/iconfont.css'
 import './assets/icon/font_alszihkajvj/iconfont.css'
 import './assets/icon/font_zl3of1q20f/iconfont.css'
 import './assets/icon/font_04z09p6rmi9h/iconfont.css'
+import './assets/icon/font_nxgamldks/iconfont.css'
 import 'vant/lib/icon/local.css';
-import crypto from 'crypto'
+// import crypto from 'crypto'
 
 import VueRouter from 'vue-router'
 

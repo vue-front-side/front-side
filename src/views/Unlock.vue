@@ -1,5 +1,7 @@
 <template>
   <div class="unlock">
+    
+    <van-sticky>
     <van-row>
       <van-col span="24">
         <van-nav-bar
@@ -13,85 +15,24 @@
         />
       </van-col>
     </van-row>
+    </van-sticky>
+    <van-loading size="24px" v-if="flag">加载中...</van-loading>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <ul>
-        <van-cell>
+        <van-cell v-for="(item,index) in this.unlockList" :key="index">
         <li class="list">
           <div class="msg">
            
             <img src="../assets/logo.png" alt="">
           </div>
           <div class="adress">
-            <span class="name">王记锁行</span>
-            <div>联系人:<span>王师傅</span></div>
-            <div class="tel">电话:<span>13788214396</span></div>
-            <div>地址:<span>成都市青羊区大南街88号</span></div>
+            <span class="name">{{item.companyName}}</span>
+            <div>联系人:<span>{{item.personName}}</span></div>
+            <div class="tel">电话:<span>{{item.telNum}}</span></div>
+            <div>地址:<span>{{item.location}}</span></div>
             <van-button type="info">联系ta</van-button>
             <span></span>
             <span></span>
-          </div>
-        </li>
-        </van-cell>
-        <van-cell>
-        <li class="list">
-          <div class="msg">
-           
-            <img src="../assets/logo.png" alt="">
-          </div>
-          <div class="adress">
-            <span class="name">王记锁行</span>
-            <div>联系人:<span>王师傅</span></div>
-            <div class="tel">电话:<span>13788214396</span></div>
-            <div>地址:<span>成都市青羊区大南街88号</span></div>
-            <van-button type="info">联系ta</van-button>
-            <span></span>
-            <span></span>
-          </div>
-        </li>
-        </van-cell>
-        <van-cell>
-         <li class="list">
-          <div class="msg">
-            <img src="../assets/logo.png" alt="">
-          </div>
-          <div class="adress">
-            <span class="name">王记锁行</span>
-            <div>联系人:<span>王师傅</span></div>
-            <div class="tel">电话:<span>13788214396</span></div>
-            <div>地址:<span>成都市青羊区大南街88号</span></div>
-            <van-button type="info">联系ta</van-button>
-            <span></span>
-            <span></span>
-          </div>
-        </li>
-        </van-cell>
-        <van-cell>
-         <li class="list">
-          <div class="msg">
-            <img src="../assets/logo.png" alt="">
-          </div>
-          <div class="adress">
-            <span class="name">王记锁行</span>
-            <div>联系人:<span>王师傅</span></div>
-            <div class="tel">电话:<span>13788214396</span></div>
-            <div>地址:<span>成都市青羊区大南街88号</span></div>
-            <van-button type="info">联系ta</van-button>
-            <span></span>
-            <span></span>
-          </div>
-        </li>
-        </van-cell>
-        <van-cell>
-         <li class="list">
-          <div class="msg">    
-            <img src="../assets/logo.png" alt="">
-          </div>
-          <div class="adress">
-            <span class="name">王记锁行</span>
-            <div>联系人:<span>王师傅</span></div>
-            <div class="tel">电话:<span>13788214396</span></div>
-            <div>地址:<span>成都市青羊区大南街88号</span></div>
-            <van-button type="info">联系ta</van-button>
           </div>
         </li>
         </van-cell>
@@ -114,8 +55,9 @@ import {
   DatetimePicker,
   Uploader,
   Button,
-  List
-  
+  List,
+  Sticky,
+  Loading
 } from "vant";
 export default {
   components: {
@@ -131,8 +73,9 @@ export default {
     [DatetimePicker.name]: DatetimePicker,
     [Uploader.name]: Uploader,
     [Button.name]: Button,
-    [List.name]: List
-   
+    [List.name]: List,
+    [Sticky.name]:Sticky,
+    [Loading.name]:Loading
   },
   methods: {
     onClickLeft() {
@@ -161,8 +104,26 @@ export default {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      unlockList:[],
+      flag:true
     };
+  },
+  created(){
+    this.axios.post("/unlock/getAll",{
+      pageSize:"100",
+      currentPage:"1"
+    })
+    .then(res=>{
+      console.log(res.data);
+       if(res.data.code==200){
+          this.flag=false;
+        }
+      this.unlockList = res.data.data.data;
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
 };
 </script>
@@ -216,12 +177,14 @@ export default {
     font-size: 18px;
   }
   .van-button {
-    width: 60px;
+    width: 74px;
     height: 30px;
     line-height: 30px;
     position: absolute;
     right: 10px;
     top: 16%;
+    background-color: #ffa400;
+    border-color: #ffa400;
   }
 }
 li:first-child {
