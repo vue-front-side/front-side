@@ -2,19 +2,19 @@
   <div class="clearfix">
     <!-- 定位 -->
     <van-sticky>
-     <div class="position">
-      <div class="pos_content">
-        <span>成都</span>
-        <van-icon name="location-o" class="icon" />
+      <div class="position" ref="location" :style="{background:bgcolor}">
+        <div class="pos_content">
+          <span>成都</span>
+          <van-icon name="location-o" class="icon" />
+        </div>
       </div>
-    </div>
     </van-sticky>
     <!-- 轮播 -->
     <van-row class="row">
       <van-col span="24" class="col">
         <van-swipe :autoplay="3000" class="swipe_box">
           <van-swipe-item v-for="(image, index) in images" :key="index">
-            <img v-lazy="image" />
+            <img :src="image" />
           </van-swipe-item>
         </van-swipe>
       </van-col>
@@ -35,54 +35,53 @@
       </van-col>
     </van-row>
     <!-- 导航 -->
-   
+
     <van-row class="nav">
       <van-col span="24">
         <van-grid class="grid" :border="false" icon-size="42px">
-          <van-grid-item class="grid_item tabBar" to="/payments">
-            
-            <span class="iconfont icon-wuyejiaofei"></span>
-            <span class="tab_text">物业缴费</span>
+          <van-grid-item class="grid_item tabBar" @click="link">
+            <span class="iconfont icon-qitafeiyong"></span>
+            <span class="tab_text fee">物业缴费</span>
           </van-grid-item>
-          
-          <van-grid-item class="grid_item tabBar" to="/recovery" >
-             <span class="iconfont icon-huishou"></span>
-              <span class="tab_text">上门回收</span>
+
+          <van-grid-item class="grid_item tabBar" to="/recovery">
+            <span class="iconfont icon-recycle"></span>
+            <span class="tab_text">上门回收</span>
           </van-grid-item>
           <van-grid-item class="grid_item tabBar" to="/repair">
-            <span class="iconfont icon-baoxiu"></span>
-              <span class="tab_text">报修</span>
+            <span class="iconfont icon-repairfill"></span>
+            <span class="tab_text">报修</span>
           </van-grid-item>
           <van-grid-item class="grid_item tabBar" to="/service">
-              <span class="iconfont icon-ruanjianfuwu"></span>
-              <span class="tab_text">服务</span>
+            <span class="iconfont icon-menu"></span>
+            <span class="tab_text">服务</span>
           </van-grid-item>
         </van-grid>
       </van-col>
     </van-row>
-    
+
     <!-- 生活百科 -->
-   
-    <van-row class="encyclopedia_box">
+
+    <van-row class="encyclopedia_box" :style="{bacground:bgcolor}">
       <van-col span="24">
         <span class="encyclopedia">生活百科</span>
       </van-col>
     </van-row>
-   
+
     <van-row>
       <van-col span="24">
         <van-tabs v-model="activeName" sticky :offset-top="44">
-          <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index" class="article_box">
+          <van-tab v-for="(item,index) in textType" :title="item" :key="index" class="article_box">
             <div>
-              <router-link :to="{ name: 'encyclopdia'}">
-              <div class="article">
-                <div>
-                  <img src="../assets/imag/index/VN.png" alt />
+              <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in allText" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="'http://172.16.6.63:8080/'+item.ciImage" alt />
+                  </div>
+                  <span class="tag">{{item.ciType}}</span>
+                  <p class="title">{{item.ciTitle}}</p>
+                  <span class="info">{{item.ciDate}}</span>
                 </div>
-                <span class="tag">生活常识</span>
-                <p class="title">因为有你，心存感激</p>
-                <span class="info">感恩节</span>
-              </div>
               </router-link>
               <div class="article">
                 <div>
@@ -111,7 +110,7 @@
 
 <script>
 // import navSlot from '../components/Nav-top'
-import NavBottom from '../components/NavBottom'
+import NavBottom from "../components/NavBottom";
 import {
   Button,
   Row,
@@ -128,7 +127,8 @@ import {
   NoticeBar,
   Tab,
   Tabs,
-  Sticky
+  Sticky,
+  Toast
 } from "vant";
 export default {
   components: {
@@ -149,14 +149,14 @@ export default {
     [Tabs.name]: Tabs,
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
-    [Sticky.name]:Sticky,
+    [Sticky.name]: Sticky,
     NavBottom
     // navSlot
   },
   data() {
     return {
       images: [
-        "../../public/favicon.ico",
+        "../assets/imag/index/plante1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
       ],
       lists: [
@@ -171,25 +171,74 @@ export default {
       active: "home",
       activeName: "a",
       icon: {
-        active: 'https://img.yzcdn.cn/vant/user-active.png',
-        inactive: 'https://img.yzcdn.cn/vant/user-inactive.png'
-      }
+        active: "https://img.yzcdn.cn/vant/user-active.png",
+        inactive: "https://img.yzcdn.cn/vant/user-inactive.png"
+      },
+      bgcolor: "transform",
+      startTime: new Date().getTime(),
+      textType:[],
+      allText:[]
     };
   },
-  created(){
-    this.axios.get("/communityInfo/showByLike")
-    .then(res=>{
-      console.log(res.data);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+  created() {
+    sessionStorage.setItem("userState", true);
+    this.axios
+      .get("/communityInfo/showType")
+      .then(res => {
+        console.log(res.data.data.data);
+        this.textType=res.data.data.data;
+        this.textType.unshift("最新");
+        this.axios.post("/communityInfo/showByLike",)
+        .then(res=>{
+          console.log(res.data.data.data);
+          this.allText = res.data.data.data;
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  methods: {
+    link() {
+      const userState = sessionStorage.getItem("userState");
+      console.log(userState);
+      if (userState) {
+        this.$router.push("/payments");
+      } else {
+        Toast("请先进行用户认证！");
+      }
+    },
+    getScrollTop() {
+      // console.log("开始时间：",this.startTime);
+      var currentTime = new Date().getTime();
+      // console.log("当前时间：",currentTime);
+      if (currentTime - this.startTime > 500) {
+        console.log("1");
+        let scrollTop = 0;
+        if (document.documentElement && document.documentElement.scrollTop) {
+          scrollTop = document.documentElement.scrollTop;
+        } else if (document.body) {
+          scrollTop = document.body.scrollTop;
+        }
+        console.log(scrollTop);
+        if (scrollTop > 0) {
+          this.bgcolor = "red";
+        }
+      }
+      this.startTime = currentTime;
+    }
+  },
+  mounted() {
+    window.addEventListener("scroll", this.getScrollTop); // 监听滚动事件，然后用handleScroll这个方法进行相应的处理
   }
 };
 </script>
 
 <style lang="less" scoped>
-@import '../assets/style/base.less';
+@import "../assets/style/base.less";
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -209,7 +258,7 @@ export default {
   overflow: hidden;
   height: 44px;
   line-height: 44px;
-  background-color: transparent;
+
   text-align: left;
 }
 .row {
@@ -276,7 +325,7 @@ export default {
   text-align: center;
 }
 .article img {
-  height: 100%;
+  width: 100%;
 }
 .tag {
   display: inline-block;
@@ -301,13 +350,19 @@ export default {
 .icons {
   padding: 10px 0 5px;
 }
-.iconfont{
-  font-size: 50px;
+.iconfont {
+  font-size: 38px;
   color: @themeColor;
 }
 
 .tab_text {
   font-size: 14px;
-  color: #838383
+  color: #838383;
+}
+.icon-qitafeiyong {
+  font-size: 36px;
+}
+.fee {
+  margin-top: 2px;
 }
 </style>

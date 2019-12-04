@@ -99,6 +99,14 @@ export default {
     onClickLeft() {
       Toast("返回");
     }
+  },
+  created(){
+    this.axios.post("/activity/showOne",{
+      activityId:"1"
+    })
+    .then(res=>{
+      console.log(res.data);
+    })
   }
 };
 </script>

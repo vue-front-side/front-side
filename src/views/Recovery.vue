@@ -249,6 +249,7 @@ export default {
       choose1:false,
       choose2:false,
       choose:false,
+      url:""
     };
   },
   methods: {
@@ -301,10 +302,13 @@ export default {
     },
     submit(){
       this.axios.post("/repairInfo/addRepairInfo",{
+        // params:{
         housePropertyId:"1",
         inhabitantId:"1",
         repairContent:"hhajdj",
-        repairPartId:['dsa','da']   
+        repairPartIds:"1,2",
+        repairImg:this.url   
+        // }
       })
       .then(res=>{
         console.log(res.data);
@@ -323,11 +327,11 @@ export default {
                'Content-Type':'multipart/form-data'
            }
       };
-      this.axios.post('/repairInfo/addRepairInfo',formdata1,config)
+      this.axios.post('/repairInfo/loadInfoImg',formdata1,config)
       .then((res)=>{   //这里的url为后端接口
           console.log(res.data.data);
           //res 为接口返回值
-          // this.url=res.data.data.filePath
+          this.url=res.data.data.filePath
       })
       .catch(() => {})
     }

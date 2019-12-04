@@ -22,7 +22,7 @@
       <van-field
         clearable
         label="联系人"
-        placeholder="请输入用户名"
+        :placeholder="concactPeople"
         label-width="60"
         label-align="left"
         
@@ -32,7 +32,7 @@
       <van-field
         clearable
         label="联系电话"
-        placeholder="请输入用户名"
+        :placeholder="concactTel"
         label-width="60"
         label-align="left"
        
@@ -46,7 +46,7 @@
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
-      
+        :value="value"
         disabled="true"
         @click="showPopup"
         
@@ -55,14 +55,14 @@
         clearable
         label="所在小区"
         right-icon="arrow"
-        placeholder="请选择小区"
+        :placeholder="village"
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
         
         disabled="true"
       />
-      <van-field placeholder="请填写详细地址，不少于5个字" size="large" />
+      <van-field :placeholder="address" size="large" />
     </van-cell-group>
     <van-popup v-model="show" position="bottom">
       <van-area :area-list="areaList" value="110101" title="请选择区" @cancel="show=false" @confirm="onConfirm" />
@@ -114,7 +114,7 @@
     </van-row>
       <van-row class="photo">
       <van-col span="24">
-        <van-uploader v-model="fileList" multiple :max-count="4" :before-read="beforeRead" capture="camera"/>
+        <van-uploader v-model="fileList" multiple :max-count="4" :before-read="beforeRead" capture="camera" :after-read="afterRead"/>
       </van-col>
     </van-row>
     
@@ -160,19 +160,6 @@ export default {
     [Button.name]:Button
   },
   methods: {
-     submit() {
-      console.log("提交");
-      this.axios.post("/users/login",{
-        username:"admin",
-        userpass:'123'
-      })
-      .then(res=>{
-        console.log(res.data);
-      })
-      .catch(err=>{
-        console.log(err);
-      })
-    },
     onClickLeft() {
       this.$router.go(-1);
     },
@@ -192,6 +179,27 @@ export default {
       }
     
       return true;
+    },
+          afterRead(file) {
+      // 此时可以自行将文件上传至服务器
+      // this.uploadImg(file.file);
+      // console.log(file);
+      console.log("发送了")
+      let formdata1 = new FormData();
+      formdata1.append("file", file.file, file.file.name);
+      // console.log("format",this.formdata1);
+      let config = {
+           headers:{
+               'Content-Type':'multipart/form-data'
+           }
+      };
+      this.axios.post('/repairInfo/loadInfoImg',formdata1,config)
+      .then((res)=>{   //这里的url为后端接口
+          console.log(res.data.data);
+          //res 为接口返回值
+          this.url=res.data.data.filePath
+      })
+      .catch(() => {})
     },
      // 返回 Promise
     asyncBeforeRead(file) {
@@ -220,13 +228,52 @@ export default {
       var d = new Date(time);  
       var myTime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
       this.appointment = myTime;
+    },
+    submit(){
+      var selected = this.rec.map((item,i)=>{
+        console.log(i)
+        if(item.state){
+          return i+1;
+        }else{
+          return 0
+        }
+      })
+      var selected2 = this.recSecond.map((item,i)=>{
+        if(item.state){
+          return i+4
+        }else{
+          return 0;
+        }
+      });
+      selected = selected.concat(selected2);
+      this.catergary = selected.join(',');
+      
+      this.axios.post("/repairInfo/addRepairInfo",{
+        // params:{
+        repairName:"",
+        concactTel:"",
+        repairAdress:"",
+        housePropertyId:"1",
+        inhabitantId:"1",
+        repairContent:"hhajdj",
+        repairPartIds:this.catergary,
+        repairImg:this.url   
+        // }
+      })
+      .then(res=>{
+        console.log(res.data);
+      })
     }
    
   },
   data() {
     return {
-      areaPlace:"请选择区",
+      concactPeople:"请输入用户名",
+      concactTel:"请输入用户名",
+      areaPlace: "请选择地区",
       appointment:"请选择预约时间",
+      village:"请选择小区",
+      address:"请填写详细地址，不少于5个字",
       areaList: {
         province_list: {
           110000: "北京市",
@@ -280,6 +327,7 @@ export default {
           state: false
         },
       ],
+      value:'',
       show: false,
       showTime: false,
       minHour: 10,
@@ -292,7 +340,8 @@ export default {
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         { url: 'https://cloud-image', isImage: true }
-      ]
+      ],
+      catergary:""
     };
   }
 };
