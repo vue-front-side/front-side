@@ -16,7 +16,7 @@ const routes = [
     component: ()=>import('../views/jzlist.vue')
   },
   {
-    path:'/jzdetails',
+    path:'/jzdetails/:staffId',
     name:'jzdetails',
     component:()=>import('../views/jzdetails.vue')
   },
@@ -51,11 +51,6 @@ const routes = [
     component:()=>import('../views/wxrecord.vue')
   },
   {
-    path:'/wxdetails',
-    name:'wxdetails',
-    component:()=>import('../views/wxdetails.vue')
-  },
-  {
     path:'/recoverjl',
     name:'recoverjl',
     component:()=>import('../views/recoverjl.vue')
@@ -66,19 +61,40 @@ const routes = [
     component:()=>import('../views/payjl.vue')
   },
   {
-    path:'/openjl',
-    name:'openjl',
-    component:()=>import('../views/openjl.vue')
-  },
-  {
     path:'/jzjl',
     name:'jzjl',
     component:()=>import('../views/jzjl.vue')
   },
+
   {
-    path:'/newphone',
-    name:'newphone',
-    component:()=>import('../views/newphone.vue')
+    path:'/newnext',
+    name:'newnext',
+    component:()=>import('../views/newnext.vue')
+  },
+  {
+    path:'/newmsg',
+    name:'newmsg',
+    component:()=>import('../views/newmsg.vue')
+  },
+  {
+    path:'/newpic',
+    name:'newpic',
+    component:()=>import('../views/newpic.vue')
+  },
+  {
+    path:'/newsex',
+    name:'newsex',
+    component:()=>import('../views/newsex.vue')
+  },
+  {
+    path:'/newcy',
+    name:'newcy',
+    component:()=>import('../views/newcy.vue')
+  },
+  {
+    path:'/paydetails/:payId',
+    name:'paydetails',
+    component:()=>import('../views/paydetails.vue')
   },
 
 

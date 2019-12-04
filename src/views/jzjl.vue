@@ -1,6 +1,6 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="家政记录" left-text="返回" left-arrow></van-nav-bar>
+    <van-nav-bar title="家政记录" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
     <div style="margin-top:84px;"></div>
     <van-tabs v-model="active" animated>
       <van-tab title="待上门">
@@ -49,33 +49,38 @@ export default {
     return {
       active: 2
     };
+  },
+  methods:{
+    onClickLeft() {
+      this.$router.push('/my')
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .box {
-  border: 2px solid #eee;
-  margin: 10px;
+  border: 1px solid #eee;
+  margin: 5px;
   overflow: hidden;
 }
 .box p {
-  font-size: 32px;
-  margin-top: 10px;
+  font-size: 16px;
+  margin-top: 5px;
 }
 .img {
-  width: 140px;
-  height: 140px;
+  width: 70px;
+  height: 70px;
   background: #eee;
   float: left;
-  margin-left: 20px;
+  margin-left:10px;
   margin-top: 5px;
   line-height: 70px;
-  font-size: 28px;
+  font-size: 14px;
   text-align: center;
 }
 .content {
-  width: 500px;
+  width: 250px;
   float: right;
   text-align: left;
   position: relative;
@@ -88,27 +93,28 @@ p {
 
 }
 .isover {
-  font-size: 24px;
+  font-size: 14px;
   display: inline-block;
-  width: 80px;
-  height: 40px;
-  line-height: 40px;
+  width: 60px;
+  height: 20px;
+  line-height: 20px;
   text-align: center;
   padding: 5px 10px;
   position: absolute;
-  top: 20px;
-  right: 20px;;
+  top: 10px;
+  right: 10px;;
 }
 .price {
-    font-size: 30px;
+    font-size: 16px;
   display: inline-block;
-  width: 80px;
-  height: 40px;
-  line-height: 40px;
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
   text-align: center;
   padding: 5px 10px;
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 20px;;
+  color: red;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="关于我们" left-text="返回" left-arrow></van-nav-bar>
+    <van-nav-bar title="关于我们" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
     <div style="margin-top:84px;"></div>
-    <van-image width="100" height="100" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+    <img background="#eee" width="100" height="100" src="../assets/logo.png" />
     <van-row>
       <van-col style="font-size:24px" span="24">易居APP</van-col>
     </van-row>
@@ -27,7 +27,16 @@
 
 
 <script>
-export default {};
+export default {
+  methods:{
+    onClickLeft() {
+      this.$router.push("/my");
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
+#qpp {
+  text-align: center;
+}
 </style>

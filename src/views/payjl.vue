@@ -1,20 +1,24 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="缴费记录" left-text="返回" left-arrow></van-nav-bar>
+    <van-nav-bar title="缴费记录" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
     <div style="margin-top:64px;"></div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+   
      <ul>
-       <li v-for="item in list" :key="item" :title="item">
+       
+       <li v-for="(item,index) in list" :key="index">
+         <router-link :to="'/paydetails/'+item.payId">
          <div class="box" >
            <div class="boxone">
-             <p>缴费对象</p>
-             <p>缴费时间：xxxxxx</p>
+             <p>{{item.company.companyName}}</p>
+             <p>缴费时间：{{item.payDate}}</p>
            </div>
-           <div class="price"><span>-40.00</span></div>
+           <div class="price"><span>-{{item.payMoney}}</span></div>
          </div>
+         </router-link>
        </li>
+       
      </ul>
-    </van-list>
+
   </div>
 
 </template>
@@ -23,26 +27,24 @@
 export default {
    data() {
     return {
-      list: [],
-      loading: false,
-      finished: false
+      list: []
     };
   },
+  created() {
+    this.axios
+      .post("/pay/selinha", {inhabitantId:1})
+      .then(res => {
+        console.log(res.data.data)
+        this.list = res.data.data.pays;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
     methods: {
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 5; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-
-        // 数据全部加载完成
-        if (this.list.length >= 10) {
-          this.finished = true;
-        }
-      }, );
+   
+    onClickLeft(){
+      this.$router.push('/my')
     }
   }
 };
@@ -54,6 +56,7 @@ export default {
   margin: 0 auto;
   overflow: hidden;
   border-bottom: 1px solid #999;
+  position: relative;
 }
 .boxone {
   width: 300px;
@@ -61,10 +64,17 @@ export default {
   float: left;
 }
 .boxone p {
-  font-size: 36px;
+  font-size: 18px;
 }
 .price {
-  margin: 70px 0 0 40px;
+  width: 75px;
+  height: 30px;
   text-align: right;
+  position: absolute;
+  top: 40px;
+  right: 10px;
+}
+a {
+  color: #000;
 }
 </style>

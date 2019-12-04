@@ -20,6 +20,20 @@ import { Image } from 'vant';
 import { NoticeBar } from 'vant';
 import { Tab, Tabs } from 'vant';
 import { IndexBar, IndexAnchor } from 'vant';
+import { NumberKeyboard } from 'vant';
+import { Uploader } from 'vant';
+import { Picker } from 'vant';
+import http from './utils/http'
+import vueAxios from 'vue-axios'
+import { Loading } from 'vant';
+
+Vue.use(Loading);
+Vue.use(vueAxios, http)
+Vue.use(Picker);
+
+Vue.use(Uploader);
+
+Vue.use(NumberKeyboard);
 
 Vue.use(IndexBar).use(IndexAnchor);
 
