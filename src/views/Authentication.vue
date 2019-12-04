@@ -1,0 +1,55 @@
+<template>
+  <div id="qpp">
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="绑定信息"
+            left-text="返回"
+            
+            left-arrow
+            @click-left="onClickLeft"
+            
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
+    <van-cell-group>
+      <van-field v-model="username" clearable label="姓名" placeholder="请填写成员姓名" />
+      <van-field v-model="idcard" clearable label="身份证号" placeholder="请填写成员身份证号" />
+    </van-cell-group>
+    <div>
+      <button type="submit" class="sub">提交</button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: "",
+      idcard: "",
+    };
+  },
+  methods: {
+    onClickLeft() {
+      this.$router.push("/my");
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.sub {
+  border: none;
+  background: #ffa400;
+  color:#fff;
+  font-size: 18px;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  margin:20px  0  0  85px; 
+}
+</style>

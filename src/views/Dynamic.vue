@@ -1,156 +1,83 @@
 <template>
   <div class="recovery">
-    
-    <van-row>
-      <van-col span="24">
-        <van-nav-bar
-          title="社区动态"
-          left-text="返回"
-          right-text="发布"
-          left-arrow
-          @click-left="onClickLeft"
-          @click-right="onClickRight"
-          class="top_nav"
-        />
-      </van-col>
-    </van-row>
-    <van-loading type="spinner" v-if="flag"/>
-    <div v-for="(item,index) in dynamicList" :key="index">
-      <div class="contents">
-        <van-row class="head">
-          <van-col span="4">
-            <div class="head_box">
-              <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            </div>
-          </van-col>
-          <van-col span="20" class="msg">
-            <span class="name">{{item.name}}</span>
-            <span class="time">{{item.time}}</span>
-          </van-col>
-        </van-row>
-        <van-row class="text">
-          <van-col span="24">
-            <p>{{item.content}}</p>
-            <div class="img_box">
-              <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            </div>
-          </van-col>
-        </van-row>
-        <van-row class="comment_box">
-          <van-col span="24">
-            <span class="comment">
-              <van-icon name="good-job-o" @click="zan(index)" />
-            </span>
-            <span class="thumbs-up">
-              <van-icon name="chat-o" @click="focus(index)"/>
-            </span>
-          </van-col>
-        </van-row>
-        <van-row class="comment_text">
-          <van-col span="24">
-            <span class="comment_logo">
-              <van-icon name="good-job-o" @click="comment" />
-            </span>
-            <span>{{item.count}}人觉得很赞</span>
-          </van-col>
-        </van-row>
-        <van-row class="comment_content" v-for="(items,index) in item.componentArr" :key="index">
-          <van-col span="24">
-            <span class="com_name">{{items.componentName}}:</span><span>{{items.component}}</span>
-          </van-col>
-        </van-row>
-        <!-- <van-row class="comment_content">
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="社区动态"
+            left-text="返回"
+            right-text="发布"
+            left-arrow
+            @click-left="onClickLeft"
+            @click-right="onClickRight"
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
+    <van-loading size="24px" v-if="flag" class="load">加载中...</van-loading>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div v-for="(item,index) in dynamicList" :key="index">
+        <div class="contents">
+          <van-row class="head">
+            <van-col span="4">
+              <div class="head_box">
+                <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+              </div>
+            </van-col>
+            <van-col span="20" class="msg">
+              <span class="name">{{item.name}}</span>
+              <span class="time">{{item.time}}</span>
+            </van-col>
+          </van-row>
+          <van-row class="text">
+            <van-col span="24">
+              <p>{{item.content}}</p>
+              <div class="img_box">
+                <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+              </div>
+            </van-col>
+          </van-row>
+          <van-row class="comment_box">
+            <van-col span="24">
+              <span class="comment">
+                <van-icon name="good-job-o" @click="zan(index)" />
+              </span>
+              <span class="thumbs-up">
+                <van-icon name="chat-o" @click="focus(index)" />
+              </span>
+            </van-col>
+          </van-row>
+          <van-row class="comment_text">
+            <van-col span="24">
+              <span class="comment_logo">
+                <van-icon name="good-job-o" @click="comment" />
+              </span>
+              <span>{{item.count}}人觉得很赞</span>
+            </van-col>
+          </van-row>
+          <van-row class="comment_content" v-for="(items,index) in item.componentArr" :key="index">
+            <van-col span="24">
+              <span class="com_name">{{items.componentName}}:</span>
+              <span>{{items.component}}</span>
+            </van-col>
+          </van-row>
+
+          <!-- <van-row class="comment_content">
           <van-col span="24">
             <span>张三:</span><span>厉害</span>
           </van-col>
-        </van-row> -->
-        <van-field ref="com_input" v-model="value" placeholder="评论" class="com_input"/>
+          </van-row>-->
+          <van-field ref="com_input" placeholder="评论" class="com_input" />
+        </div>
       </div>
-    </div>
-    <!-- <div class="contents">
-      <van-row class="head">
-        <van-col span="4">
-          <div class="head_box">
-            <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-          </div>
-        </van-col>
-        <van-col span="20" class="msg">
-          <span class="name">王思聪</span>
-          <span class="time">今天12:22</span>
-        </van-col>
-      </van-row>
-      <van-row class="text">
-        <van-col span="24">
-          <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
-          <div class="img_box">
-            <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-          </div>
-        </van-col>
-      </van-row>
-      <van-row class="comment_box">
-        <van-col span="24">
-          <span class="comment">
-            <van-icon name="good-job-o" />
-          </span>
-          <span class="thumbs-up">
-            <van-icon name="chat-o" />
-          </span>
-        </van-col>
-      </van-row>
-      <van-row class="comment_text">
-        <van-col span="24">
-          <span class="comment">
-            <van-icon name="good-job-o" />
-          </span>
-          <span>3人觉得很赞</span>
-        </van-col>
-      </van-row>
-      <van-field v-model="value" placeholder="评论" class="com_input" />
-    </div>
-     <div class="contents">
-      <van-row class="head">
-        <van-col span="4">
-          <div class="head_box">
-            <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-          </div>
-        </van-col>
-        <van-col span="20" class="msg">
-          <span class="name">王思聪</span>
-          <span class="time">今天12:22</span>
-        </van-col>
-      </van-row>
-      <van-row class="text">
-        <van-col span="24">
-          <p>Vant 提供了一套默认主题，CSS 命名采用 BEM 的风格，方便使用者覆盖样式。如果你想完全替换主题色或者其他样式，可以使用下面提供的方法</p>
-          <div class="img_box">
-            <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-          </div>
-        </van-col>
-      </van-row>
-      <van-row class="comment_box">
-        <van-col span="24">
-          <span class="comment">
-            <van-icon name="good-job-o" />
-          </span>
-          <span class="thumbs-up">
-            <van-icon name="chat-o" />
-          </span>
-        </van-col>
-      </van-row>
-      <van-row class="comment_text">
-        <van-col span="24">
-          <span class="comment">
-            <van-icon name="good-job-o" />
-          </span>
-          <span>3人觉得很赞</span>
-        </van-col>
-      </van-row>
-      <van-field v-model="value" placeholder="评论" class="com_input" />
-    </div>-->
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
+import '../assets/less/reset.less'
+
 import {
   Row,
   Col,
@@ -166,7 +93,9 @@ import {
   Button,
   Image,
   Icon,
-  Loading
+  Loading,
+  Sticky,
+  PullRefresh
 } from "vant";
 export default {
   components: {
@@ -184,7 +113,9 @@ export default {
     [Button.name]: Button,
     [Image.name]: Image,
     [Icon.name]: Icon,
-    [Loading.name]:Loading
+    [Loading.name]: Loading,
+    [Sticky.name]: Sticky,
+    [PullRefresh.name]: PullRefresh
   },
   methods: {
     onClickLeft() {
@@ -205,22 +136,20 @@ export default {
         temp.time = arr[i].releaseTime;
         temp.dynamicsId = arr[i].dynamicsId;
         temp.count = arr[i].zanCount;
-        for(var j=0;j<arr[i].discusses.length;j++){
+        for (var j = 0; j < arr[i].discusses.length; j++) {
           temp2.component = arr[i].discusses[j].comment;
           temp2.componentName = arr[i].discusses[j].inhabitant.inhabitantName;
           tempArr.push(temp2);
         }
-        temp.componentArr=tempArr;
+        temp.componentArr = tempArr;
         this.dynamicList.push(temp);
-        
       }
       return this.dynamicList;
     },
     // getComponent(arr) {
     //   for (var i = 0; i < arr.length; i++) {
     //     var temp = {};
-        
-        
+
     //     this.dynamicList.push(temp);
     //   }
     //   return this.dynamicList;
@@ -228,7 +157,6 @@ export default {
     //点赞
     zan(i) {
       this.dynamicList[i].count += 1;
-      console.log(typeof this.dynamicList[i].dynamicsId);
       this.axios
         .post("/dynamic/zan", {
           // params:{
@@ -247,18 +175,39 @@ export default {
     comment() {
       this.axios.post("/dynamic/discusses", {});
     },
-    focus(i){
+    focus(i) {
       this.$refs.com_input[i].focus();
-   }
-   
+    },
+    onRefresh() {
       
-    
+      setTimeout(() => {
+        this.axios
+          .get("/dynamic/showAll", {
+            params: {
+              pageIndex: "1",
+              pageSize: "1"
+            }
+          })
+          .then(res => {
+            console.log(res.data);
+            if (res.data.code == 200) {
+              this.flag = false;
+              this.$toast("刷新成功");
+              this.isLoading = false;
+            }
+            this.dynamicList = [];
+            this.getDynamic(res.data.data.dynamics);
+            console.log("数据", this.dynamicList);
+          });
+      }, 500);
+    }
   },
   data() {
     return {
       dynamicList: [],
       count: 0,
-      flag:true
+      flag: true,
+      isLoading: false
     };
   },
   created() {
@@ -272,21 +221,19 @@ export default {
       })
       .then(res => {
         console.log(res.data);
-        if(res.data.code==200){
-          this.flag=false;
+        if (res.data.code == 200) {
+          this.flag = false;
         }
         this.getDynamic(res.data.data.dynamics);
         console.log("数据", this.dynamicList);
       });
-     
   },
-  mounted() {
-   
-  }
+  mounted() {}
 };
 </script>
 
 <style lang="less" scoped>
+
 //导航
 .top_nav {
   font-size: 16px;
@@ -344,7 +291,6 @@ export default {
   font-size: 14px;
   padding: 10px 0 5px 10px;
   .comment {
-    
     margin-right: 6px;
   }
 }

@@ -48,6 +48,14 @@ export default {
     onClickLeft() {
        this.$router.go(-1);
     }
+  },
+  created(){
+    this.axios.post("/communityInfo/showById",{
+      id:"1"
+    })
+    .then(res=>{
+      console.log(res.data);
+    })
   }
 }
 </script>

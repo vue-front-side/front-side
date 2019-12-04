@@ -1,5 +1,6 @@
 <template>
   <div class="recovery">
+    <van-sticky>
     <van-row>
       <van-col span="24">
         <van-nav-bar
@@ -9,14 +10,13 @@
           left-arrow
           @click-left="onClickLeft"
           @click-right="onClickRight"
-          class="top_nav"
         />
       </van-col>
     </van-row>
-    
+    </van-sticky>
     <van-row class="people_title">
       <van-col span="24">
-        <span class="fa fa-newspaper-o logo"></span>
+        <span class="iconfont icon-yuyue logo"></span>
         <span>预约人信息</span>
       </van-col>
     </van-row>
@@ -24,123 +24,147 @@
       <van-field
         clearable
         label="联系人"
-        :placeholder="concactPeople"
+        placeholder="请输入联系人姓名:"
         label-width="60"
         label-align="left"
+        v-model="name"
         border
         type="text"
-        
+        required
       />
       <van-field
         clearable
         label="联系电话"
-        :placeholder="concactTel"
+        placeholder="请输入联系电话:"
         label-width="60"
         label-align="left"
+        v-model="telNumber"
         type="tel"
-        :tel="concactTel"
+        required
       />
       <van-field
         clearable
         label="所在区"
         right-icon="arrow"
-        :placeholder="areaPlace"
+        placeholder="请选择所在区:"
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
         :value="value"
+        disabled="true"
         @click="showPopup"
+        v-model="areaPlace"
+        required
       />
       <van-field
         clearable
         label="所在小区"
         right-icon="arrow"
-        :placeholder="village"
+        placeholder="请选择所在小区:"
         @click-right-icon="$toast('question')"
         label-width="60"
         label-align="left"
         disabled="true"
+        v-model="village"
+        required
       />
-      <van-field :placeholder="address" size="large" />
+      <van-field placeholder="请填写详细地址，不少于5个字" size="large" v-model="address" required />
     </van-cell-group>
     <van-popup v-model="show" position="bottom">
-      <van-area :area-list="areaList" value="110101" title="请选择区" @cancel="show=false" @confirm="onConfirm" />
-    </van-popup>
-    <van-popup v-model="showTime" position="bottom">
-      <van-datetime-picker
-  v-model="currentDate"
-  type="datetime"
-  :min-date="minDate"
-  :max-date="maxDate"
-  @cancel="showTime=false"
-  @confirm ="timeConfirm"
-/>
+      <van-area
+        :area-list="areaList"
+        value="110101"
+        title="请选择区"
+        @cancel="show=false"
+        @confirm="onConfirm"
+      />
     </van-popup>
     <van-field
       clearable
       label="预约时间"
       right-icon="arrow"
-      :placeholder="appointment"
+      placeholder="请选择预约时间:"
       @click-right-icon="$toast('question')"
       label-width="60"
       label-align="left"
       disabled="true"
       class="time"
       @click="showPopupTime"
+      v-model="appointment"
+      required
     />
-    <!-- <van-popup v-model="showTime" position="bottom">
+    <van-popup v-model="showTime" position="bottom">
       <van-datetime-picker
         v-model="currentDate"
         type="datetime"
         :min-date="minDate"
         :max-date="maxDate"
+        @cancel="showTime=false"
+        @confirm="timeConfirm"
       />
-    </van-popup>-->
+    </van-popup>
     <van-row class="people_title">
       <van-col span="24">
-        <span class="fa fa-gg-circle logo"></span>
-        <span>回收类别</span>
+        <span class="iconfont icon-biaoqian logo"></span>
+        <span>报修类型</span>
       </van-col>
     </van-row>
     <van-row class="catergary">
       <van-col span="24" class="catergary_col">
-        <van-row type="flex" justify="space-around" >
-          <van-col span="6" v-for="(item,index) in rec" :key="index" @click="item.state=!item.state" :class="{on:item.state}" :cat="item.name">{{item.name}}</van-col>
-          <!-- <van-col span="6" @click="chooseCatergary(choose2,2)" :class="{on:choose2}">印刷品</van-col>
-          <van-col span="6">塑料</van-col> -->
+        <van-row type="flex" justify="space-around">
+          <van-col
+            span="6"
+            v-for="(item,index) in rec"
+            :key="index"
+            @click="item.state=!item.state"
+            :class="{on:item.state}"
+          >{{item.name}}</van-col>
         </van-row>
         <van-row type="flex" justify="space-around" class="second_row">
-          <van-col span="6" v-for="(item,index) in recSecond" :key="index" @click="item.state=!item.state" :class="{on:item.state}" :cat="item.name">{{item.name}}</van-col>
-          <!-- <van-col span="6">纸板</van-col>
-          <van-col span="6">其他</van-col> -->
+          <van-col
+            span="6"
+            v-for="(item,index) in recSecond"
+            :key="index"
+            @click="item.state=!item.state"
+            :class="{on:item.state}"
+          >{{item.name}}</van-col>
         </van-row>
       </van-col>
     </van-row>
     <van-row class="people_title">
       <van-col span="24">
-        <span class="fa fa-gg-circle logo"></span>
+        <span class="iconfont icon-tupianshangchuan logo"></span>
         <span>上传物品照片(非必填项)</span>
       </van-col>
     </van-row>
-      <van-row class="photo">
+    <van-row class="photo">
       <van-col span="24">
-        <van-uploader v-model="fileList" multiple :max-count="4" :before-read="beforeRead" capture="camera" :after-read="afterRead"/>
+        <van-uploader
+          
+          multiple
+          :max-count="1"
+          :before-read="beforeRead"
+          capture="camera"
+          :after-read="afterRead"
+        />
       </van-col>
     </van-row>
-    
+
     <van-row class="tips">
       <van-col span="24">
-        <span class="fa fa-gg-circle logo"></span>
+        <span class="iconfont icon-wenxintishi logo"></span>
         <span>温馨提示</span>
         <p>请保持电话畅通，工作人员会第一时间与您联系。</p>
       </van-col>
     </van-row>
-    <van-button type="primary" size="large" round @click="submit">提交</van-button>
-    
+    <div @click="submit" class="btn_box">
+      <van-button type="primary" class="btn" size="large" round>提交</van-button>
+    </div>
   </div>
 </template>
 
 <script>
+import '../assets/less/reset.less'
 import {
   Row,
   Col,
@@ -153,9 +177,9 @@ import {
   Popup,
   DatetimePicker,
   Uploader,
-  Button
+  Button,
+  Sticky
 } from "vant";
-// import { format } from 'path';
 export default {
   components: {
     [Row.name]: Row,
@@ -168,17 +192,188 @@ export default {
     [Area.name]: Area,
     [Popup.name]: Popup,
     [DatetimePicker.name]: DatetimePicker,
-    [Uploader.name]:Uploader,
-    [Button.name]:Button
+    [Uploader.name]: Uploader,
+    [Button.name]: Button,
+    [Sticky.name]:Sticky
   },
-    data() {
+  methods: {
+    onClickLeft() {
+      this.$router.push(this.oldUrl);
+    },
+    onClickRight() {
+      this.$router.push("/recoverjl")
+    },
+    showPopup() {
+      this.show = true;
+    },
+    showPopupTime() {
+      this.showTime = true;
+    },
+    beforeRead(file) {
+      if (file.type !== "image/jpeg") {
+        Toast("请上传 jpg 格式图片");
+        return false;
+      }
+
+      return true;
+    },
+    afterRead(file) {
+      // 此时可以自行将文件上传至服务器
+      // this.uploadImg(file.file);
+      // console.log(file);
+      console.log("发送了");
+      let formdata1 = new FormData();
+      formdata1.append("file", file.file, file.file.name);
+      // console.log("format",this.formdata1);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      this.axios
+        .post("/repairInfo/loadInfoImg", formdata1, config)
+        .then(res => {
+          //这里的url为后端接口
+          console.log(res.data.data);
+          //res 为接口返回值
+          this.url = res.data.data.filePath;
+        })
+        .catch(() => {});
+    },
+    // 返回 Promise
+    asyncBeforeRead(file) {
+      return new Promise((resolve, reject) => {
+        if (file.type !== "image/jpeg") {
+          Toast("请上传 jpg 格式图片");
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    },
+    //获取用户所在区
+    onConfirm(value) {
+      console.log(value);
+      // this.value = value[2].code;
+      this.areaPlace =
+        value[0].name + " " + value[1].name + " " + value[2].name;
+      this.show = false;
+    },
+    timeConfirm(value) {
+      console.log(value);
+      this.showTime = false;
+      this.formatTime(value);
+    },
+    formatTime(time) {
+      var d = new Date(time);
+      var myTime =
+        d.getFullYear() +
+        "-" +
+        (d.getMonth() + 1) +
+        "-" +
+        d.getDate() +
+        " " +
+        d.getHours() +
+        ":" +
+        d.getMinutes();
+      this.appointment = myTime;
+    },
+    //判断用户是否选择了类型
+    isChoose() {
+      var tempArr = this.selected.filter(item => {
+        if (item != 0) {
+          return item;
+        }
+      });
+      console.log("temArr", tempArr);
+      if (tempArr.length == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    //判断输入框是否为空
+    isEmpity() {
+      const pat = /^1[3456789]\d{9}$/;
+      if (this.name == "") {
+        Toast("请输入联系人姓名！");
+      } else if (!pat.test(this.telNumber)) {
+        Toast("请输入正确联系人电话！");
+      } else if (this.areaPlace == "") {
+        Toast("请选择地区！");
+      } else if (this.village == "") {
+        Toast("请选择小区！");
+      } else if (this.address == "") {
+        Toast("请填写具体地址！");
+      } else if (this.appointment == "") {
+        Toast("请选择预约时间！");
+      } else if (!this.isChoose()) {
+        Toast("请选择报修类型！");
+      }
+      else{
+       return true
+      }
+    },
+    //点击提交报修订单
+    submit() {
+      this.selected = this.rec.map((item, i) => {
+        console.log(i);
+        if (item.state) {
+          return i + 1;
+        } else {
+          return 0;
+        }
+      });
+      var selected2 = this.recSecond.map((item, i) => {
+        if (item.state) {
+          return i + 4;
+        } else {
+          return 0;
+        }
+      });
+      this.selected = this.selected.concat(selected2);
+      this.catergary = this.selected.join(",");
+      // console.log(this.catergary);
+      // console.log(this.name);
+      // console.log(this.telNumber);
+      // console.log(this.address);
+      // console.log(this.areaPlace);
+      // console.log(this.appointment);
+      // console.log(this.areaPlace + this.village + this.address);
+      if(this.isEmpity()){
+      this.axios.post("/repairInfo/addRepairInfo",{
+        // params:{
+        repairName:this.name,
+        concactTel:this.telNumber,
+        repairAdress:this.areaPlace+this.village+this.address,
+        housePropertyId:"1",
+        inhabitantId:"1",
+        repairContent:"hhajdj",
+        appointmentTime:this.appointment,
+        repairPartIds:this.catergary,
+        repairImg:this.url
+        // }
+      })
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.code==200){
+          Toast("报修成功！");
+        }
+      })
+      }
+    }
+  },
+  data() {
     return {
-      concactPeople:"请输入用户名",
-      concactTel:"请输入用户名",
-      areaPlace: "请选择地区",
-      appointment:"请选择预约时间",
-      village:"请选择小区",
-      address:"请填写详细地址，不少于5个字",
+      concactPeople: "请输入用户名",
+      concactTel: "请输入用户名",
+      areaPlace: "",
+      appointment: "",
+      village: "请选择小区",
+      address: "",
+      name: "",
+      telNumber: "",
+      selected: [],
       areaList: {
         province_list: {
           110000: "北京市",
@@ -202,7 +397,8 @@ export default {
           120105: "河北区"
         }
       },
-      rec: [
+      
+rec: [
         {
           name: '衣服',
           state: false
@@ -232,111 +428,37 @@ export default {
           state: false
         },
       ],
-      value:'',
+      value: "",
       show: false,
       showTime: false,
       minHour: 10,
       maxHour: 20,
-      minDate: new Date(1980, 10, 1),
-      maxDate: new Date(2020, 12, 1),
+      minDate: new Date(2019, 1, 1),
+      maxDate: new Date(2020, 12, 2),
       currentDate: new Date(),
       fileList: [
-        { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
+        { url: "https://img.yzcdn.cn/vant/leaf.jpg" },
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-        { url: 'https://cloud-image', isImage: true }
+        { url: "https://cloud-image", isImage: true }
       ],
-      choose1:false,
-      choose2:false,
-      choose:false,
-      url:""
+      catergary: "",
+      oldUrl:""
     };
   },
-  methods: {
-    // onClickLeft() {
-    //   this.$router.go(-1);
-    // },
-    // onClickRight() {
-    //   Toast("按钮");
-    // },
-    showPopup() {
-      this.show = true;
-    },
-    showPopupTime() {
-      this.showTime = true;
-    },
-    beforeRead(file) {
-      if (file.type !== 'image/jpeg') {
-        Toast('请上传 jpg 格式图片');
-        return false;
-      }
-    
-      return true;
-    },
-     // 返回 Promise
-    asyncBeforeRead(file) {
-      return new Promise((resolve, reject) => {
-        if (file.type !== 'image/jpeg') {
-          Toast('请上传 jpg 格式图片');
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    },
-    onConfirm(value) {
-      console.log(value);
-      // this.value = value[2].code;
-      this.areaPlace = value[0].name + " " + value[1].name + " " + value[2].name
-      this.show = false;
-    },
-    timeConfirm(value){
-      console.log(value);
-      this.showTime = false;
-      this.formatTime(value);
-    },
-    formatTime(time){
-      var d = new Date(time);  
-      var myTime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
-      this.appointment = myTime;
-    },
-    submit(){
-      this.axios.post("/repairInfo/addRepairInfo",{
-        // params:{
-        housePropertyId:"1",
-        inhabitantId:"1",
-        repairContent:"hhajdj",
-        repairPartIds:"1,2",
-        repairImg:this.url   
-        // }
-      })
-      .then(res=>{
-        console.log(res.data);
-      })
-    },
-      afterRead(file) {
-      // 此时可以自行将文件上传至服务器
-      // this.uploadImg(file.file);
-      // console.log(file);
-      console.log("发送了")
-      let formdata1 = new FormData();
-      formdata1.append("file", file.file, file.file.name);
-      // console.log("format",this.formdata1);
-      let config = {
-           headers:{
-               'Content-Type':'multipart/form-data'
-           }
-      };
-      this.axios.post('/repairInfo/loadInfoImg',formdata1,config)
-      .then((res)=>{   //这里的url为后端接口
-          console.log(res.data.data);
-          //res 为接口返回值
-          this.url=res.data.data.filePath
-      })
-      .catch(() => {})
-    }
-  }
-
+  beforeRouteEnter (to, from, next){
+     next(vm => {
+       // 通过 `vm` 访问组件实例,将值传入oldUrl
+       vm.oldUrl = from.path
+     })
+   },
+   mounted() {
+     this.$nextTick(()=>{
+       // 验证是否获取到了上页的url
+       /* eslint-disable no-console */
+       console.log("上页地址",this.oldUrl)
+     })
+   }
 };
 </script>
 
@@ -344,24 +466,22 @@ export default {
 .recovery {
   background-color: #ececec;
 }
-
-//导航
-.top_nav {
-  font-size: 32px;
-}
-
 // .van-nav-bar__title,
 // .van-nav-bar {
-//   height: 44px;
-//   line-height: 44px;
-  
+//   // height: 44px;
+//   // line-height: 44px;
 // }
 .logo {
   font-size: 18px;
-  color: green;
+  color: #ffa400;
   vertical-align: middle;
-  margin: 0 14px;
+  margin: 0 10px;
 }
+.icon-tupianshangchuan,
+.icon-yuyue {
+  font-size: 22px;
+}
+
 .people_title {
   height: 35px;
   line-height: 35px;
@@ -388,7 +508,7 @@ export default {
 .time {
   margin-top: 12px;
 }
-.catergary{
+.catergary {
   font-size: 16px;
   padding: 20px 0;
   .van-col {
@@ -397,18 +517,23 @@ export default {
   }
   .catergary_col {
     border: none;
-  } 
+    text-align: center;
+  }
   .second_row {
     margin-top: 20px;
   }
+  .on {
+  background: #ffa400;
+  border-color: #ffa400;
+}
 }
 .tips {
-  margin-top: 10px; 
+  margin-top: 10px;
   line-height: 30px;
   font-size: 14px;
   text-align: left;
   background-color: #fff;
-  p{
+  p {
     margin-left: 14px;
     color: #858585;
   }
@@ -428,13 +553,16 @@ export default {
     justify-content: start;
   }
 }
-.van-button{
+.btn_box {
+  text-align: center;
+}
+.van-button {
   width: 90%;
   // height: 40px;
   font-size: 20px;
   margin: 20px 0;
+  background-color: #ffa400;
+  border-color: #ffa400;
 }
-.on {
-  background: green;
-}
+
 </style>
