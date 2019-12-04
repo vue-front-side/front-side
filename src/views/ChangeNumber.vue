@@ -10,12 +10,16 @@
       <van-cell-group>
         <van-field
           label="手机号"
-          placeholder="请输入手机号"
+          placeholder="请输入新的手机号"
           maxlength="11"
           v-model="phonenumber"
           @blur="phoneCheckOut"
         />
-        <van-field label="姓名" placeholder="请输入您的姓名" v-model="name" @blur="nameCheckOut" />
+        <van-field label="姓名" 
+        placeholder="请输入您的姓名" 
+        v-model="name" 
+        @blur="nameCheckOut" 
+        />
         <van-field
           label="身份证号"
           placeholder="请输入您的身份证号"
@@ -31,6 +35,7 @@
             size="small"
             type="primary"
             color="#999"
+            :disabled="state" 
             @click="sendSmsCode"
           >发送验证码</van-button>
         </van-field>
@@ -53,7 +58,8 @@ export default {
       name: "",
       identity: "",
       sms: "",
-      username: ""
+      username: "",
+      state: true
     };
   },
   components: {
@@ -70,9 +76,9 @@ export default {
         if (!myreg.test(this.phonenumber)) {
           Toast("请填写正确手机号码！");
           console.log(this.phonenumber);
-          this.phonenumber = "";
         } else {
           console.log("Yeah you got your correct number!");
+          this.state = false;
         }
       }
     },
@@ -107,9 +113,16 @@ export default {
       if (this.phonenumber == "") {
         Toast("请输入手机号！");
       } else {
+        /* this.userId = sessionStorage.getItem(userId); */
+        this.axios
+        .post("/inhabitant/findByUserId",{
+          userId: this.userId
+        })
+        .then()
         this.axios
           .post("/user/modifyTelNumSms", {
             telNum: this.phonenumber
+            
           })
           .then(res => {
             console.log(res.data);
@@ -119,7 +132,8 @@ export default {
             } else {
               Toast("验证码发送成功！");
             }
-          });
+          })
+          ;
       }
     },
     setPassSubmit() {

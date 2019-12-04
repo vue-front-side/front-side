@@ -28,22 +28,13 @@
         <van-field
           label="充值金额"
           placeholder="请输入充值金额"
-          label-width='2rem'
-          :value="value"
-          @touchstart.native.stop="show = true"
-        />
-
-        <van-number-keyboard
           v-model="value"
-          :show="show"
-          :maxlength="6"
-          @blur="show = false"
         />
       </van-cell-group>
-        <router-link :to="{ name: 'orderdetails'}">
-       <div class="btn-box">
-        <button type="submit" class="confrim">立即缴费</button>
-      </div>
+      <router-link :to="{ name: 'orderdetails'}">
+        <div class="btn-box">
+          <button type="submit" class="confrim" @click="getPay">立即缴费</button>
+        </div>
       </router-link>
       
     </div>
@@ -52,16 +43,60 @@
 
 <script>
 export default {
+  name: 'paymentDetails',
   data() {
     return {
       catigorys: '电费',
-      show: false,
-      value: ''
+      value: '',
+      list: []
     }
+  },
+  created() {
+    console.log("当前缴费类别 id:", location.search.substring(1));
+    this.category = location.search.substring(1);
+    /* var userId = sessionStorage.getItem(userId); */
+    this.userId = "1";
+    console.log(this.category);
+    console.log(this.userId);
+    this.axios
+    .post("/pay/jiemian", {
+      payUnitId: this.category,
+      inhabitantId: this.userId
+    })
+    .then(res => {
+      console.log(res.data)
+      if(res.data.code == "200"){
+        this.list = res.data.data.Pays[0];
+        console.log(res.data.data.Pays[0])
+      } else {
+        console.log("获取数据失败");
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
   },
   methods: {
     onClickLeft(){
       this.$router.go(-1);
+    },
+    getPay() {
+      this.payId = '19'
+      this.axios
+      .post("/alipay/shaxiang", {
+        payId: this.payId
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.code == "200"){
+          console.log(res.data);
+        } else {
+          console.log("bbb");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
   }
 }

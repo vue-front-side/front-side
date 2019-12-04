@@ -17,7 +17,7 @@
               label="验证码"
               placeholder="请输入短信验证码"
             >
-              <van-button slot="button" size="small" type="primary" color="#999" @click="sendSmsCode">发送验证码</van-button>
+              <van-button slot="button" size="small" type="primary" color="#999" @click="sendSmsCode" :disabled="state">发送验证码</van-button>
             </van-field>
           </van-cell-group>
           <van-cell-group class="pass-box">
@@ -54,7 +54,8 @@ export default {
       sms: '',
       username: '',
       password: '',
-      passSure: ''
+      passSure: '',
+      state: true
     }
   },
    components: {
@@ -71,9 +72,9 @@ export default {
         if (!myreg.test(this.phonenumber)) {
           Toast("请填写正确手机号码！");
           console.log(this.phonenumber);
-          this.phonenumber = "";
         } else {
           console.log("Yeah you got your correct number!");
+          this.state = false;
         }
       }
     },
@@ -118,6 +119,8 @@ export default {
       } else if (this.password == "" || this.passSure == '') {
         Toast("请输入密码！");
       } else {
+        console.log(this.sms);
+        console.log(typeof(this.sms));
         this.axios
         .post("/user/forgetPasswordSubmit", {
             telNum: this.phonenumber,

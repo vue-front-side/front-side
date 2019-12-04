@@ -1,58 +1,57 @@
 <template>
   <div class="body">
     <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
-    <div class="history" @click="changeUrl">
+    <div class="history" >
       <van-icon name="underway-o" />
-      </div>
+    </div>
     <div class="banner">
       <img src="../assets/img/payments/bannerimg.png" alt="">
     </div>
     <h2 class="title">手机缴费<br>快速到账</h2>
     <div class="box">
-      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="payment inner-box">
         <div class="icons"><span class="iconfont icon-chongzhishuifei"></span></div>
-        <button @click="toNext" value="1">水费</button>
+        <router-link :to="'/paymentsdetails?' + water"><button >水费</button></router-link> 
       </div>
-      </router-link>
-      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="repair inner-box">
         <div class="icons"><span class="iconfont icon-dianfei"></span></div>
-        <button @click="toNext" value="2">电费</button>
+        <router-link :to="'/paymentsdetails?' + electrcity"><button >电费</button></router-link> 
       </div>
-      </router-link>
-      <router-link :to="{ name: 'paymentsdetails'}">
       <div class="unlock inner-box">
         <div class="icons"><span class="iconfont icon-ranqifei"></span></div>
-        <button @click="toNext" value="3">气费</button>
+        <router-link :to="'/paymentsdetails?' + gass"><button >气费</button></router-link> 
       </div>
-      </router-link>
-      <router-link :to="{ name: 'paymentsdetails'}">
        <div class="housekepping inner-box">
         <div class="icons"><span class="iconfont icon-wuyefei"></span></div>
-        <button @click="toNext" value="4">物业费</button>
+        <router-link :to="'/paymentsdetails?' + service"><button >服务费</button></router-link> 
       </div>
-      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+/* var id = sessionStorage.getItem(userId); */
 export default {
   data() {
     return {
-      id: 1
+      id: 1,
+      water: "2",
+      electrcity: "1",
+      gass: "3",
+      service: "4"
     }
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
-    },
+    }
+    /* ,
     changeUrl() {
       alert('history')
     },
     toNext() {
-      console.log(event.target.value)
+      console.log(event.target.value);
+      console.log(this.id);
       var category = event.target.value;
       this.axios
       .post("/pay/jiemian", {
@@ -61,8 +60,16 @@ export default {
       })
       .then(res => {
         console.log(res.data)
+        if(res.data.code == "200"){
+          console.log("aaaa");
+        } else {
+          console.log("bbb");
+        }
       })
-    }
+      .catch(err => {
+        console.log(err);
+      });
+    } */
   }
 }
 </script>

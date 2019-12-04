@@ -12,7 +12,7 @@
         />
       </van-cell-group>
       <van-cell-group class="test-code">
-        <van-field v-model="sms" label="验证码" placeholder="请输入短信验证码">
+        <van-field v-model="sms" label="验证码" :disabled="state"  placeholder="请输入短信验证码">
           <van-button slot="button" size="small" type="primary" color="#999" @click="sendCode">发送验证码</van-button>
         </van-field>
       </van-cell-group>
@@ -44,7 +44,8 @@ export default {
       sms: "",
       username: "",
       password: "",
-      passSure: ""
+      passSure: "",
+      state: true
     };
   },
   components: {
@@ -61,9 +62,9 @@ export default {
         if (!myreg.test(this.phonenumber)) {
           Toast("请填写正确手机号码！");
           console.log(this.phonenumber);
-          this.phonenumber = "";
         } else {
           console.log("Yeah you got your correct number!");
+          this.state = false;
         }
       }
     },
@@ -123,6 +124,7 @@ export default {
         )
         .then(res => {
           console.log(res);
+          console.log(res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
             var token = res.data.data.token;
