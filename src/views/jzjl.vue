@@ -1,7 +1,20 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="家政记录" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
-    <div style="margin-top:84px;"></div>
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="家政记录"
+            left-text="返回"
+            
+            left-arrow
+            @click-left="onClickLeft"
+            
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
     <van-tabs v-model="active" animated>
       <van-tab title="待上门">
         <ul>
@@ -75,7 +88,6 @@ export default {
   float: left;
   margin-left:10px;
   margin-top: 5px;
-  line-height: 70px;
   font-size: 14px;
   text-align: center;
 }

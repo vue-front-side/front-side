@@ -15,7 +15,7 @@
         </van-col>
       </van-row>
     </van-sticky>
-    <van-loading size="24px" v-if="flag">加载中...</van-loading>
+    <van-loading size="24px" v-if="flag" class="load">加载中...</van-loading>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div v-for="(item,index) in dynamicList" :key="index">
         <div class="contents">
@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import '../assets/less/reset.less'
+
 import {
   Row,
   Col,
@@ -231,6 +233,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 //导航
 .top_nav {
   font-size: 16px;

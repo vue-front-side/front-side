@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id="qpp">
     <van-nav-bar title="设置" left-text="返回" left-arrow @click-left="onClickLeft">
 
     </van-nav-bar>
-    <van-cell-group style="margin-top:64px">
+    <van-cell-group>
       <van-cell  title="头像" center is-link to="newpic" >
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <van-image class="img" slot="default" round width="40px" height="40px" :src="'http://172.16.6.43:8080/'+msg.photo" />

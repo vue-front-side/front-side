@@ -8,7 +8,7 @@
       left-arrow
       @click-left="onClickLeft"
     />
-    <div style="margin-top:64px;"></div>
+    <div></div>
     <van-picker v-model="sex" :columns="columns" :default-index="0"  @change="onChange" />
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
      onChange(picker, value) {
        this.sex=value
        console.log(this.sex)
-      this.$toast(`当前值：${value}`);
+      
     },
     onClickLeft() {
       this.$router.push('/center')
@@ -65,7 +65,7 @@ export default {
 
 <style lang="less" scoped>
 #qpp {
-  height: 603px;
+  height: 667px;
   background: #eee;
 }
 </style>

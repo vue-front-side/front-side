@@ -1,7 +1,20 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="维修记录" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
-    <div style="margin-top:84px;"></div>
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="维修记录"
+            left-text="返回"
+            
+            left-arrow
+            @click-left="onClickLeft"
+            
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
     <van-tabs v-model="active" animated>
       <van-tab title="待维修">
         <ul>

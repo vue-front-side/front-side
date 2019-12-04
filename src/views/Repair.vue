@@ -157,13 +157,14 @@
         <p>请保持电话畅通，工作人员会第一时间与您联系。</p>
       </van-col>
     </van-row>
-    <div @click="submit">
+    <div @click="submit" class="btn_box">
       <van-button type="primary" class="btn" size="large" round>提交</van-button>
     </div>
   </div>
 </template>
 
 <script>
+import '../assets/less/reset.less'
 import {
   Row,
   Col,
@@ -499,6 +500,7 @@ export default {
   }
   .catergary_col {
     border: none;
+    text-align: center;
   }
   .second_row {
     margin-top: 20px;
@@ -533,6 +535,9 @@ export default {
     display: flex;
     justify-content: start;
   }
+}
+.btn_box {
+  text-align: center;
 }
 .van-button {
   width: 90%;

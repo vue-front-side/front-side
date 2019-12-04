@@ -1,9 +1,18 @@
 <template>
-  <div id="app">
-    <van-nav-bar title="个人中心" left-text="返回" left-arrow>
-      <van-icon class="nav-right"  name="comment" @click="news" slot="right" />
-    </van-nav-bar>
-    <div style="margin-top:64px;"></div>
+  <div id="qpp">
+      <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="个人中心"
+            left-text="返回"          
+            left-arrow
+            @click-left="onClickLeft"
+            class="top_nav"
+          ><van-icon class="nav-right"  name="comment" @click="news" slot="right" /></van-nav-bar>
+        </van-col>
+      </van-row>
+    </van-sticky>
     <div class="msg" style="padding:0 10px;">
       <img :src="'http://172.16.6.43:8080/'+list.photo" alt="">
       <p class="aaa">{{list.inhabitantName}}</p>
@@ -32,6 +41,9 @@ export default {
     
   },
   methods:{
+     onClickLeft() {
+      this.$router.go(-1);
+    },
     center(){
       this.$router.push("/center");
     },

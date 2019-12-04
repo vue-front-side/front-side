@@ -26,12 +26,13 @@ import { NumberKeyboard } from 'vant';
 import { Uploader } from 'vant';
 import { Picker } from 'vant';
 
-
+import { Sticky } from 'vant';
 import { Loading } from 'vant';
 
 Vue.use(Loading);
 Vue.use(vueAxios, http)
 Vue.use(Picker);
+Vue.use(Sticky);
 
 Vue.use(Uploader);
 
@@ -59,7 +60,7 @@ Vue.use(List);
 Vue.use(NavBar);
 import 'vant/lib/index.css';
 import './assets/font-awesome-4.7.0/css/font-awesome.min.css'
-import './assets/less/reset.less'
+
 import './assets/icon/font_inoi7rxcu4j/iconfont.css'
 import './assets/icon/font_alszihkajvj/iconfont.css'
 import './assets/icon/font_zl3of1q20f/iconfont.css'

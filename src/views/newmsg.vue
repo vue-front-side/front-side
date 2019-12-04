@@ -8,7 +8,7 @@
       @click-left="onClickLeft"
       @click-right="ok"
     />
-    <div style="margin-top:64px;"></div>
+    <div></div>
     <van-field v-model="username" style="background:#fff" clearable placeholder="请输入新用户名" />
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
 
 <style lang="less" scoped>
 #qpp {
-  height: 603px;
+  height: 667px;
   background: #eee;
 }
 </style>

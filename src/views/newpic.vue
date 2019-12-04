@@ -8,7 +8,7 @@
       @click-left="onClickLeft"
       left-arrow
     ></van-nav-bar>
-    <div style="margin-top:64px; margin-bottom:20px"></div>
+    <div style="margin-bottom:20px"></div>
 
     <van-uploader
       v-model="fileList"

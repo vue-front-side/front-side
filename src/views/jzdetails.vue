@@ -1,5 +1,5 @@
 <template>
-  <div id="jz">
+  <div id="qpp">
     <van-nav-bar title="易居家政" left-text="返回" @click-left="onClickLeft" left-arrow>
       <van-icon class="nav-right" name="wap-nav" slot="right" />
     </van-nav-bar>

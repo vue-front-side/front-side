@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import '../assets/less/reset.less'
 import {
   Row,
   Col,

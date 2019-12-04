@@ -1,17 +1,20 @@
 <template>
   <div id="qpp">
     <div class="box">
-      <van-nav-bar
-        title="意见反馈"
-        left-text="返回"
-        @click-left="onClickLeft"
-        @click-right="suss"
-        right-text="完成"
-        left-arrow
-      >
-        <!-- <van-icon class="nav-right" title="完成"  /> -->
-      </van-nav-bar>
-      <div style="margin-top:64px;"></div>
+      <van-sticky>
+    <van-row>
+      <van-col span="24">
+        <van-nav-bar
+          title="意见反馈"
+          left-text="返回"
+          right-text="完成"
+          left-arrow
+          @click-left="onClickLeft"
+          @click-right="suss"
+        />
+      </van-col>
+    </van-row>
+    </van-sticky>
 
       <van-field v-model="message" rows="1" style="height:200px" autosize type="textarea" />
 

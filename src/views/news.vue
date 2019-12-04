@@ -1,7 +1,20 @@
 <template>
-  <div id="app">
-    <van-nav-bar title="消息中心" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
-    <div style="margin-top:64px;"></div>
+  <div id="qpp">
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="消息中心"
+            left-text="返回"
+            
+            left-arrow
+            @click-left="onClickLeft"
+            
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
     <ul>
       <li
         style="overflow: hidden;position:relative;margin-top:-20px"

@@ -5,7 +5,7 @@
     <van-row>
       <van-col span="24">
         <van-nav-bar
-          title="修改密码"
+          title="用户认证"
           left-text="返回"
           
           left-arrow
@@ -15,10 +15,6 @@
       </van-col>
     </van-row>
     </van-sticky>
-    <div class="phone-number">
-      <span style="float:left;font-size:18px">绑定手机号:</span>
-      <p class="recent-phonenumber">{{msg.telNum}}</p>
-    </div>
 
       <div class="input-box">
         <van-cell-group class="test-code">

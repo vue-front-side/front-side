@@ -110,6 +110,7 @@
 
 <script>
 // import navSlot from '../components/Nav-top'
+import '../assets/less/reset.less'
 import NavBottom from "../components/NavBottom";
 import {
   Button,

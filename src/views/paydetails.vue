@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="qpp">
     <van-nav-bar title="订单详情" left-arrow left-text="返回" @click-left="back" />
     <div class="title">
       <h3>{{list[0].company.companyName}}</h3>
@@ -89,6 +89,7 @@ h3 {
   font-weight: 500;
 }
 .title {
+  margin-top: 40px;
   padding: 25px 0;
   text-align: center;
 }
