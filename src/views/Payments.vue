@@ -1,9 +1,23 @@
 <template>
   <div class="body">
-    <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
-    <div class="history" >
+    <van-sticky>
+      <van-row>
+        <van-col span="24">
+          <van-nav-bar
+            title="生活缴费"
+            left-text="返回"
+            right-text="缴费记录"
+            left-arrow
+            @click-left="onClickLeft"
+            @click-right="onClickRight"
+            class="top_nav"
+          />
+        </van-col>
+      </van-row>
+    </van-sticky>
+    <!-- <div class="history" >
       <van-icon name="underway-o" />
-    </div>
+    </div> -->
     <div class="banner">
       <img src="../assets/img/payments/bannerimg.png" alt="">
     </div>
@@ -43,6 +57,9 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    onClickRight(){
+      this.$router.push("/payjl");
     }
   }
 }
