@@ -200,6 +200,16 @@ const routes = [
     component:()=>import('../views/Verification.vue')
   },
   
+  {
+    path:'/paysuccess',
+    name:'paysuccess',
+    component:()=>import('../views/paySuccess.vue')
+  },
+  {
+    path:'/payfailed',
+    name:'payfailed',
+    component:()=>import('../views/payFailed.vue')
+  },
 
 ]
 
