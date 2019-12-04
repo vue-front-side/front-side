@@ -198,10 +198,10 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1);
+      this.$router.push(this.oldUrl);
     },
     onClickRight() {
-      Toast("按钮");
+      this.$router.push("/wxrecord");
     },
     showPopup() {
       this.show = true;
@@ -439,9 +439,23 @@ export default {
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         { url: "https://cloud-image", isImage: true }
       ],
-      catergary: ""
+      catergary: "",
+      oldUrl:""
     };
-  }
+  },
+  beforeRouteEnter (to, from, next){
+     next(vm => {
+       // 通过 `vm` 访问组件实例,将值传入oldUrl
+       vm.oldUrl = from.path
+     })
+   },
+   mounted() {
+     this.$nextTick(()=>{
+       // 验证是否获取到了上页的url
+       /* eslint-disable no-console */
+       console.log("上页地址",this.oldUrl)
+     })
+   }
 };
 </script>
 

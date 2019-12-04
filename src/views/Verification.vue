@@ -15,7 +15,15 @@
       </van-col>
     </van-row>
     </van-sticky>
-
+     <van-cell-group>
+            <van-field
+              label="手机号"
+              placeholder="请输入手机号"
+              v-model="phonenumber"
+              maxlength="11"
+              @blur="phoneNumCheckOut"
+            />
+      </van-cell-group>
       <div class="input-box">
         <van-cell-group class="test-code">
           <van-field
@@ -30,16 +38,6 @@
          
         </van-cell-group>
       </div>
-    <van-cell-group >
-      <van-field v-model="value1" label="新密码" type="password" placeholder="请输入新密码" />
-      <van-field
-        v-model="value2"
-        label="确认密码"
-        type="password"
-        placeholder="请再次输入密码"
-        @blur="passChekOut"
-      />
-    </van-cell-group>
     <div class="btn-box">
       <button type="submit" @click="ok" class="confrim">确认</button>
     </div>
@@ -48,8 +46,12 @@
 
 
 <script>
+import {Toast} from 'vant'
 export default {
   name: "changenumber",
+  components:{
+    [Toast.name]:Toast
+  },
   data() {
     return {
       show: false,
@@ -62,20 +64,12 @@ export default {
     };
   },
   created() {
-    this.axios
-      .post("/inhabitant/findByUserId", {userId:4})
-      .then(res => {
-        this.msg = res.data.data.data;
-        console.log("数组:", this.msg);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    
   },
   methods: {
     sub(){
       this.axios
-      .post("/user/sendSmsCode", {telNum:this.tel})
+      .post("/user/sendSmsCode", {telNum:this.phonenumber})
       .then(res => {
         console.log(res.data)
         this.telyz = res.data;
@@ -90,14 +84,16 @@ export default {
     next() {
       this.$router.push("/newpass");
     },
-    passChekOut() {
-      //密码检测
-      if (this.value1 || this.value2) {
-        if (this.value1 != this.value2) {
-          this.$toast("两次密码输入不一致！");
-          this.value2 = "";
-        } else if (this.value2 == "") {
-          this.$toast("请再次输入密码！");
+     phoneNumCheckOut() {
+      if (this.phonenumber != "") {
+        //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(this.phonenumber)) {
+          Toast("请填写正确手机号码！");
+          console.log(this.phonenumber);
+        } else {
+          console.log("Yeah you got your correct number!");
+          this.state == false;
         }
       }
     },
@@ -105,7 +101,7 @@ export default {
     ok(){
       console.log(typeof(this.tel))
       this.axios
-      .post("/user/forgetPasswordSubmit", {telNum:this.tel,smsCode:this.value,password:this.value2})
+      .post("/user/authentication", {telNum:this.phonenumber,smsCode:this.value,userId:"21"})
       .then(res => {
         console.log(res.data)
         if(res.data.message=='密码修改成功'){
@@ -147,7 +143,6 @@ export default {
 }
 .input-box {
   width: 100%;
-  margin-top: 10px;
 }
 
 .btn-box {
