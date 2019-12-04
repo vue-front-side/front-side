@@ -189,7 +189,17 @@ const routes = [
     name:'paydetails',
     component:()=>import('../views/paydetails.vue')
   },
-
+  {
+    path:'/authentication',
+    name:'authentication',
+    component:()=>import('../views/Authentication.vue')
+  },
+  {
+    path:'/verification',
+    name:'verification',
+    component:()=>import('../views/Verification.vue')
+  },
+  
 
 ]
 
