@@ -23,7 +23,7 @@
              <p>回收物</p>
              <p>预约时间：xxxxxx</p>
            </div>
-           <van-button style="width:100px;height:40px;margin:35px 0 0 60px" type="danger">回收状态</van-button>
+           <van-button style="width:100px;height:40px;margin:25px 0 0 10px" type="danger">回收状态</van-button>
          </div>
        </li>
      </ul>
@@ -37,7 +37,8 @@ export default {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      oldUrl:""
     };
   },
   created() {
@@ -51,6 +52,12 @@ export default {
         console.log(err);
       });
   },
+  beforeRouteEnter (to, from, next){
+     next(vm => {
+       // 通过 `vm` 访问组件实例,将值传入oldUrl
+       vm.oldUrl = from.path
+     })
+   },
     methods: {
     onLoad() {
       // 异步更新数据
@@ -68,9 +75,16 @@ export default {
       }, 500);
     },
     onClickLeft() {
-      this.$router.push('/my')
+      this.$router.push(this.oldUrl)
     }
-  }
+  },
+  mounted() {
+     this.$nextTick(()=>{
+       // 验证是否获取到了上页的url
+       /* eslint-disable no-console */
+       console.log("上页地址",this.oldUrl)
+     })
+   }
 };
 </script>
 
@@ -82,11 +96,12 @@ export default {
   border-bottom: 1px solid #999;
 }
 .boxone {
-  width: 150px;
+  width: 200px;
   text-align: left;
   float: left;
 }
 .boxone p {
   font-size: 18px;
+  margin: 15px 0 0 10px;
 }
 </style>

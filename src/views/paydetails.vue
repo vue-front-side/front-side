@@ -2,30 +2,30 @@
   <div id="qpp">
     <van-nav-bar title="订单详情" left-arrow left-text="返回" @click-left="back" />
     <div class="title">
-      <h3>{{list[0].company.companyName}}</h3>
-      <h3>{{list[0].payMoney}}</h3>
+      <h3>{{list.company.companyName}}</h3>
+      <h3>{{list.payMoney}}</h3>
       <p>交易成功</p>
     </div>
     <ul class="details">
       <li class="clearfix">
         <p class="left">金额</p>
-        <p class="right" >{{list[0].payMoney}}</p>
+        <p class="right" >{{list.payMoney}}</p>
       </li>
       <li class="clearfix">
         <p class="left">付款方式</p>
-        <p class="right">{{list[0].payTheWay}}</p>
+        <p class="right">{{list.payTheWay}}</p>
       </li>
       <li class="clearfix">
         <p class="left">户号</p>
-        <p class="right">{{list[0].inhabitantAndHousePropertyVO.housePropertyNo}}</p>
+        <p class="right">{{list.inhabitantAndHousePropertyVO.housePropertyNo}}</p>
       </li>
       <li class="clearfix">
         <p class="left">创建时间</p>
-        <p class="right">{{list[0].payDate}}</p>
+        <p class="right">{{list.payDate}}</p>
       </li>
       <li class="clearfix">
         <p class="left">订单号</p>
-        <p class="right">{{list[0].payOrder}}</p>
+        <p class="right">{{list.payOrder}}</p>
       </li>
     </ul>
   </div>
@@ -89,7 +89,7 @@ h3 {
   font-weight: 500;
 }
 .title {
-  margin-top: 40px;
+
   padding: 25px 0;
   text-align: center;
 }
