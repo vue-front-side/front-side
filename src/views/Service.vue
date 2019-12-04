@@ -26,7 +26,7 @@
         <p class="letters">开锁</p>
       </div>
       </router-link>
-      <router-link :to="{ name: 'payments'}">
+      <router-link :to="{ name: 'jzlist'}">
       <div class="housekepping inner-box">
         <div class="icons">
           <span class="iconfont icon-jiazhengfuwu"></span>

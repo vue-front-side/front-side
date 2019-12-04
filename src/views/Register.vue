@@ -45,7 +45,8 @@ export default {
       username: "",
       password: "",
       passSure: "",
-      state: true
+      state: true,
+      validateId:''
     };
   },
   components: {
@@ -98,6 +99,10 @@ export default {
         });
       }
     },
+    getMd5Pass() {
+      var md5 = crypto.createHash("md5");
+      md5.update(this.passSure);
+    },
     getRegister() {
       console.log(this.password);
       console.log("注册");
@@ -127,6 +132,7 @@ export default {
           console.log(res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
+            this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;

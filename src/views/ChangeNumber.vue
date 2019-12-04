@@ -4,7 +4,7 @@
     <van-nav-bar title="更换手机号码" left-arrow @click-left="onClickLeft" />
     <div class="phone-number">
       <h3>当前绑定手机号:</h3>
-      <p class="recent-phonenumber">182******42</p>
+      <p class="recent-phonenumber">{{this.userPhone.substr(0,3)+'*****'+this.userPhone.substr(8,3)}}</p>
     </div>
     <div class="input-box">
       <van-cell-group>
@@ -54,16 +54,33 @@ export default {
   data() {
     return {
       active: 0,
-      phonenumber: "",
-      name: "",
-      identity: "",
+      phonenumber: '',
+      name: '',
+      identity: '',
       sms: "",
-      username: "",
-      state: true
+      username: '',
+      state: true,
+      userPhone: '',
+      userId: ''
     };
   },
   components: {
     [Toast.name]: Toast
+  },
+  created() {
+    this.userId = sessionStorage.getItem("userId");
+    this.axios
+    .post("/inhabitant/findByUserId",{
+      userId: this.userId
+    })
+    .then(res => {
+      console.log(res.data.data.data);
+      this.userPhone = res.data.data.data.telNum;
+      console.log(this.userPhone);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   },
   methods: {
     onClickLeft() {
@@ -109,20 +126,17 @@ export default {
       }
     },
     sendSmsCode() {
-      console.log(this.phonenumber);
+      console.log(typeof(this.phonenumber));
       if (this.phonenumber == "") {
         Toast("请输入手机号！");
       } else {
-        /* this.userId = sessionStorage.getItem(userId); */
-        this.axios
-        .post("/inhabitant/findByUserId",{
-          userId: this.userId
-        })
-        .then()
+        console.log(this.identity);
         this.axios
           .post("/user/modifyTelNumSms", {
+            id: this.userId,
+            inhabitantName: this.name,
+            idCardNum: this.identity,
             telNum: this.phonenumber
-            
           })
           .then(res => {
             console.log(res.data);
@@ -153,11 +167,11 @@ export default {
       } else {
         this.axios
           .post(
-            "/user/forgetPasswordSubmit",
+            "/user/modifyTelNumSubmit",
             {
+              id: this.userId,
               telNum: this.phonenumber,
-              smsCode: this.sms,
-              password: this.password
+              smsCode: this.sms
             },
             {
               headers: {
@@ -177,7 +191,7 @@ export default {
               sessionStorage.setItem("userId", userId);
               sessionStorage.setItem("userId", userState);
               console.log(userId);
-              Toast("密码修改成功!");
+              Toast("手机号修改成功!");
               // 获取参数（未登录时想访问的路由）
               var url = this.$route.query.redirect;
 

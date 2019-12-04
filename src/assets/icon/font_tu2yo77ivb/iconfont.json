@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8875677",
+      "name": "支付成功",
+      "font_class": "zhifuchenggong",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "8875682",
+      "name": "支付失败",
+      "font_class": "zhifushibai",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    }
+  ]
+}

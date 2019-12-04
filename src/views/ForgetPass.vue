@@ -44,6 +44,7 @@
 
 <script>
 import { Toast } from "vant";
+import md5 from 'js-md5';
 export default {
   data() {
     return {
@@ -125,7 +126,7 @@ export default {
         .post("/user/forgetPasswordSubmit", {
             telNum: this.phonenumber,
             smsCode: this.sms,
-            password: this.password
+            password: md5(this.passSure)
           },
           {
             headers: {
@@ -135,21 +136,12 @@ export default {
           }
         )
         .then(res => {
-          console.log(res);
+          console.log(res.data);
           if (res.data.code == "modify_success") {
-            // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            var token = res.data.data.token;
-            var userId = res.data.data.user.userId;
-            var userState = res.data.data.user.userId;
-            sessionStorage.setItem("token", token);
-            sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userId", userState);
-            console.log(userId);
             Toast("密码修改成功!");
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
-
-            url = url ? url : "/index";
+            url = url ? url : "/login";
             // 切换路由
             this.$router.replace(url);
             // this.axios.post("/test")

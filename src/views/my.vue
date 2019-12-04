@@ -86,6 +86,7 @@ export default {
   font-size: 20px;
 }
 .aaa {
+  font-size: 20px;
   margin-left: 120px;
 }
 .nav-right  {

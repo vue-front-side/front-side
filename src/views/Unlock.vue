@@ -16,7 +16,7 @@
       </van-col>
     </van-row>
     </van-sticky>
-    <van-loading size="24px" v-if="flag">加载中...</van-loading>
+    <van-loading size="24px" v-if="flag" class="load">加载中...</van-loading>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <ul>
         <van-cell v-for="(item,index) in this.unlockList" :key="index">
@@ -190,5 +190,8 @@ export default {
 }
 li:first-child {
   border: none;
+}
+.load {
+  text-align: center;
 }
 </style>

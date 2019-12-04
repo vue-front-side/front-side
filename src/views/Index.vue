@@ -23,15 +23,15 @@
     <van-row class="notice_content">
       <van-col span="24">
         <!-- <van-swipe :autoplay="3000" class="notice" vertical :show-indicators="false">
-          <van-swipe-item v-for="(item, index) in lists" :key="index" class="swipe_item">
-            <span>{{item.text}}</span>
+          <van-swipe-item v-for="(item, index) in this.noticeList" :key="index" class="swipe_item">
+            <span>{{item.content}}</span>
           </van-swipe-item>
-        </van-swipe>-->
+        </van-swipe> -->
         <van-notice-bar
           mode="link"
           left-icon="volume-o"
           :scrollable="true"
-        >足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。</van-notice-bar>
+        ><span v-for="(item,index) in this.noticeList" :key="index">{{index+"、"+item.content+" "}}</span></van-notice-bar>
       </van-col>
     </van-row>
     <!-- 导航 -->
@@ -178,11 +178,24 @@ export default {
       bgcolor: "transform",
       startTime: new Date().getTime(),
       textType:[],
-      allText:[]
+      allText:[],
+      noticeList:[],
+      // noticeString:[]
     };
   },
   created() {
     sessionStorage.setItem("userState", true);
+    this.axios.post("/Announcement/showAll",{
+      currentPage:"1"
+      
+    })
+    .then(res=>{
+      console.log(res.data.data.Announcements);
+      this.fomatNotice(res.data.data.Announcements);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
     this.axios
       .get("/communityInfo/showType")
       .then(res => {
@@ -203,6 +216,15 @@ export default {
       });
   },
   methods: {
+    fomatNotice(arr){
+      for(var i=0;i<arr.length;i++){
+        var temp={};
+        temp.content=arr[i].content;
+        this.noticeList.push(temp);
+      }
+      // this.noticeString = this.noticeList.join()
+      return this.noticeList;
+    },
     link() {
       const userState = sessionStorage.getItem("userState");
       console.log(userState);
