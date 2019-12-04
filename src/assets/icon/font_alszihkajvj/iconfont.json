@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3481627",
+      "name": "燃气费",
+      "font_class": "ranqifei",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "3481628",
+      "name": "物业费",
+      "font_class": "wuyefei",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "7470171",
+      "name": "电费",
+      "font_class": "dianfei",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "7976624",
+      "name": "充值水费",
+      "font_class": "chongzhishuifei",
+      "unicode": "e73f",
+      "unicode_decimal": 59199
+    }
+  ]
+}
