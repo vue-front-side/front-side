@@ -56,7 +56,7 @@
               <span>{{item.count}}人觉得很赞</span>
             </van-col>
           </van-row>
-          <van-row class="comment_content" v-for="(items,index) in item.componentArr" :key="index">
+          <van-row class="comment_content" v-for="(items,inde) in item.componentArr" :key="inde">
             <van-col span="24">
               <span class="com_name">{{items.componentName}}:</span>
               <span>{{items.component}}</span>
@@ -68,11 +68,19 @@
             <span>张三:</span><span>厉害</span>
           </van-col>
           </van-row>-->
-          <van-field ref="com_input" placeholder="评论" class="com_input" v-model="text" />
+          <div  class="com_input_box">
+            <div>
+               <van-field ref="com_input" placeholder="评论" class="com_input" v-model="text" bind:focus="show" @click="focus(index)">
+                 
+               </van-field>
+                <button type="button" @click="fn(index,item.dynamicsId)" class="com_btn" v-if="able">评论</button>
+            </div>
+          </div>
+         
         </div>
       </div>
     </van-pull-refresh>
-    <button type="button" @click="fn">评论</button>
+    
   </div>
 </template>
 
@@ -119,14 +127,20 @@ export default {
     [PullRefresh.name]: PullRefresh
   },
   methods: {
-    fn(){
+    fn(i,id){
+      this.inhabitantId = sessionStorage.getItem("inhabitantId");
+      console.log(i);
+      console.log(this.inhabitantId);
       this.axios.post("/dynamic/discusses",{
-        dynamicsId:"1",
-        otherInhabitantId:"2",
+        dynamicsId:id,
+        otherInhabitantId:this.inhabitantId,
         comment:this.text
+        
       })
       .then(res=>{
         console.log(res.data);
+        this.dynamicList = [];
+        this.getDynamic(res.data.data.dynamics);
       })
     },
     onClickLeft() {
@@ -139,7 +153,6 @@ export default {
       for (var i = 0; i < arr.length; i++) {
         var temp = {};
         var tempArr = [];
-        var temp2 = {};
         temp.content = arr[i].content;
         temp.userid = arr[i].inhabitant.inhabitantId;
         temp.name = arr[i].inhabitant.inhabitantName;
@@ -148,12 +161,16 @@ export default {
         temp.dynamicsId = arr[i].dynamicsId;
         temp.count = arr[i].zanCount;
         for (var j = 0; j < arr[i].discusses.length; j++) {
+          var temp2 = {};
           temp2.component = arr[i].discusses[j].comment;
           temp2.componentName = arr[i].discusses[j].inhabitant.inhabitantName;
           tempArr.push(temp2);
+          console.log(i,j,temp2,tempArr);
         }
+
         temp.componentArr = tempArr;
         this.dynamicList.push(temp);
+        console.log(this.dynamicList)
       }
       return this.dynamicList;
     },
@@ -187,7 +204,14 @@ export default {
       this.axios.post("/dynamic/discusses", {});
     },
     focus(i) {
+      this.able=true;
       this.$refs.com_input[i].focus();
+      
+    },
+    show(){
+      console.log("hha")
+      this.able=true;
+      console.log("hha")
     },
     onRefresh() {
       
@@ -219,7 +243,9 @@ export default {
       count: 0,
       flag: true,
       isLoading: false,
-      text:""
+      text:"",
+      able:false,
+      inhabitantId:""
     };
   },
   created() {
@@ -313,5 +339,21 @@ export default {
   .com_name {
     color: rgb(31, 31, 167);
   }
+}
+//评论按钮
+.com_input_box {
+  position: relative;
+  overflow: hidden;
+}
+.com_btn {
+ 
+  
+ float: right;
+ margin-right: 16px;
+  border: none;
+  background-color: rgb(25,137,250);
+  color: #fff;
+  padding: 3px 6px;
+  font-size: 14px;
 }
 </style>

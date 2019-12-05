@@ -2,19 +2,19 @@
   <div id="qpp">
     <div class="box">
       <van-sticky>
-    <van-row>
-      <van-col span="24">
-        <van-nav-bar
-          title="意见反馈"
-          left-text="返回"
-          right-text="完成"
-          left-arrow
-          @click-left="onClickLeft"
-          @click-right="suss"
-        />
-      </van-col>
-    </van-row>
-    </van-sticky>
+        <van-row>
+          <van-col span="24">
+            <van-nav-bar
+              title="意见反馈"
+              left-text="返回"
+              right-text="完成"
+              left-arrow
+              @click-left="onClickLeft"
+              @click-right="suss"
+            />
+          </van-col>
+        </van-row>
+      </van-sticky>
 
       <van-field v-model="message" rows="1" style="height:200px" autosize type="textarea" />
 
@@ -27,23 +27,26 @@
 export default {
   data() {
     return {
-      message: ""
+      message: "",
+      userId:""
     };
   },
   methods: {
     suss() {
+      this.userId = sessionStorage.getItem("userId")
       this.$toast.success("提交成功");
       this.axios
-      .post("/suggestion/add", {userId:5,content:this.message})
-      // .then(res => {
-      //   console.log(this.message)
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
-      setTimeout(() => {
+      .post("/suggestion/add", {userId:this.userId,content:this.message})
+      .then(res => {
+        console.log(res.data)
+         setTimeout(() => {
         this.$router.push("/my");
       }, 2000);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      
     },
 
     onClickLeft() {

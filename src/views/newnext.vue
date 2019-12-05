@@ -16,7 +16,8 @@
     <div class="input-box">
       <van-cell-group class="test-code">
         <van-field v-model="value" center clearable label="短信验证码" placeholder="请输入短信验证码">
-          <van-button slot="button"  @click="sub" size="small" type="primary">发送验证码</van-button>
+          <van-button slot="button" v-if="isfs" @click="sub" size="small" type="primary">发送验证码</van-button>
+          <van-button slot="button" v-else size="small" disabled type="primary">{{miao}}s后重新发送</van-button>
         </van-field>
       </van-cell-group>
     </div>
@@ -49,12 +50,16 @@ export default {
       value1: "",
       value2: "",
       telyz: "",
-      tel: "15008125180"
+      tel: "15008125180",
+      miao: 60,
+      isfs: true,
+      userId:""
     };
   },
   created() {
+    this.userId = sessionStorage.getItem("userId");
     this.axios
-      .post("/inhabitant/findByUserId", { userId: 4 })
+      .post("/inhabitant/findByUserId", { userId: this.userId })
       .then(res => {
         this.msg = res.data.data.data;
         console.log("数组:", this.msg);
@@ -65,6 +70,17 @@ export default {
   },
   methods: {
     sub() {
+      this.isfs = false;
+      var time = setInterval(() => {
+        if (this.miao > 1) {
+          this.miao--;
+        } else {
+          clearInterval(time);
+          this.miao = 60;
+          this.isfs = true;
+        }
+      }, 1000);
+
       this.axios
         .post("/user/sendSmsCode", { telNum: this.tel })
         .then(res => {
@@ -75,6 +91,7 @@ export default {
           console.log(err);
         });
     },
+
     onClickLeft() {
       this.$router.push("/center");
     },
@@ -112,9 +129,8 @@ export default {
                 this.$router.push("/center");
               })
               .catch(() => {
-                this.$toast('取消修改')
+                this.$toast("取消修改");
               });
-            
           } else {
             this.$toast("验证码错误！");
           }

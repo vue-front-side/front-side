@@ -52,6 +52,9 @@ export default {
       service: "4"
     }
   },
+  created(){
+    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
+  },
   methods: {
     onClickLeft() {
       this.$router.go(-1);

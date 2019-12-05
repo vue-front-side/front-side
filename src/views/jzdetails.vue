@@ -1,8 +1,6 @@
 <template>
   <div id="qpp">
-    <van-nav-bar title="易居家政" left-text="返回" @click-left="onClickLeft" left-arrow>
-    
-    </van-nav-bar>
+    <van-nav-bar title="易居家政" left-text="返回" @click-left="onClickLeft" left-arrow></van-nav-bar>
 
     <div class="content">
       <div class="information">
@@ -132,10 +130,6 @@
     <div class="choose">
       <button type="primary" @click="ok">就决定是你了</button>
     </div>
-    <van-row class="foot" type="flex" justify="between">
-      <van-col style="text-align:center" span="12">首页</van-col>|
-      <van-col style="text-align:center" span="12">精品服务</van-col>
-    </van-row>
   </div>
 </template>
 
@@ -145,14 +139,15 @@ export default {
     return {
       show: false,
       newId: "",
-      list: []
+      list: [],
+      time:''
     };
   },
   created() {
     this.newId = this.$route.params.staffId;
     console.log(this.newId);
     this.axios
-      .post("/staff/selectJZAYbyId", { staffId: this.newId })
+      .get("/staff/selectJZAYbyId", {params:{staffId: this.newId }})
       .then(res => {
         console.log(res);
         this.list = res.data.data.staff;
@@ -165,6 +160,13 @@ export default {
   },
   methods: {
     ok() {
+      var date = new Date;
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDay();
+      this.time =year+"-"+month+"-"+day
+
+      console.log(this.time)
       this.$dialog
         .alert({
           title: "预约成功",
@@ -174,7 +176,15 @@ export default {
             "您已经成功预定该阿姨，我们会尽快通知阿姨联系您，请保持电话畅通"
         })
         .then(() => {
-          // on close
+          this.axios
+            .post("/InhabitantAndStaff/addrisInfo", {staffId:this.newId,serviceTime:this.time,inhabitantId:1 })
+            .then(res => {
+              console.log(res.data);
+              this.$toast.success("提交成功");
+            })
+            .catch(err => {
+              console.log(err);
+            });
         });
     },
     onClickLeft() {

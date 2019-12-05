@@ -62,13 +62,15 @@ export default {
     return {
       active: 2,
       oldUrl:"",
-      list:[]
+      list:[],
+      inhabitantId:""
     };
   },
   created() {
     sessionStorage.setItem("firstRoute",this.$route.fullPath);
+    this.inhabitantId = sessionStorage.getItem("inhabitantId")
     this.axios
-      .get("/InhabitantAndStaff/getInfoById", {params:{inhabitantId:1}})
+      .get("/InhabitantAndStaff/getInfoById", {params:{inhabitantId:this.inhabitantId}})
       .then(res => {
         console.log(res.data.data)
         this.list = res.data.data.list
