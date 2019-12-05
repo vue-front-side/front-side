@@ -52,12 +52,14 @@ export default {
       telyz: "",
       tel: "15008125180",
       miao: 60,
-      isfs: true
+      isfs: true,
+      userId:""
     };
   },
   created() {
+    this.userId = sessionStorage.getItem("userId");
     this.axios
-      .post("/inhabitant/findByUserId", { userId: 4 })
+      .post("/inhabitant/findByUserId", { userId: this.userId })
       .then(res => {
         this.msg = res.data.data.data;
         console.log("数组:", this.msg);

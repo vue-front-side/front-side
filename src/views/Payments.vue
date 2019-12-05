@@ -15,9 +15,6 @@
         </van-col>
       </van-row>
     </van-sticky>
-    <!-- <div class="history" >
-      <van-icon name="underway-o" />
-    </div> -->
     <div class="banner">
       <img src="../assets/img/payments/bannerimg.png" alt="">
     </div>
@@ -45,6 +42,7 @@
 
 <script>
 export default {
+  name: 'payments',
   data() {
     return {
       id: 1,

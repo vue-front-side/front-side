@@ -66,7 +66,8 @@ export default {
       list: [],
       sugId: "",
       state: "",
-      msg: []
+      msg: [],
+      userId:""
     };
   },
   methods: {
@@ -74,6 +75,7 @@ export default {
       this.$router.push("/my");
     },
     send() {
+      this.userId = sessionStorage.getItem("userId");
       this.axios
         .post("/suggestion/deleteById", { id: this.sugId })
         .then(res => {
@@ -84,7 +86,7 @@ export default {
             })
             .then(() => {
               this.axios
-                .post("/suggestion/showByUserId", { userId: 1 })
+                .post("/suggestion/showByUserId", { userId: this.userId })
                 .then(res => {
                   this.list = res.data.data.data;
                 })
@@ -92,7 +94,7 @@ export default {
                   console.log(err);
                 });
               this.axios
-                .post("/suggestion/showRepairByUserId", { userId: 1 })
+                .post("/suggestion/showRepairByUserId", { userId: this.userId })
                 .then(res => {
                   this.msg = res.data.data.data;
                 })
@@ -111,7 +113,7 @@ export default {
   },
   created() {
     this.axios
-      .post("/suggestion/showByUserId", { userId: 1 })
+      .post("/suggestion/showByUserId", { userId: this.userId })
       .then(res => {
         this.list = res.data.data.data;
       })
@@ -119,7 +121,7 @@ export default {
         console.log(err);
       });
     this.axios
-      .post("/suggestion/showRepairByUserId", { userId: 1 })
+      .post("/suggestion/showRepairByUserId", { userId: this.userId })
       .then(res => {
         this.msg = res.data.data.data;
         console.log(this.msg);

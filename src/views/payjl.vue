@@ -42,7 +42,8 @@ export default {
    data() {
     return {
       list: [],
-      oldUrl:""
+      oldUrl:"",
+      inhabitantId:""
     };
   },
     beforeRouteEnter (to, from, next){
@@ -52,10 +53,11 @@ export default {
      })
    },
   created() {
+    this.inhabitantId = sessionStorage.getItem("inhabitantId")
     console.log(this.$route.fullPath);
     sessionStorage.setItem("firstRoute",this.$route.fullPath);
     this.axios
-      .post("/pay/selinha", {inhabitantId:1})
+      .post("/pay/selinha", {inhabitantId:this.inhabitantId})
       .then(res => {
         console.log(res.data.data)
         this.list = res.data.data.pays;

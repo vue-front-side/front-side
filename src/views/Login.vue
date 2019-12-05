@@ -87,6 +87,9 @@ export default {
       validateId: ''
     };
   },
+  components: {
+    [Toast.name]: Toast
+  },
   methods: {
     onClickLeft() {
       alert("返回");
@@ -182,7 +185,7 @@ export default {
             console.log("用户状态",a);
             console.log(userId);
             console.log(roleName);
-            console.log(token);
+            console.log(userState);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
             url = url ? url : "/index";

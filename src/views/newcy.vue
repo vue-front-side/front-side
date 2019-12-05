@@ -50,7 +50,8 @@ export default {
       username: "",
       usernum: "",
       idcard: "",
-      relate: ""
+      relate: "",
+      inhabitantId:""
     };
   },
   methods: {
@@ -97,13 +98,14 @@ export default {
       }
     },
     sub() {
+      this.inhabitantId = sessionStorage.getItem("inhabitantId")
       this.axios
         .post("/InhabitantAndHouseProperty/inhabitantAddToHouseProperty", {
           inhabitantName: this.username,
           inhabitantType: this.relate,
-          telNum: this.usernum,
-          idCardNo: this.idcard,
-          inhabitantId: 1
+          telNum:this.usernum,
+          idCardNo:this.idcard,
+          inhabitantId:this.inhabitantId
         })
         .then(res => {
           if (res.data.message == "该成员已被绑定") {

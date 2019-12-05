@@ -37,12 +37,14 @@ export default {
     return {
       fileList: [],
       url:'',
-      msg:[]
+      msg:[],
+      userId:""
     };
   },
   created() {
+    this.userId = sessionStorage.getItem("userId")
     this.axios
-      .post("/inhabitant/findByUserId", { userId: 4 })
+      .post("/inhabitant/findByUserId", { userId: this.userId })
       .then(res => {
         this.msg = res.data.data.data;
         console.log("数组:", this.msg);
