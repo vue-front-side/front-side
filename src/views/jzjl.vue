@@ -18,14 +18,14 @@
     <van-tabs v-model="active" animated>
       <van-tab title="待上门">
         <ul>
-          <li>
-            <div class="box">
+          <li v-for="(item,index) in list" :key="index">
+            <div class="box" v-if="item.state==0">
               <div class="img">
                 <img src alt="暂无图片" />
               </div>
               <div class="content">
-                <p>唐阿姨</p>
-                <p class="time" style="font-size:12px">2019.12.01-2019.12.02</p>
+                <p>{{item.staffName}}</p>
+                <p class="time" style="font-size:12px">{{item.serviceTime}}</p>
                 <p>洗衣做饭带娃</p>
                 <span class="isover">未完成</span>
               </div>
@@ -35,14 +35,14 @@
       </van-tab>
       <van-tab title="已上门">
         <ul>
-          <li>
-            <div class="box">
+          <li v-for="(item,index) in list" :key="index" >
+            <div class="box" v-if="item.state ==1">
               <div class="img">
                 <img src alt="暂无图片" />
               </div>
               <div class="content">
-                <p>唐阿姨</p>
-                <p class="time" style="font-size:12px">2019.12.01</p>
+                <p>{{item.staffName}}</p>
+                <p class="time" style="font-size:12px">{{item.serviceTime}}</p>
                 <p>洗衣做饭带娃</p>
                 <span class="isover">已完成</span>
                 <span class="price">￥845</span>
@@ -61,8 +61,22 @@ export default {
     data() {
     return {
       active: 2,
-      oldUrl:""
+      oldUrl:"",
+      list:[]
     };
+  },
+  created() {
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
+    this.axios
+      .get("/InhabitantAndStaff/getInfoById", {params:{inhabitantId:1}})
+      .then(res => {
+        console.log(res.data.data)
+        this.list = res.data.data.list
+        console.log("数组:", this.list);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   beforeRouteEnter (to, from, next){
      next(vm => {
@@ -72,7 +86,9 @@ export default {
    },
   methods:{
     onClickLeft() {
-      this.$router.push(this.oldUrl)
+      var route = sessionStorage.getItem("zeroRoute");
+      this.$router.replace(route);
+      sessionStorage.removeItem("zeroRoute");
     }
   },  
    mounted() {

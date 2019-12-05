@@ -1,5 +1,6 @@
 <template>
   <div id="qpp">
+     <van-loading style="text-align:center" v-if='state' />
    <van-sticky>
       <van-row>
         <van-col span="24">
@@ -40,10 +41,19 @@
 export default {
    data() {
     return {
-      list: []
+      list: [],
+      oldUrl:""
     };
   },
+    beforeRouteEnter (to, from, next){
+     next(vm => {
+       // 通过 `vm` 访问组件实例,将值传入oldUrl
+       vm.oldUrl = from.path
+     })
+   },
   created() {
+    console.log(this.$route.fullPath);
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
     this.axios
       .post("/pay/selinha", {inhabitantId:1})
       .then(res => {
@@ -54,12 +64,21 @@ export default {
         console.log(err);
       });
   },
-    methods: {
+  methods: {
    
     onClickLeft(){
-      this.$router.push('/my')
+      var route = sessionStorage.getItem("zeroRoute");
+      this.$router.replace(route);
+      sessionStorage.removeItem("zeroRoute");
     }
-  }
+  },
+     mounted() {
+     this.$nextTick(()=>{
+       // 验证是否获取到了上页的url
+       /* eslint-disable no-console */
+       console.log("上页地址",this.oldUrl)
+     })
+   }
 };
 </script>
 

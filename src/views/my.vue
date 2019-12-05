@@ -52,6 +52,7 @@ export default {
     }
   },
   created() {
+    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
     this.userId = sessionStorage.getItem("userId");
     this.state = sessionStorage.getItem("userState");
     this.isHu = sessionStorage.getItem("userName");
