@@ -198,7 +198,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.push(this.oldUrl);
+      this.$router.back(-1);
     },
     onClickRight() {
       this.$router.push("/recoverjl")

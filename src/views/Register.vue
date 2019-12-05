@@ -126,16 +126,18 @@ export default {
         )
         .then(res => {
           console.log(res);
-          console.log(res.data);
+          console.log("注册",res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
             this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
+            console.log("用户ID",userId);
+            console.log("用户stste",userState);
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userIdState", userState);
+            sessionStorage.setItem("userState", userState);
             console.log(userId);
             Toast("注册成功！");
             // 获取参数（未登录时想访问的路由）

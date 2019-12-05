@@ -176,10 +176,13 @@ export default {
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
             var roleName = res.data.data.user.roles[0].roleName;
+            
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
+            var a =  sessionStorage.getItem(userState);
+            console.log("用户状态",a);
             console.log(userId);
             console.log(roleName);
             console.log(userState);
@@ -230,8 +233,7 @@ export default {
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
             console.log(userId);
-            var a = sessionStorage.getItem(userState);
-            console.log(a);
+            console.log(userState);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
 

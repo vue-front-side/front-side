@@ -41,6 +41,7 @@ export default {
     };
   },
    created() {
+     sessionStorage.setItem("secRoute",this.$route.fullPath);
     this.newId = this.$route.params.payId;
     console.log(this.newId);
     this.axios
@@ -55,7 +56,8 @@ export default {
   },
   methods:{
     back(){
-      this.$router.push('/payjl')
+      this.$router.push(sessionStorage.getItem("firstRoute"));
+      sessionStorage.removeItem("firstRoute");
     }
   }
 }
