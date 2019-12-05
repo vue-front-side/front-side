@@ -21,26 +21,26 @@
               </div>
               <div class="introduce">
                 <van-row type="flex" justify="space-between" style="font-size:18px;">
-                  <van-col span="8" style="text-align: center;">{{item.staffName}}</van-col>
-                  <van-col span="10" class="price">{{item.staffSalary}}元/月</van-col>
+                  <van-col span="8"  style="text-align: center;height:36px;line-height:36px">{{item.staffName}}</van-col>
+                  <van-col span="10" class="price">{{item.staffSalary}}元/周</van-col>
                 </van-row>
                 <van-row
                   type="flex"
                   justify="space-between"
                   style="text-align: center;font-size:16px;margin-top:10px"
                 >
-                  <van-col span="8">年龄</van-col>|
+                  <van-col span="8">44</van-col>|
                   <van-col span="8">{{item.born}}</van-col>|
-                  <van-col span="8">{{item.workTime}}</van-col>
+                  <van-col span="8">从业{{item.workTime}}年</van-col>
                 </van-row>
                 <van-row
                   type="flex"
                   justify="space-around"
                   style="font-size:14px;font-weight:100;margin-top:10px"
                 >
-                  <van-col span="6" style="border:1px solid #000;">工作内容</van-col>
-                  <van-col span="6" style="border:1px solid #000;">工作内容</van-col>
-                  <van-col span="6" style="border:1px solid #000;">工作内容</van-col>
+                  <van-col span="6" style="border:1px solid #000;">洗衣做饭</van-col>
+                  <van-col span="6" style="border:1px solid #000;">照顾小孩</van-col>
+                  <van-col span="6" style="border:1px solid #000;">打扫卫生</van-col>
                 </van-row>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default {
   created() {
     sessionStorage.setItem("zeroRoute",this.$route.fullPath);
     this.axios
-      .post("/staff/getAllStaffIsJZAY", {})
+      .get("/staff/getAllStaffIsJZAY", {})
 
       .then(res => {
         if(res.data.code==200){
@@ -120,7 +120,7 @@ export default {
 }
 .headimg img {
   width: 90px;
-  height: 120px;
+  height: 100px;
 }
 .price {
   border: 1px solid #ffa400;

@@ -14,10 +14,28 @@
       </van-row>
     </van-sticky>
     <van-cell-group>
-      <van-field v-model="username" clearable label="姓名" placeholder="请填写成员姓名" />
+      <van-field
+        v-model="username"
+        clearable
+        label="姓名"
+        placeholder="请填写成员姓名"
+        @blur="nameCheckOut"
+      />
       <van-field v-model="relate" clearable label="关系" placeholder="请填写成员关系" />
-      <van-field v-model="usernum" clearable label="手机号" placeholder="请填写成员手机号" />
-      <van-field v-model="idcard" clearable label="身份证号" placeholder="请填写成员身份证号" />
+      <van-field
+        v-model="usernum"
+        clearable
+        label="手机号"
+        placeholder="请填写成员手机号"
+        @blur="phoneCheckOut"
+      />
+      <van-field
+        v-model="idcard"
+        clearable
+        label="身份证号"
+        placeholder="请填写成员身份证号"
+        @blur="identityCheckOut"
+      />
     </van-cell-group>
     <div>
       <button type="submit" @click="sub" class="sub">提交</button>
@@ -39,22 +57,61 @@ export default {
     onClickLeft() {
       this.$router.push("/my");
     },
+    phoneCheckOut() {
+      if (this.usernum != "") {
+        //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(this.usernum)) {
+          this.$toast("请填写正确手机号码！");
+          console.log(this.usernum);
+          this.usernum=''
+        } else {
+          console.log("Yeah you got your correct number!");
+        }
+      }
+    },
+    nameCheckOut() {
+      if (this.username != "") {
+        //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^[\u4e00-\u9fa5]{2,4}$/i;
+        if (!myreg.test(this.username)) {
+          this.$toast("请填写正确姓名！");
+          console.log(this.username);
+          this.username = "";
+        } else {
+          console.log("Yeah you got your correct name!");
+        }
+      }
+    },
+    identityCheckOut() {
+      if (this.idcard != "") {
+        //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if (!myreg.test(this.idcard)) {
+           this.$toast("请填写正确身份证号！");
+          console.log(this.idcard);
+          this.idcard = "";
+        } else {
+          console.log("Yeah you got your correct identity!");
+        }
+      }
+    },
     sub() {
       this.axios
         .post("/InhabitantAndHouseProperty/inhabitantAddToHouseProperty", {
           inhabitantName: this.username,
           inhabitantType: this.relate,
-          telNum:this.usernum,
-          idCardNo:this.idcard,
-          inhabitantId:1
+          telNum: this.usernum,
+          idCardNo: this.idcard,
+          inhabitantId: 1
         })
         .then(res => {
-            if( res.data.message=="该成员已被绑定" ) {
-              this.$toast('该成员已经绑定')
-            }else {
-              this.$toast('绑定成功')
-              this.$router.push('/my')
-            }
+          if (res.data.message == "该成员已被绑定") {
+            this.$toast("该成员已经绑定");
+          } else {
+            this.$toast("绑定成功");
+            this.$router.push("/my");
+          }
         })
         .catch(err => {
           console.log(err);

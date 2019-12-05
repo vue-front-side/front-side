@@ -32,18 +32,19 @@ export default {
   },
   methods: {
     suss() {
-      this.$toast.success("提交成功");
       this.axios
       .post("/suggestion/add", {userId:5,content:this.message})
-      // .then(res => {
-      //   console.log(this.message)
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
-      setTimeout(() => {
+      .then(res => {
+        console.log(res.data)
+        this.$toast.success("提交成功");
+        setTimeout(() => {
         this.$router.push("/my");
       }, 2000);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      
     },
 
     onClickLeft() {
