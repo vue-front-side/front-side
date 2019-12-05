@@ -1,8 +1,8 @@
 <template>
-  <div>haha
-      <button type="button" @click="submit">登录</button>
+  <div>
+      
       <van-button type="primary" size="large" round @click="submit">提交</van-button>
-       <van-icon class="iconfont" class-prefix='icon' name='wuyejiaofei' />
+       
   </div>
 </template>
 

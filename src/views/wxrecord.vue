@@ -21,7 +21,7 @@
           <li v-for="(item,index) in list" :key="index">
             <div class="box" v-if="item.repairState==1||item.repairState==0">
               <div class="img">
-                <img src alt="暂无图片" />
+                <img :src="getUrl+item.repairImg" alt="暂无图片" />
               </div>
               <div class="content">
               <p>维修内容：{{item.repairContent}}</p>
@@ -36,7 +36,7 @@
           <li v-for="(item,index) in list" :key="index">
             <div class="box" v-if="item.repairState==2">
               <div class="img">
-                <img src alt="暂无图片" />
+                <img :src="getUrl+item.repairImg" alt="暂无图片" />
               </div>
               <div class="content">
                 <p>维修内容：{{item.repairContent}}</p>
@@ -93,7 +93,12 @@ export default {
        /* eslint-disable no-console */
        console.log("上页地址",this.oldUrl)
      })
-   }
+   },
+   computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
+  }
 };
 </script>
 

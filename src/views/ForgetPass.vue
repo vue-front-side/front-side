@@ -107,6 +107,7 @@ export default {
       }
     },
     sendSmsCode() {
+      this.sub();
       console.log(this.phonenumber);
       if (this.phonenumber == "") {
         Toast("请输入手机号！");

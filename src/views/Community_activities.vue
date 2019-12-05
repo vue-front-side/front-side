@@ -10,7 +10,7 @@
     <div v-for="(item,index) in this.activeList" :key="index">
     <van-row>
       <van-col span="24">
-        <van-image width="100%" height="200" :src="'http://172.16.6.66:8080/'+item.img" />
+        <van-image width="100%" height="200" :src="getUrl+item.img" />
       </van-col>
     </van-row>
     <van-row class="active_text">
@@ -54,7 +54,7 @@
       </van-col>
     </van-row>
     <div class="btn_box">
-      <van-button type="info" @click="sign" ref="btn">活动报名</van-button>
+      <van-button type="info" @click="sign" ref="btn">{{text}}</van-button>
     </div>
     
     </div>
@@ -103,22 +103,27 @@ export default {
   data() {
     return {
       radio: "1",
-      activeList:[]
+      activeList:[],
+      text:"活动报名",
+      inhabitantId:"",
+      count:""
     };
   },
   methods: {
     onClickLeft() {
-      Toast("返回");
+     this.$router.push('/index')
     },
     sign() {
       this.axios.post("/activity/userJoinActivity",{
-        inhabitantId:"1",
+        inhabitantId:this.inhabitantId,
         activityId:"2"
       })
       .then(res=>{
         console.log(res.data);
         if(res.data.code==200){
           console.log(this.$refs)
+          this.text = "已报名"
+          this.activeList.count = 1
           this.$refs.disabled=true;
           this.$refs.style.backgroundColor = "#3657be";
         }
@@ -129,18 +134,27 @@ export default {
     }
   },
   created(){
+    this.inhabitantId = sessionStorage.getItem("inhabitantId");
     this.axios.post("/activity/showOne",{
-      activityId:"1"
+      activityId:"17"
     })
     .then(res=>{
       console.log(res.data);
       this.activeList.push(res.data.data.Activity);
     })
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.release {
+  text-align: center;
+}
 .active_text {
   p {
     padding: 10px;

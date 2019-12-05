@@ -23,7 +23,7 @@
         <li class="list">
           <div class="msg">
            
-            <img src="../assets/logo.png" alt="">
+            <img :src="getUrl+item.headImg" alt="">
           </div>
           <div class="adress">
             <span class="name">{{item.companyName}}</span>
@@ -125,6 +125,11 @@ export default {
     .catch(err=>{
       console.log(err);
     })
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 };
 </script>

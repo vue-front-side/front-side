@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar title="生活缴费" left-arrow left-text="返回" @click-left="onClickLeft"/>
     <van-loading size="24px" v-if="flag" class="load">加载中...</van-loading>
     <div class="details">
       <div class="de-innerbox">
@@ -57,7 +57,7 @@ export default {
       money: '',
       state: true,
       flag: true ,
-      userId:""
+      inhabitantId:""
     }
   },
   components: {
@@ -68,14 +68,14 @@ export default {
   created() {
     console.log("当前缴费类别 id:", location.search.substring(1));
     this.category = location.search.substring(1);
-    this.userId = sessionStorage.getItem("userId"); 
+    this.inhabitantId = sessionStorage.getItem("inhabitantId"); 
      
     console.log(this.category);
-    console.log(this.userId);
+    console.log(this.inhabitantId);
     this.axios
     .post("/pay/jiemian", {
       payUnitId: this.category,
-      inhabitantId: this.userId
+      inhabitantId: this.inhabitantId
     })
     .then(res => {
       this.flag = false;

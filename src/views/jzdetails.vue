@@ -5,7 +5,7 @@
     <div class="content">
       <div class="information">
         <div class="headimg">
-          <img src="../assets/logo.png" alt />
+          <img :src="getUrl+list.photo" alt />
         </div>
         <div class="introduce">
           <van-row
@@ -189,6 +189,11 @@ export default {
     },
     onClickLeft() {
       this.$router.push("/jzlist");
+    }
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
     }
   }
 };

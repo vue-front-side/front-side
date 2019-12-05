@@ -12,9 +12,11 @@ const http = axios.create({
 http.interceptors.request.use(function (config) {
   // 获取 token
   const token = sessionStorage.getItem('token')
+  const validateId = sessionStorage.getItem('validateId')
   if(token) {
     // 在请求头上带上 token，固定写法
-    config.headers['Authorization'] = 'Bearer ' + token
+    config.headers['Authorization'] =  token;
+    config.headers['validateId'] = validateId;
   }
   return config;
 }, function (error) {

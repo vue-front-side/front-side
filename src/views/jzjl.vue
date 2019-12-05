@@ -15,13 +15,15 @@
         </van-col>
       </van-row>
     </van-sticky>
+    
     <van-tabs v-model="active" animated>
       <van-tab title="待上门">
+        <van-loading style="text-align:center" v-if='this.state' />
         <ul>
           <li v-for="(item,index) in list" :key="index">
             <div class="box" v-if="item.state==0">
               <div class="img">
-                <img src alt="暂无图片" />
+                <img :src="getUrl+item.photo" alt="暂无图片" />
               </div>
               <div class="content">
                 <p>{{item.staffName}}</p>
@@ -34,11 +36,12 @@
         </ul>
       </van-tab>
       <van-tab title="已上门">
+        <van-loading style="text-align:center" v-if='this.state' />
         <ul>
           <li v-for="(item,index) in list" :key="index" >
             <div class="box" v-if="item.state ==1">
               <div class="img">
-                <img src alt="暂无图片" />
+                <img :src="getUrl+item.photo" alt="暂无图片" />
               </div>
               <div class="content">
                 <p>{{item.staffName}}</p>
@@ -63,18 +66,20 @@ export default {
       active: 2,
       oldUrl:"",
       list:[],
-      inhabitantId:""
+      inhabitantId:"",
+      state:true
     };
   },
   created() {
-    sessionStorage.setItem("firstRoute",this.$route.fullPath);
+    sessionStorage.setItem("secondRoute",this.$route.fullPath);
     this.inhabitantId = sessionStorage.getItem("inhabitantId")
     this.axios
       .get("/InhabitantAndStaff/getInfoById", {params:{inhabitantId:this.inhabitantId}})
       .then(res => {
-        console.log(res.data.data)
-        this.list = res.data.data.list
-        console.log("数组:", this.list);
+        if(res.data.code==200){
+          this.state=false;
+          this.list = res.data.data.list
+        }
       })
       .catch(err => {
         console.log(err);
@@ -88,9 +93,9 @@ export default {
    },
   methods:{
     onClickLeft() {
-      var route = sessionStorage.getItem("zeroRoute");
+      var route = sessionStorage.getItem("firstRoute");
       this.$router.replace(route);
-      sessionStorage.removeItem("zeroRoute");
+      // sessionStorage.removeItem("zeroRoute");
     }
   },  
    mounted() {
@@ -99,7 +104,12 @@ export default {
        /* eslint-disable no-console */
        console.log("上页地址",this.oldUrl)
      })
-   }
+   },
+   computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
+  }
 };
 </script>
 

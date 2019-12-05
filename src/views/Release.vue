@@ -76,9 +76,13 @@ export default {
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
       ],
       formdata1:{},
-      url:""
+      url:"",
+      inhabitantId:""
 
     };
+  },
+  created(){
+    this.inhabitantId = sessionStorage.getItem("inhabitantId");
   },
   methods: {
     onClickLeft() {
@@ -91,7 +95,7 @@ export default {
       //     "Content-Type": "multipart/form-data"
       //   }
       // };
-      this.axios.post("/dynamic/insert", {inhabitantId:"1",imgs:this.url,content:this.message})
+      this.axios.post("/dynamic/insert", {inhabitantId:this.inhabitantId,imgs:this.url,content:this.message})
         .then(res => {
           //这里的url为后端接口
           console.log(res.data);

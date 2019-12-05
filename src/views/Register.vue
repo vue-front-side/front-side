@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="注册" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="注册" left-arrow left-text="返回" @click-left="onClickLeft" />
     <div class="input-box">
       <van-cell-group>
         <van-field
@@ -96,6 +96,7 @@ export default {
       }
     },
     sendCode() {
+      this.sub();
       console.log(this.phonenumber);
       if (this.phonenumber == "") {
         Toast("请输入手机号！");
@@ -135,7 +136,7 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
+              
             }
           }
         )
@@ -144,7 +145,7 @@ export default {
           console.log("注册",res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -153,6 +154,7 @@ export default {
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
+            sessionStorage.setItem("validateId",validateId);
             console.log(userId);
             Toast("注册成功！");
             // 获取参数（未登录时想访问的路由）

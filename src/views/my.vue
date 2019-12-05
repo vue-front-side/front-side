@@ -36,7 +36,8 @@ export default {
     return{
       list:[],
       statu:false,
-      isHu:"房主"
+      isHu:"房主",
+      // userId:""
     }
     
   },
@@ -52,7 +53,7 @@ export default {
     }
   },
   created() {
-    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
     this.userId = sessionStorage.getItem("userId");
     this.state = sessionStorage.getItem("userState");
     this.isHu = sessionStorage.getItem("userName");
@@ -92,6 +93,7 @@ export default {
 }
 .aaa {
   font-size: 20px;
+  margin: 20px 0;
   margin-left: 120px;
 }
 .nav-right  {

@@ -1,20 +1,20 @@
 <template>
   <div class="clearfix">
     <!-- 定位 -->
-    <van-sticky>
+    <!-- <van-sticky>
       <div class="position" ref="location" :style="{background:bgcolor}">
         <div class="pos_content">
           <span>成都</span>
           <van-icon name="location-o" class="icon" />
         </div>
       </div>
-    </van-sticky>
+    </van-sticky> -->
     <!-- 轮播 -->
     <van-row class="row">
       <van-col span="24" class="col">
         <van-swipe :autoplay="3000" class="swipe_box">
           <van-swipe-item v-for="(image, index) in images" :key="index">
-            <img :src="image" />
+            <img :src="image.url" />
           </van-swipe-item>
         </van-swipe>
       </van-col>
@@ -59,6 +59,21 @@
         </van-grid>
       </van-col>
     </van-row>
+     <van-row class="encyclopedia_box" :style="{bacground:bgcolor}">
+      <van-col span="24">
+        <span class="encyclopedia">社区活动</span>
+      </van-col>
+    </van-row>
+      <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in activeList" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="getUrl+item.img" alt />
+                  </div>
+                  <!-- <span class="tag">{{item.ciType}}</span> -->
+                  <p class="title">{{item.activityName}}</p>
+                  <span class="info">{{item.startTime}}-{{item.endTime}}</span>
+                </div>
+              </router-link>
 
     <!-- 生活百科 -->
 
@@ -70,19 +85,20 @@
 
     <van-row>
       <van-col span="24">
-        <van-tabs v-model="activeName" sticky :offset-top="44">
+        <van-tabs v-model="activeName" sticky :offset-top="0">
           <van-tab v-for="(item,index) in textType" :title="item" :key="index" class="article_box" background="gray" color="#ffa400">
             <div>
               <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in allText" :key="index">
                 <div class="article">
                   <div>
-                    <img :src="'http://172.16.6.63:8080/'+item.ciImage" alt />
+                    <img :src="getUrl+item.ciImage" alt />
                   </div>
                   <span class="tag">{{item.ciType}}</span>
                   <p class="title">{{item.ciTitle}}</p>
                   <span class="info">{{item.ciDate}}</span>
                 </div>
               </router-link>
+               <router-link :to="{ name: 'encyclopdia'}">
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -91,14 +107,15 @@
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
               </div>
-              <div class="article">
+              </router-link>
+              <!-- <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
                 </div>
                 <span class="tag">生活常识</span>
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
-              </div>
+              </div> -->
             </div>
           </van-tab>
         </van-tabs>
@@ -157,8 +174,9 @@ export default {
   data() {
     return {
       images: [
-        "../assets/imag/index/plante1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
+        {url:require('../assets/imag/index/plante1.jpg')},
+        {url:require('../assets/imag/index/plante2.jpg')},
+        {url:require('../assets/imag/index/plante3.jpg')}
       ],
       lists: [
         {
@@ -180,10 +198,12 @@ export default {
       textType:[],
       allText:[],
       noticeList:[],
-      // noticeString:[]
+      // noticeString:[],
+      activeList:[]
     };
   },
   created() {
+    sessionStorage.setItem("zeroRoute",this.$route.fullPath)
     this.axios.post("/Announcement/showAll",{
       currentPage:"1"
       
@@ -196,32 +216,44 @@ export default {
       console.log(err);
     })
     this.axios
-      .get("/communityInfo/showType")
+      .post("/communityInfo/showType")
       .then(res => {
-        console.log(res.data);
+        console.log("分类1",res.data);
         this.textType=res.data.data.data;
         this.textType.unshift("最新");
-        this.axios.post("/communityInfo/showByLike",)
+      
+      })
+      .catch(err => {
+        console.log(err);
+      });
+        this.axios.get("/communityInfo/showAll",)
         .then(res=>{
-          console.log(res.data.data.data);
+          console.log("分类",res.data.data.data);
           this.allText = res.data.data.data;
         })
         .catch(err=>{
           console.log(err);
         })
-      })
-      .catch(err => {
-        console.log(err);
-      });
     this.userId = sessionStorage.getItem("userId");
-    console.log(this.userId)
+    console.log("用户Id",this.userId)
     this.axios.post("/inhabitant/findByUserId",{userId:this.userId})
     .then(res=>{
-      console.log(res.data);
+      console.log("住户id",res.data);
       sessionStorage.setItem("inhabitantId",res.data.data.data.inhabitantId);
       
       console.log("id:",sessionStorage.getItem("inhabitantId"));
       console.log("tel",this.telNum)
+    });
+    this.axios.post("/activity/showAll",{
+      pageSize:"1000",
+      pageIndex:"1"
+    })
+    .then(res=>{
+      console.log(res.data);
+      this.activeList=res.data.data.Activity;
+    })
+    .catch(err=>{
+      console.log(err);
     })
   },
   methods: {
@@ -265,6 +297,11 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.getScrollTop); // 监听滚动事件，然后用handleScroll这个方法进行相应的处理
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 };
 </script>
@@ -294,7 +331,7 @@ export default {
   text-align: left;
 }
 .row {
-  height: 160px;
+  height: 200px;
 }
 .col {
   position: absolute;
@@ -353,7 +390,7 @@ export default {
   padding: 20px 10px;
 }
 .article div {
-  height: 180px;
+  // height: 180px;
   text-align: center;
 }
 .article img {
@@ -367,7 +404,7 @@ export default {
   border-radius: 9px 0 9px 0;
   background-color: rgba(0, 0, 0, 0.24);
   position: absolute;
-  top: 170px;
+  bottom: 100px;
 }
 .title {
   margin: 10px 0;

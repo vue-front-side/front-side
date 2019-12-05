@@ -53,11 +53,11 @@ export default {
     }
   },
   created(){
-    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1);
+      this.$router.push(sessionStorage.getItem("zeroRoute"));
     },
     onClickRight(){
       this.$router.push("/payjl");

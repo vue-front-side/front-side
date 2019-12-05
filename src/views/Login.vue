@@ -2,8 +2,8 @@
   <div>
     <van-nav-bar
       title="登录"
-      left-arrow
-      @click-left="onClickLeft"
+      
+      
       right-text="注册"
       @click-right="onClickRight"
     />
@@ -174,7 +174,6 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
             }
           }
         )
@@ -182,7 +181,7 @@ export default {
           console.log(res.data);
           if (res.data.code == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -192,6 +191,7 @@ export default {
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
+            sessionStorage.setItem("validateId",validateId);
             var a =  sessionStorage.getItem(userState);
             console.log("用户状态",a);
             console.log(userId);
@@ -226,7 +226,7 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
+              
             }
           }
         )
@@ -234,7 +234,7 @@ export default {
           console.log(res.data);
           if (res.data.code == "success") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -243,6 +243,7 @@ export default {
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
+            sessionStorage.setItem("validateId",validateId);
             console.log(userId);
             console.log(userState);
             // 获取参数（未登录时想访问的路由）
