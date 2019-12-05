@@ -1,10 +1,10 @@
 <template>
   <div id="qpp">
     
-    <van-nav-bar title="易居家政" left-text="返回" left-arrow>
-      <van-icon class="nav-right" name="wap-nav" slot="right"  />
+    <van-nav-bar title="易居家政" left-text="返回" @click-left="back" right-text="家政记录" @click-right="jl" left-arrow>
+     
     </van-nav-bar>
-    <van-loading v-if='state' />
+    <van-loading style="text-align:center" v-if='state' />
     <div class="content">
       <van-row type="flex" justify="space-between" style="margin-bottom:10px">
         <van-col span="12" style="font-size:16px; font-weight:900">成都优质保姆推荐</van-col>
@@ -49,11 +49,6 @@
         </ul>
       <!-- </van-list> -->
     </div>
-
-    <van-row class="foot" type="flex" justify="between">
-      <van-col span="12">首页</van-col>|
-      <van-col span="12">精品服务</van-col>
-    </van-row>
   </div>
 </template>
 
@@ -83,6 +78,12 @@ export default {
       });
   },
   methods: {
+    jl(){
+      this.$router.push('/jzjl')
+    },
+    back(){
+      this.$router.push('/service')
+    }
     // next(){
     //   this.$router.push({ path: '/jzdetails', query: { orderId: 123 } });
     // }
@@ -106,9 +107,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.content {
-  margin-top: 64px;
-}
 .information {
   width: 90%;
   margin: 0 auto;

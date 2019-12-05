@@ -42,7 +42,7 @@ export default {
   },
   methods:{
      onClickLeft() {
-      this.$router.go(-1);
+      this.$router.push('/index');
     },
     center(){
       this.$router.push("/center");
@@ -83,10 +83,14 @@ export default {
   position: absolute;
   right: 20px;
   top:20px;
+  font-size: 20px;
 }
 .aaa {
   font-size: 20px;
   margin-left: 120px;
+}
+.nav-right  {
+  font-size: 18px;
 }
 </style>
 

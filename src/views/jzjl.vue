@@ -60,14 +60,28 @@
 export default {
     data() {
     return {
-      active: 2
+      active: 2,
+      oldUrl:""
     };
   },
+  beforeRouteEnter (to, from, next){
+     next(vm => {
+       // 通过 `vm` 访问组件实例,将值传入oldUrl
+       vm.oldUrl = from.path
+     })
+   },
   methods:{
     onClickLeft() {
-      this.$router.push('/my')
+      this.$router.push(this.oldUrl)
     }
-  }
+  },  
+   mounted() {
+     this.$nextTick(()=>{
+       // 验证是否获取到了上页的url
+       /* eslint-disable no-console */
+       console.log("上页地址",this.oldUrl)
+     })
+   }
 };
 </script>
 
