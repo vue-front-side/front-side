@@ -39,20 +39,20 @@
     <van-row class="nav">
       <van-col span="24">
         <van-grid class="grid" :border="false" icon-size="42px">
-          <van-grid-item class="grid_item tabBar" @click="link">
+          <van-grid-item class="grid_item tabBar" @click="link('/payments')">
             <span class="iconfont icon-qitafeiyong"></span>
             <span class="tab_text fee">物业缴费</span>
           </van-grid-item>
 
-          <van-grid-item class="grid_item tabBar" to="/recovery">
+          <van-grid-item class="grid_item tabBar"  @click="link('/recovery')">
             <span class="iconfont icon-recycle"></span>
             <span class="tab_text">上门回收</span>
           </van-grid-item>
-          <van-grid-item class="grid_item tabBar" to="/repair">
+          <van-grid-item class="grid_item tabBar"  @click="link('/repair')">
             <span class="iconfont icon-repairfill"></span>
             <span class="tab_text">报修</span>
           </van-grid-item>
-          <van-grid-item class="grid_item tabBar" to="/service">
+          <van-grid-item class="grid_item tabBar"  @click="link('/service')">
             <span class="iconfont icon-menu"></span>
             <span class="tab_text">服务</span>
           </van-grid-item>
@@ -184,7 +184,6 @@ export default {
     };
   },
   created() {
-    sessionStorage.setItem("userState", true);
     this.axios.post("/Announcement/showAll",{
       currentPage:"1"
       
@@ -199,7 +198,7 @@ export default {
     this.axios
       .get("/communityInfo/showType")
       .then(res => {
-        console.log(res.data.data.data);
+        console.log(res.data);
         this.textType=res.data.data.data;
         this.textType.unshift("最新");
         this.axios.post("/communityInfo/showByLike",)
@@ -214,6 +213,16 @@ export default {
       .catch(err => {
         console.log(err);
       });
+    this.userId = sessionStorage.getItem("userId");
+    console.log(this.userId)
+    this.axios.post("/inhabitant/findByUserId",{userId:this.userId})
+    .then(res=>{
+      console.log(res.data);
+      sessionStorage.setItem("inhabitantId",res.data.data.data.inhabitantId);
+      
+      console.log("id:",sessionStorage.getItem("inhabitantId"));
+      console.log("tel",this.telNum)
+    })
   },
   methods: {
     fomatNotice(arr){
@@ -225,11 +234,11 @@ export default {
       // this.noticeString = this.noticeList.join()
       return this.noticeList;
     },
-    link() {
+    link(url) {
       const userState = sessionStorage.getItem("userState");
       console.log(userState);
-      if (userState) {
-        this.$router.push("/payments");
+      if (userState==2) {
+        this.$router.push(url);
       } else {
         Toast("请先进行用户认证！");
       }

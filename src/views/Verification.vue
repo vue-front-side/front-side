@@ -60,7 +60,8 @@ export default {
       value1: "",
       value2: "",
       telyz:'',
-      tel:"15008125180"
+      tel:"15008125180",
+      userId:""
     };
   },
   created() {
@@ -99,15 +100,20 @@ export default {
     },
     
     ok(){
+      this.userId = sessionStorage.getItem("userId");
+      console.log(this.userId);
       console.log(typeof(this.tel))
       this.axios
-      .post("/user/authentication", {telNum:this.phonenumber,smsCode:this.value,userId:"1"})
+      .post("/user/authentication", {telNum:this.phonenumber,validateCode:this.value,userId:this.userId})
       .then(res => {
         console.log(res.data)
-        if(res.data.message=='密码修改成功'){
-          this.$router.push('/center')
+        if(res.data.code==200){
+          sessionStorage.setItem("userState",res.data.data.data.user.userState);
+          console.log("认证成功：",sessionStorage.getItem("userState"));
+          this.$router.push('/authentication')
+          
         } else {
-          this.$toast("验证码错误！")
+          this.$toast("认证失败！")
         }
       })
       .catch(err => {

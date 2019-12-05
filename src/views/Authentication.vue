@@ -20,23 +20,63 @@
       <van-field v-model="idcard" clearable label="身份证号" placeholder="请填写成员身份证号" />
     </van-cell-group>
     <div>
-      <button type="submit" class="sub">提交</button>
+      <button type="submit" class="sub" @click="sub">提交</button>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
   data() {
     return {
       username: "",
       idcard: "",
+      userId:"",
+      inhabitantId:"",
+      telNum:""
     };
   },
   methods: {
     onClickLeft() {
       this.$router.push("/my");
+    },
+    sub(){
+      console.log("提交")
+      this.axios.post("/inhabitant/modifyInhabitant",{
+        inhabitantName:this.username,
+        idCardNo:this.idcard,
+        inhabitantType: "已认证",
+        telNum:this.telNum,
+        inhabitantId:this.inhabitantId
+      })
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.code==200){
+          Toast("绑定成功！");
+          this.axios.post("")
+          setTimeout(()=>{
+            this.$router.push("/my");
+          },2000);
+          
+        }
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     }
+  },
+  created(){
+    this.userId = sessionStorage.getItem("userId");
+    console.log(this.userId)
+    this.axios.post("/inhabitant/findByUserId",{userId:this.userId})
+    .then(res=>{
+      console.log(res.data);
+      this.inhabitantId = res.data.data.data.inhabitantId;
+      this.telNum = res.data.data.data.telNum;
+      console.log("id:",this.inhabitantId);
+      console.log("tel",this.telNum)
+    })
   }
 };
 </script>
