@@ -35,6 +35,7 @@
 
 <script>
 import { Toast } from "vant";
+import md5 from 'js-md5';
 Toast.resetDefaultOptions({ position: "top" });
 export default {
   data() {
@@ -99,10 +100,6 @@ export default {
         });
       }
     },
-    getMd5Pass() {
-      var md5 = crypto.createHash("md5");
-      md5.update(this.passSure);
-    },
     getRegister() {
       console.log(this.password);
       console.log("注册");
@@ -118,7 +115,7 @@ export default {
         .post("/user/registerBySms", {
             telNum: this.phonenumber,
             smsCode: this.sms,
-            password: this.password
+            password: md5(this.passSure)
           },
           {
             headers: {
