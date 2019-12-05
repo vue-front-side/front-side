@@ -59,12 +59,14 @@ export default {
       active: 2,
       list:[],
       msg:[],
-      oldUrl:""
+      oldUrl:"",
+      inhabitantId:""
     };
   },
     created() {
+      this.inhabitantId = sessionStorage.getItem("inhabitantId")
     this.axios
-      .post("/repairInfo/findByHibId", {inhibId:2})
+      .post("/repairInfo/findByHibId", {inhibId:this.inhabitantId})
       .then(res => {
         console.log(res.data.data)
         this.list = res.data.data.data;

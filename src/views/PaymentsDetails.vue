@@ -56,7 +56,8 @@ export default {
       location: '',
       money: '',
       state: true,
-      flag: true 
+      flag: true ,
+      userId:""
     }
   },
   components: {
@@ -67,8 +68,8 @@ export default {
   created() {
     console.log("当前缴费类别 id:", location.search.substring(1));
     this.category = location.search.substring(1);
-    /* var userId = sessionStorage.getItem(userId); */
-    this.userId = "1";
+    this.userId = sessionStorage.getItem("userId"); 
+     
     console.log(this.category);
     console.log(this.userId);
     this.axios

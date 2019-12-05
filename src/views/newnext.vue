@@ -49,12 +49,14 @@ export default {
       value1: "",
       value2: "",
       telyz: "",
-      tel: "15008125180"
+      tel: "15008125180",
+      userId:""
     };
   },
   created() {
+    this.userId = sessionStorage.getItem("userId");
     this.axios
-      .post("/inhabitant/findByUserId", { userId: 4 })
+      .post("/inhabitant/findByUserId", { userId: this.userId })
       .then(res => {
         this.msg = res.data.data.data;
         console.log("数组:", this.msg);

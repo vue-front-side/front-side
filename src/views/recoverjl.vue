@@ -38,13 +38,15 @@ export default {
   data() {
     return {
       list: [],
-      oldUrl: ""
+      oldUrl: "",
+      inhabitantId:""
     };
   },
   created() {
+    this.inhabitantId = sessionStorage.getItem("inhabitantId");
     this.axios
       .get("/InhabitantAndRecycle/getAllRecycle", {
-        params: { inhabitantId: 1 }
+        params: { inhabitantId: this.inhabitantId }
       })
       .then(res => {
         this.list = res.data.data.recycles;

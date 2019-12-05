@@ -27,14 +27,16 @@
 export default {
   data() {
     return {
-      message: ""
+      message: "",
+      userId:""
     };
   },
   methods: {
     suss() {
+      this.userId = sessionStorage.getItem("userId")
       this.$toast.success("提交成功");
       this.axios
-      .post("/suggestion/add", {userId:5,content:this.message})
+      .post("/suggestion/add", {userId:this.userId,content:this.message})
       // .then(res => {
       //   console.log(this.message)
       // })

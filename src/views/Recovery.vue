@@ -231,7 +231,7 @@ export default {
         }
       };
       this.axios
-        .post("/repairInfo/loadInfoImg", formdata1, config)
+        .post("/InhabitantAndRecycle/loadInfoImg", formdata1, config)
         .then(res => {
           //这里的url为后端接口
           console.log(res.data.data);
@@ -316,23 +316,20 @@ export default {
     },
     //点击提交报修订单
     submit() {
-      this.selected = this.rec.map((item, i) => {
-        console.log(i);
+      this.selected = this.rec.map((item) => {
         if (item.state) {
-          return i + 1;
-        } else {
-          return 0;
+          return item.name;
         }
       });
-      var selected2 = this.recSecond.map((item, i) => {
+      var selected2 = this.recSecond.map((item) => {
         if (item.state) {
-          return i + 4;
-        } else {
-          return 0;
-        }
+          return item.name;
+        } 
       });
+      console.log(this.selected,selected2);
       this.selected = this.selected.concat(selected2);
       this.catergary = this.selected.join(",");
+      console.log("分类",this.catergary)
       // console.log(this.catergary);
       // console.log(this.name);
       // console.log(this.telNumber);
@@ -341,7 +338,7 @@ export default {
       // console.log(this.appointment);
       // console.log(this.areaPlace + this.village + this.address);
       if(this.isEmpity()){
-      this.axios.post("/repairInfo/addRepairInfo",{
+      this.axios.post("/InhabitantAndRecycle//insertRecycle",{
         // params:{
         repairName:this.name,
         concactTel:this.telNumber,
@@ -349,9 +346,9 @@ export default {
         housePropertyId:"1",
         inhabitantId:"1",
         repairContent:"hhajdj",
-        appointmentTime:this.appointment,
-        repairPartIds:this.catergary,
-        repairImg:this.url
+        recycleTime:this.appointment,
+        regenerantStyle:this.catergary,
+        regenerantImage:this.url
         // }
       })
       .then(res=>{
