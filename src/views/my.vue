@@ -52,6 +52,7 @@ export default {
     }
   },
   created() {
+    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
     this.axios
       .post("/inhabitant/findByUserId", {userId:4})
       .then(res => {

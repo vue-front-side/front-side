@@ -1,90 +1,77 @@
 <template>
   <div id="qpp">
+     <van-loading style="text-align:center" v-if='state' />
     <van-sticky>
       <van-row>
         <van-col span="24">
           <van-nav-bar
             title="回收记录"
             left-text="返回"
-            
             left-arrow
             @click-left="onClickLeft"
-            
             class="top_nav"
           />
         </van-col>
       </van-row>
     </van-sticky>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-     <ul>
-       <li v-for="(item,index) in list" :key="index">
-         <div class="box">
-           <div class="boxone">
-             <p>回收物</p>
-             <p>预约时间：xxxxxx</p>
-           </div>
-           <van-button style="width:100px;height:40px;margin:25px 0 0 10px" type="danger">回收状态</van-button>
-         </div>
-       </li>
-     </ul>
-    </van-list>
+
+    <ul>
+      <li v-for="(item,index) in list" :key="index">
+        <div class="box">
+          <div class="boxone">
+            <p>{{item.regenerantStyle}}</p>
+            <p>预约时间：{{item.recycleTime}}</p>
+          </div>
+          <van-button
+            style="width:100px;height:40px;margin:25px 0 5px 10px"
+            type="primary"
+            :class="{red:item.recycleState=='待回收'}"
+          >{{item.recycleState}}</van-button>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-   data() {
+  data() {
     return {
       list: [],
-      loading: false,
-      finished: false,
-      oldUrl:""
+      oldUrl: ""
     };
   },
   created() {
     this.axios
-      .post("/staff/recycle/getAllRecycle", {})
+      .get("/InhabitantAndRecycle/getAllRecycle", {
+        params: { inhabitantId: 1 }
+      })
       .then(res => {
-        this.list = res.data.data.staffList;
+        this.list = res.data.data.recycles;
         console.log("数组:", this.list);
       })
       .catch(err => {
         console.log(err);
       });
   },
-  beforeRouteEnter (to, from, next){
-     next(vm => {
-       // 通过 `vm` 访问组件实例,将值传入oldUrl
-       vm.oldUrl = from.path
-     })
-   },
-    methods: {
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 5; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-
-        // 数据全部加载完成
-        if (this.list.length >= 4) {
-          this.finished = true;
-        }
-      }, 500);
-    },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      // 通过 `vm` 访问组件实例,将值传入oldUrl
+      vm.oldUrl = from.path;
+    });
+  },
+  methods: {
     onClickLeft() {
-      this.$router.push(this.oldUrl)
+      this.$router.push(this.oldUrl);
     }
   },
   mounted() {
-     this.$nextTick(()=>{
-       // 验证是否获取到了上页的url
-       /* eslint-disable no-console */
-       console.log("上页地址",this.oldUrl)
-     })
-   }
+    this.$nextTick(() => {
+      // 验证是否获取到了上页的url
+      /* eslint-disable no-console */
+      console.log("上页地址", this.oldUrl);
+    });
+  }
 };
 </script>
 
@@ -103,5 +90,9 @@ export default {
 .boxone p {
   font-size: 18px;
   margin: 15px 0 0 10px;
+}
+.red {
+  background: red;
+  border: none;
 }
 </style>

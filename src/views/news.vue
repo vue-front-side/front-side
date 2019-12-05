@@ -6,10 +6,8 @@
           <van-nav-bar
             title="消息中心"
             left-text="返回"
-            
             left-arrow
             @click-left="onClickLeft"
-            
             class="top_nav"
           />
         </van-col>
@@ -44,14 +42,14 @@
         <van-icon name="volume-o" />
         <div>
           <p class="news">
-            您保修的：
-            {{item.partName}}
+            您报修的：
+            {{item.repairsParts[0].partName}}
             <br />
-            <span v-if="item.repairState==1" class="del" style="margin-left:290px" @click="send">
+            <span v-if="item.repairState==2" class="del" style="margin-left:290px" @click="send">
               已处理
               <van-icon name="close" class="sc" @click="sugId=item.sugId" />
             </span>
-            <span v-if="item.repairState==0" class="del">处理中</span>
+            <span v-if="item.repairState==0||item.repairState==1" class="del">处理中</span>
             <span class="time">3:10</span>
           </p>
         </div>
@@ -124,6 +122,7 @@ export default {
       .post("/suggestion/showRepairByUserId", { userId: 1 })
       .then(res => {
         this.msg = res.data.data.data;
+        console.log(this.msg);
       })
       .catch(err => {
         console.log(err);

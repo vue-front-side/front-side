@@ -1,7 +1,7 @@
 <template>
   <div id="qpp">
     <van-nav-bar title="易居家政" left-text="返回" @click-left="onClickLeft" left-arrow>
-      <van-icon class="nav-right" name="wap-nav" slot="right" />
+    
     </van-nav-bar>
 
     <div class="content">
@@ -185,9 +185,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.content {
-  margin-top: 64px;
-}
 .information {
   width: 100%;
   height: 150px;
