@@ -87,6 +87,9 @@ export default {
       validateId: ''
     };
   },
+  components: {
+    [Toast.name]: Toast
+  },
   methods: {
     onClickLeft() {
       alert("返回");
@@ -171,7 +174,7 @@ export default {
             this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
-            var userState = res.data.data.user.userId;
+            var userState = res.data.data.user.userState;
             var roleName = res.data.data.user.roles[0].roleName;
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
@@ -179,7 +182,7 @@ export default {
             sessionStorage.setItem("userName", roleName);
             console.log(userId);
             console.log(roleName);
-            console.log(token);
+            console.log(userState);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
             url = url ? url : "/index";
@@ -220,14 +223,15 @@ export default {
             this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
-            var userState = res.data.data.user.userId;
+            var userState = res.data.data.user.userState;
             var roleName = res.data.data.user.roles[0].roleName;
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userId", userState);
-            sessionStorage.setItem("userId", roleName);
+            sessionStorage.setItem("userState", userState);
+            sessionStorage.setItem("userName", roleName);
             console.log(userId);
-            console.log(roleName);
+            var a = sessionStorage.getItem(userState);
+            console.log(a);
             // 获取参数（未登录时想访问的路由）
             var url = this.$route.query.redirect;
 

@@ -79,7 +79,7 @@ export default {
         }
       }
     },
-    passCheckOut() {
+    passCheckOut() {  
       if (this.passSure || this.password) {
         if (this.password != this.passSure) {
           Toast("两次密码输入不一致！");
@@ -139,11 +139,8 @@ export default {
           console.log(res.data);
           if (res.data.code == "modify_success") {
             Toast("密码修改成功!");
-            // 获取参数（未登录时想访问的路由）
-            var url = this.$route.query.redirect;
-            url = url ? url : "/login";
             // 切换路由
-            this.$router.replace(url);
+            this.$router.replace('/login');
             // this.axios.post("/test")
           } else {
             Toast("密码修改失败！")

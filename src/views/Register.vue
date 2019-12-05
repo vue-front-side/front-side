@@ -135,7 +135,7 @@ export default {
             var userState = res.data.data.user.userState;
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userId", userState);
+            sessionStorage.setItem("userIdState", userState);
             console.log(userId);
             Toast("注册成功！");
             // 获取参数（未登录时想访问的路由）
