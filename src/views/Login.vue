@@ -25,16 +25,12 @@
           <van-cell-group class="test-code">
             <van-field
               v-model="sms"
+              clearable
               label="验证码"
               placeholder="请输入短信验证码"
             >
-              <van-button
-                slot="button"
-                size="small"
-                type="primary"
-                color="#999"
-                @click="sendCode"
-              >发送验证码</van-button>
+              <van-button slot="button" size="small" type="primary" @click="sendCode" v-if="isSend" :disabled="state">发送验证码</van-button>
+              <van-button slot="button" v-else size="small" disabled type="primary">{{seconds}}s后重新发送</van-button>
             </van-field>
           </van-cell-group>
         </div>
@@ -84,7 +80,9 @@ export default {
       username: "",
       password: "",
       state: true,
-      validateId: ''
+      validateId: '',
+      isSend: true,
+      seconds: 60
     };
   },
   components: {
@@ -96,6 +94,18 @@ export default {
     },
     onClickRight() {
       this.$router.replace("/register");
+    },
+    sub() {
+      this.isSend = false;
+      var time = setInterval(() => {
+        if (this.seconds > 1) {
+          this.seconds--;
+        } else {
+          clearInterval(time);
+          this.seconds = 60;
+          this.isSend = true;
+        }
+      }, 1000)
     },
     toForgetPass() {
       this.$router.replace("/forgetpass");
@@ -109,7 +119,7 @@ export default {
           console.log(this.phonenumber);
         } else {
           console.log("Yeah you got your correct number!");
-          this.state == false;
+          this.state = false;
         }
       }
     },
@@ -127,6 +137,7 @@ export default {
       }
     },
     sendCode() {
+      this.sub();
       //发送验证码
       console.log(this.phonenumber);
       if (this.phonenumber == "") {

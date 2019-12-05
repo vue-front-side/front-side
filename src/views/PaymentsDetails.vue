@@ -127,7 +127,8 @@ export default {
     getPayUrl() {
     this.axios
     .post("/alipay", {
-      payId: this.payid
+      payId: this.payid,
+      payMoney: this.money
     })
     .then(res => {
       console.log(res.data);
@@ -158,6 +159,11 @@ hr {
   border-width: 1px;
   border-color: #ccc;
   margin-top: 6px;
+}
+.load {
+  text-align: center;
+  position: absolute;
+  top: 250px;
 }
 .de-innerbox {
   width: 86%;
