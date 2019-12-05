@@ -1,6 +1,7 @@
 <template>
   <div>
     <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
+    <van-loading size="24px" v-if="flag" class="load">加载中...</van-loading>
     <div class="details">
       <div class="de-innerbox">
         <h4><span>{{catigorys}}</span>缴费</h4>
@@ -29,33 +30,39 @@
           label="充值金额"
           placeholder="请输入充值金额"
           @blur="checkMoney"
-          v-model="value"
+          v-model="money"
         />
       </van-cell-group>
-      <router-link :to="{ name: 'orderdetails'}">
-        <div class="btn-box">
-          <button type="submit" class="confrim" @click="getPayUrl">立即缴费</button>
-        </div>
-      </router-link>
-      
+      <div class="btn-box">
+        <button type="button" class="confrim" @click="sureToPay" :disabled="state">立即缴费</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Dialog, Loading } from 'vant';
+import { Toast } from "vant";
 export default {
   name: 'paymentDetails',
   data() {
     return {
       catigorys: '',
-      value: '',
       company: '',
       inhabitantNum: '',
       inhabitantAdd: '',
       inhabitantMone: '',
       payid: '',
-      location: ''
+      location: '',
+      money: '',
+      state: true,
+      flag: true 
     }
+  },
+  components: {
+    [Dialog.name]: Dialog,
+    [Toast.name]: Toast,
+    [Loading.name]: Loading
   },
   created() {
     console.log("当前缴费类别 id:", location.search.substring(1));
@@ -70,6 +77,7 @@ export default {
       inhabitantId: this.userId
     })
     .then(res => {
+      this.flag = false;
       console.log(res.data)
       if(res.data.code == "200"){
         this.catigorys = res.data.data.Pays[0].payProject;
@@ -79,7 +87,6 @@ export default {
         this.inhabitantMone = res.data.data.Pays[0].payMoney;
         this.payid = res.data.data.Pays[0].payId;
         console.log(res.data.data.Pays[0]);
-        console.log(this)
       } else {
         console.log("获取数据失败");
       }
@@ -93,22 +100,44 @@ export default {
       this.$router.go(-1);
     },
     checkMoney() {
-      
+      if (this.money != "") {
+        //当input 里面有数据的时候，再判断手机号对不对
+        var myreg = /^\d+(\.\d{1,2})?$/;
+        if (!myreg.test(this.money)) {
+          Toast("请输入正确的金额！");
+          console.log(this.money);
+        } else {
+          console.log("Yeah you got your correct number!");
+          this.state = false;
+        }
+      }
+    },
+    sureToPay() {
+      console.log('aaa')
+      Dialog.confirm({
+        title: '提示',
+        message: '花钱如流水哦！'
+      }).then(() => {
+        // on confirm
+        this.getPayUrl();
+      }).catch(() => {
+        // on cancel
+      });
     },
     getPayUrl() {
     this.axios
     .post("/alipay", {
-      payId: this.payid,
+      payId: this.payid
     })
     .then(res => {
       console.log(res.data);
-      this.location = res.data;
+      let routerData = this.$router.resolve({path:'/payGateWay',query:{ htmlData: res.data}})
+     // 打开新页面
+      window.open(routerData.href, '_ blank') 
     })
     .catch(err => {
       console.log(err);
     });
-    console.log(location);
-    return location;
   }
   }
 }
