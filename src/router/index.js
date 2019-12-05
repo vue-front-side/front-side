@@ -210,7 +210,11 @@ const routes = [
     name:'payfailed',
     component:()=>import('../views/payFailed.vue')
   },
-
+  {
+    path:'/paygateway',
+    name:'paygateway',
+    component:()=>import('../views/payGateWay.vue')
+  }
 ]
 
 const router = new VueRouter({
