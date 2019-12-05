@@ -35,6 +35,7 @@
 
 <script>
 import { Toast } from "vant";
+import md5 from 'js-md5';
 Toast.resetDefaultOptions({ position: "top" });
 export default {
   data() {
@@ -99,10 +100,6 @@ export default {
         });
       }
     },
-    getMd5Pass() {
-      var md5 = crypto.createHash("md5");
-      md5.update(this.passSure);
-    },
     getRegister() {
       console.log(this.password);
       console.log("注册");
@@ -118,7 +115,7 @@ export default {
         .post("/user/registerBySms", {
             telNum: this.phonenumber,
             smsCode: this.sms,
-            password: this.password
+            password: md5(this.passSure)
           },
           {
             headers: {
@@ -129,16 +126,18 @@ export default {
         )
         .then(res => {
           console.log(res);
-          console.log(res.data);
+          console.log("注册",res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
             this.validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
+            console.log("用户ID",userId);
+            console.log("用户stste",userState);
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
-            sessionStorage.setItem("userId", userState);
+            sessionStorage.setItem("userState", userState);
             console.log(userId);
             Toast("注册成功！");
             // 获取参数（未登录时想访问的路由）

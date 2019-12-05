@@ -6,11 +6,11 @@
         <span>首页</span>
         <!-- <img slot="icon" slot-scope="props" :src="props.active ? icon.active : icon.inactive" /> -->
       </van-tabbar-item>
-      <van-tabbar-item name="serve" to="/service">
+      <van-tabbar-item name="serve"  @click="link('/service')">
         <span class="iconfont icon-qitafuwu bot_text"></span>
         <span>服务</span>
       </van-tabbar-item>
-      <van-tabbar-item name="dynamic" to="/dynamic" class="bot_con">
+      <van-tabbar-item name="dynamic" class="bot_con"  @click="link('/dynamic')" >
         <span class="iconfont icon-shoucang-moren bot_text"></span>
         <span>社区动态</span>
       </van-tabbar-item>
@@ -23,12 +23,13 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem } from "vant";
+import { Tabbar, TabbarItem,Toast } from "vant";
 export default {
   name: "NavBottom",
   components: {
     [TabbarItem.name]: TabbarItem,
-    [Tabbar.name]: Tabbar
+    [Tabbar.name]: Tabbar,
+    [Toast.name]:Toast
   },
   data() {
     return {
@@ -38,6 +39,17 @@ export default {
         inactive: "https://img.yzcdn.cn/vant/user-inactive.png"
       }
     };
+  },
+  methods:{
+    link(url) {
+      const userState = sessionStorage.getItem("userState");
+      console.log(userState);
+      if (userState==2) {
+        this.$router.push(url);
+      } else {
+        Toast("请先进行用户认证！");
+      }
+    }
   }
 };
 </script>

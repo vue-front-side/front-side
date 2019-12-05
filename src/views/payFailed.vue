@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-sticky :offset-top="20">
-      <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
+      <van-nav-bar title="支付结果" left-arrow @click-left="onClickLeft"/>
       <div class="icon-box">
         <span class="iconfont icon-zhifushibai"></span>
         <p class="msg">支付失败！</p>
@@ -12,12 +12,9 @@
 
 <script>
 export default {
-  data() {
-
-  },
   methods: {
     onClickLeft() {
-      this.$router.go(-1);
+      this.$router.replace('/payments')
     }
   }
 }

@@ -77,7 +77,7 @@ h2{
   font-weight: 600;
 }
 .body{
-  height: 1196px;
+  height: 647px;
 }
 .history {
   position: absolute;

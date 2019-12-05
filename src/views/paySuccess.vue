@@ -1,9 +1,10 @@
 <template>
   <div>
     <van-sticky :offset-top="20">
-      <van-nav-bar title="生活缴费" left-arrow @click-left="onClickLeft"/>
-      <div>
+      <van-nav-bar title="支付结果" left-arrow @click-left="onClickLeft"/>
+      <div class="icon-box">
         <span class="iconfont icon-zhifuchenggong"></span>
+        <p class="msg">支付成功！</p>
       </div>
     </van-sticky>
   </div>
@@ -11,12 +12,9 @@
 
 <script>
 export default {
-  data() {
-    
-  },
   methods: {
     onClickLeft() {
-      this.$router.go(-1);
+      this.$router.replace('/payments')
     }
   }
 }
@@ -27,5 +25,14 @@ export default {
 .icon-zhifuchenggong {
   font-size: 38px;
   color: #27B61C;
+}
+.icon-box {
+  text-align: center;
+  padding-top: 50px;
+}
+.msg {
+  color: #27B61C;
+  font-size: 20px;
+  padding-top: 10px;
 }
 </style>

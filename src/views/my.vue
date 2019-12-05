@@ -24,7 +24,7 @@
     <van-cell title="回收记录" is-link to="recoverjl" />
     <van-cell title="家政记录" is-link to="jzjl" />
     <van-cell title="成员管理" v-if="isHu==='房主'" is-link to="newcy" />
-    <van-cell title="用户认证" v-if="!statu" is-link to="" />
+    <van-cell title="用户认证" v-if="!statu" is-link to="verification" />
     <van-cell title="意见反馈" is-link to="yjfk" />
     <van-cell title="关于我们" is-link to="aboutus" />
   </div>
@@ -53,8 +53,12 @@ export default {
   },
   created() {
     sessionStorage.setItem("zeroRoute",this.$route.fullPath);
+    this.userId = sessionStorage.getItem("userId");
+    this.state = sessionStorage.getItem("userState");
+    this.isHu = sessionStorage.getItem("userName");
+    console.log("state",this.state);
     this.axios
-      .post("/inhabitant/findByUserId", {userId:4})
+      .post("/inhabitant/findByUserId", {userId:this.userId})
       .then(res => {
         this.list = res.data.data.data;
         console.log("数组:", this.list);
