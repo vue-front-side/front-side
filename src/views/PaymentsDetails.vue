@@ -165,6 +165,7 @@ hr {
   text-align: center;
   position: absolute;
   top: 250px;
+  left: 150px;
 }
 .de-innerbox {
   width: 86%;
