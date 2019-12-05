@@ -53,7 +53,10 @@
         </div>
       </van-col>
     </van-row>
-    <van-button type="info">活动报名</van-button>
+    <div class="btn_box">
+      <van-button type="info" @click="sign" ref="btn">活动报名</van-button>
+    </div>
+    
     </div>
   </div>
 </template>
@@ -106,6 +109,23 @@ export default {
   methods: {
     onClickLeft() {
       Toast("返回");
+    },
+    sign() {
+      this.axios.post("/activity/userJoinActivity",{
+        inhabitantId:"1",
+        activityId:"2"
+      })
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.code==200){
+          console.log(this.$refs)
+          this.$refs.disabled=true;
+          this.$refs.style.backgroundColor = "#3657be";
+        }
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     }
   },
   created(){
@@ -146,5 +166,12 @@ export default {
   // height: 40px;
   font-size: 20px;
   margin: 20px 0;
+}
+.btn_box {
+  text-align: center;
+  .van-button {
+    background-color: #ffa400;
+    border-color: #ffa400;
+  }
 }
 </style>

@@ -68,10 +68,11 @@
             <span>张三:</span><span>厉害</span>
           </van-col>
           </van-row>-->
-          <van-field ref="com_input" placeholder="评论" class="com_input" />
+          <van-field ref="com_input" placeholder="评论" class="com_input" v-model="text" />
         </div>
       </div>
     </van-pull-refresh>
+    <button type="button" @click="fn">评论</button>
   </div>
 </template>
 
@@ -118,6 +119,16 @@ export default {
     [PullRefresh.name]: PullRefresh
   },
   methods: {
+    fn(){
+      this.axios.post("/dynamic/discusses",{
+        dynamicsId:"1",
+        otherInhabitantId:"2",
+        comment:this.text
+      })
+      .then(res=>{
+        console.log(res.data);
+      })
+    },
     onClickLeft() {
       this.$router.go(-1);
     },
@@ -207,7 +218,8 @@ export default {
       dynamicList: [],
       count: 0,
       flag: true,
-      isLoading: false
+      isLoading: false,
+      text:""
     };
   },
   created() {

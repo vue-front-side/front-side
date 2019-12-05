@@ -101,7 +101,7 @@ export default {
     ok(){
       console.log(typeof(this.tel))
       this.axios
-      .post("/user/authentication", {telNum:this.phonenumber,smsCode:this.value,userId:"21"})
+      .post("/user/authentication", {telNum:this.phonenumber,smsCode:this.value,userId:"1"})
       .then(res => {
         console.log(res.data)
         if(res.data.message=='密码修改成功'){
