@@ -71,6 +71,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .msg {
   text-align: left;
   position: relative;
@@ -92,6 +93,7 @@ export default {
 }
 .aaa {
   font-size: 20px;
+  margin: 20px 0;
   margin-left: 120px;
 }
 .nav-right  {

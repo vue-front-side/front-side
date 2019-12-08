@@ -58,6 +58,7 @@ export default {
     back(){
       this.$router.push(sessionStorage.getItem("firstRoute"));
       sessionStorage.removeItem("firstRoute");
+      
     }
   }
 }
