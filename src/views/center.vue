@@ -17,12 +17,10 @@
       <van-cell title="性别" :value="msg.inhabitantSex" is-link to="newsex" />
       <van-cell title="修改手机" :value="msg.telNum" is-link to />
       <van-cell title="修改密码" is-link to="newnext" />
-      <van-cell
-        title="退出登录"
-        style="margin:20px 0 0 125px;width:125px;background:red;color:#fff;border-radius:10px"
-        @click="tologin"
-      />
     </van-cell-group>
+    <div class="box">
+    <button @click="tologin" class="btn">退出登录</button>
+    </div>
   </div>
 </template>
 
@@ -32,11 +30,11 @@ export default {
   data() {
     return {
       msg: [],
-      userId:""
+      userId: ""
     };
   },
   created() {
-    this.userId = sessionStorage.getItem("userId")
+    this.userId = sessionStorage.getItem("userId");
     this.axios
       .post("/inhabitant/findByUserId", { userId: this.userId })
       .then(res => {
@@ -60,18 +58,18 @@ export default {
           message: "确认退出登录？"
         })
         .then(() => {
-          this.axios.post("/user/logout")
-          .then(res=>{
-            console.log(res.data);
-            if(res.data.code=="logout_success"){
-              sessionStorage.clear();
-              this.$router.replace('/login')
-            }
-          })
-          .catch(err=>{
-            console.log(err);
-          })
-          
+          this.axios
+            .post("/user/logout")
+            .then(res => {
+              console.log(res.data);
+              if (res.data.code == "logout_success") {
+                sessionStorage.clear();
+                this.$router.replace("/login");
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
         })
         .catch(() => {
           // on cancel
@@ -82,4 +80,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.box {
+  margin-top: 40px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+}
+.btn {
+  width: 125px;
+  background: red;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+}
 </style>

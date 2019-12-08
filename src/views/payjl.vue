@@ -113,6 +113,7 @@ export default {
   position: absolute;
   top: 40px;
   right: 10px;
+  font-size: 20px;
 }
 a {
   color: #000;
