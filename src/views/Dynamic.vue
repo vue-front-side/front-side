@@ -22,7 +22,7 @@
           <van-row class="head">
             <van-col span="4">
               <div class="head_box">
-                <van-image width="50" height="50" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                <van-image width="50" height="50" round :src="getUrl+item.photo" />
               </div>
             </van-col>
             <van-col span="20" class="msg">
@@ -34,7 +34,7 @@
             <van-col span="24">
               <p>{{item.content}}</p>
               <div class="img_box">
-                <van-image width="100%" height="100%" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+                <van-image width="100%" height="100%" :src="getUrl+item.img" />
               </div>
             </van-col>
           </van-row>
@@ -156,6 +156,7 @@ export default {
         temp.content = arr[i].content;
         temp.userid = arr[i].inhabitant.inhabitantId;
         temp.name = arr[i].inhabitant.inhabitantName;
+        temp.photo = arr[i].inhabitant.photo;
         temp.img = arr[i].imgs;
         temp.time = arr[i].releaseTime;
         temp.dynamicsId = arr[i].dynamicsId;
@@ -201,7 +202,13 @@ export default {
     },
     //评论
     comment() {
-      this.axios.post("/dynamic/discusses", {});
+      this.axios.post("/dynamic/discusses", {})
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.code==200){
+          this.$refs.com_input.values= ""
+        }
+      });
     },
     focus(i) {
       this.able=true;
@@ -266,7 +273,12 @@ export default {
         console.log("数据", this.dynamicList);
       });
   },
-  mounted() {}
+  mounted() {},
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
+  }
 };
 </script>
 

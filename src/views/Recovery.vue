@@ -1,7 +1,7 @@
 <template>
   <div class="recovery">
     <van-sticky>
-    <van-row>
+    <van-row class="re">
       <van-col span="24">
         <van-nav-bar
           title="上门回收"
@@ -56,7 +56,7 @@
         v-model="areaPlace"
         required
       />
-      <van-field
+      <!-- <van-field
         clearable
         label="所在小区"
         right-icon="arrow"
@@ -67,7 +67,7 @@
         disabled="true"
         v-model="village"
         required
-      />
+      /> -->
       <van-field placeholder="请填写详细地址，不少于5个字" size="large" v-model="address" required />
     </van-cell-group>
     <van-popup v-model="show" position="bottom">
@@ -106,7 +106,7 @@
     <van-row class="people_title">
       <van-col span="24">
         <span class="iconfont icon-biaoqian logo"></span>
-        <span>报修类型</span>
+        <span>回收类型</span>
       </van-col>
     </van-row>
     <van-row class="catergary">
@@ -140,11 +140,11 @@
     <van-row class="photo">
       <van-col span="24">
         <van-uploader
-          
+          v-model="fileList"
           multiple
           :max-count="1"
           :before-read="beforeRead"
-          capture="camera"
+          
           :after-read="afterRead"
         />
       </van-col>
@@ -198,7 +198,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.back(-1);
+      this.$router.push(sessionStorage.getItem("zeroRoute"));
     },
     onClickRight() {
       this.$router.push("/recoverjl")
@@ -434,14 +434,17 @@ rec: [
       maxDate: new Date(2020, 12, 2),
       currentDate: new Date(),
       fileList: [
-        { url: "https://img.yzcdn.cn/vant/leaf.jpg" },
-        // Uploader 根据文件后缀来判断是否为图片文件
-        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-        { url: "https://cloud-image", isImage: true }
+        // { url: "https://img.yzcdn.cn/vant/leaf.jpg" },
+        // // Uploader 根据文件后缀来判断是否为图片文件
+        // // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+        // { url: "https://cloud-image", isImage: true }
       ],
       catergary: "",
       oldUrl:""
     };
+  },
+  created(){
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
   },
   beforeRouteEnter (to, from, next){
      next(vm => {
@@ -460,6 +463,8 @@ rec: [
 </script>
 
 <style lang="less" scoped>
+
+
 .recovery {
   background-color: #ececec;
 }

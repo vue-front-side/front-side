@@ -1,6 +1,6 @@
 <template>
   <div id="qpp">
-     <van-loading style="text-align:center" v-if='state' />
+     
    <van-sticky>
       <van-row>
         <van-col span="24">
@@ -16,7 +16,7 @@
         </van-col>
       </van-row>
     </van-sticky>
-   
+   <van-loading style="text-align:center" v-if='state' />
      <ul>
        
        <li v-for="(item,index) in list" :key="index">
@@ -43,7 +43,8 @@ export default {
     return {
       list: [],
       oldUrl:"",
-      inhabitantId:""
+      inhabitantId:"",
+      state:true
     };
   },
     beforeRouteEnter (to, from, next){
@@ -55,12 +56,16 @@ export default {
   created() {
     this.inhabitantId = sessionStorage.getItem("inhabitantId")
     console.log(this.$route.fullPath);
-    sessionStorage.setItem("firstRoute",this.$route.fullPath);
+    sessionStorage.setItem("secondRoute",this.$route.fullPath);
     this.axios
       .post("/pay/selinha", {inhabitantId:this.inhabitantId})
       .then(res => {
-        console.log(res.data.data)
-        this.list = res.data.data.pays;
+        console.log(res.data)
+        if(res.data.code==200){
+          this.state=false;
+          this.list = res.data.data.pays;
+        }
+        
       })
       .catch(err => {
         console.log(err);
@@ -69,9 +74,9 @@ export default {
   methods: {
    
     onClickLeft(){
-      var route = sessionStorage.getItem("zeroRoute");
+      var route = sessionStorage.getItem("firstRoute");
       this.$router.replace(route);
-      sessionStorage.removeItem("zeroRoute");
+      // sessionStorage.removeItem("zeroRoute");
     }
   },
      mounted() {

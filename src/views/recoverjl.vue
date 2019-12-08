@@ -1,6 +1,6 @@
 <template>
   <div id="qpp">
-     <van-loading style="text-align:center" v-if='state' />
+     
     <van-sticky>
       <van-row>
         <van-col span="24">
@@ -14,7 +14,7 @@
         </van-col>
       </van-row>
     </van-sticky>
-
+    <van-loading style="text-align:center" v-if="this.state" />
     <ul>
       <li v-for="(item,index) in list" :key="index">
         <div class="box">
@@ -39,18 +39,24 @@ export default {
     return {
       list: [],
       oldUrl: "",
-      inhabitantId:""
+      inhabitantId:"",
+      state:true
     };
   },
   created() {
+    sessionStorage.setItem("secondRoute",this.$route.fullPath)
     this.inhabitantId = sessionStorage.getItem("inhabitantId");
     this.axios
       .get("/InhabitantAndRecycle/getAllRecycle", {
         params: { inhabitantId: this.inhabitantId }
       })
       .then(res => {
-        this.list = res.data.data.recycles;
-        console.log("数组:", this.list);
+        if(res.data.code==200){
+          this.state=false;
+          this.list = res.data.data.recycles;
+        }
+        
+        
       })
       .catch(err => {
         console.log(err);
@@ -64,7 +70,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.push(this.oldUrl);
+      this.$router.push(sessionStorage.getItem("firstRoute"));
     }
   },
   mounted() {

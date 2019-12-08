@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-html {
+html {  
   width: 375px;
   height: 667px;
 }

@@ -7,10 +7,10 @@
         <van-nav-bar
           title="开锁"
           left-text="返回"
-          right-text="开锁记录"
+         
           left-arrow
           @click-left="onClickLeft"
-          @click-right="onClickRight"
+          
           class="top_nav"
         />
       </van-col>
@@ -23,7 +23,7 @@
         <li class="list">
           <div class="msg">
            
-            <img src="../assets/logo.png" alt="">
+            <img :src="getUrl+item.headImg" alt="">
           </div>
           <div class="adress">
             <span class="name">{{item.companyName}}</span>
@@ -125,6 +125,11 @@ export default {
     .catch(err=>{
       console.log(err);
     })
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 };
 </script>

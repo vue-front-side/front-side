@@ -60,7 +60,18 @@ export default {
           message: "确认退出登录？"
         })
         .then(() => {
-          this.$router.replace('/login')
+          this.axios.post("/user/logout")
+          .then(res=>{
+            console.log(res.data);
+            if(res.data.code=="logout_success"){
+              sessionStorage.clear();
+              this.$router.replace('/login')
+            }
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+          
         })
         .catch(() => {
           // on cancel

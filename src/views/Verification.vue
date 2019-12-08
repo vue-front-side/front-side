@@ -33,7 +33,8 @@
             label="短信验证码"
             placeholder="请输入短信验证码"
           >
-            <van-button slot="button" @click="sub" size="small" type="primary">发送验证码</van-button>
+            <van-button slot="button" size="small" type="primary" @click="sendSmsCode" v-if="isSend" :disabled="state">发送验证码</van-button>
+            <van-button slot="button" v-else size="small" disabled type="primary">{{seconds}}s后重新发送</van-button>
           </van-field>
          
         </van-cell-group>
@@ -61,14 +62,19 @@ export default {
       value2: "",
       telyz:'',
       tel:"15008125180",
-      userId:""
+      userId:"",
+      isSend: true,
+      seconds: 60,
+      state: true,
+      phonenumber: ''
     };
   },
   created() {
     
   },
   methods: {
-    sub(){
+    sendSmsCode(){
+      this.sub();
       this.axios
       .post("/user/sendSmsCode", {telNum:this.phonenumber})
       .then(res => {
@@ -80,10 +86,22 @@ export default {
       });
     },
     onClickLeft() {
-      this.$router.push("/center");
+      this.$router.push("/my");
     },
     next() {
       this.$router.push("/newpass");
+    },
+    sub() {
+      this.isSend = false;
+      var time = setInterval(() => {
+        if (this.seconds > 1) {
+          this.seconds--;
+        } else {
+          clearInterval(time);
+          this.seconds = 60;
+          this.isSend = true;
+        }
+      }, 1000)
     },
      phoneNumCheckOut() {
       if (this.phonenumber != "") {
@@ -94,7 +112,7 @@ export default {
           console.log(this.phonenumber);
         } else {
           console.log("Yeah you got your correct number!");
-          this.state == false;
+          this.state = false;
         }
       }
     },

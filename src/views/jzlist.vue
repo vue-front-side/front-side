@@ -17,7 +17,7 @@
             <router-link :to="'/jzdetails/'+item.staffId">
             <div class="information">
               <div class="headimg">
-                <img src="../assets/logo.png" alt />
+                <img src="getUrl+item.photo" alt />
               </div>
               <div class="introduce">
                 <van-row type="flex" justify="space-between" style="font-size:18px;">
@@ -103,6 +103,11 @@ export default {
     //     }
     //   }, 500);
     // }
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 };
 </script>

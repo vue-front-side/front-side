@@ -41,12 +41,13 @@ export default {
     };
   },
    created() {
-     sessionStorage.setItem("secRoute",this.$route.fullPath);
+     sessionStorage.setItem("thirdRoute",this.$route.fullPath);
     this.newId = this.$route.params.payId;
     console.log(this.newId);
     this.axios
       .post("/pay/xiangqing", { payId:this.newId})
       .then(res => {
+        console.log(res.data)
         this.list = res.data.data.Pays;
         console.log(this.list)
       })
@@ -56,9 +57,8 @@ export default {
   },
   methods:{
     back(){
-      this.$router.push(sessionStorage.getItem("firstRoute"));
-      sessionStorage.removeItem("firstRoute");
-      
+      this.$router.push(sessionStorage.getItem("secondRoute"));
+      // sessionStorage.removeItem("firstRoute");
     }
   }
 }

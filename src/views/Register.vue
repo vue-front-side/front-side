@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="注册" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="注册" left-arrow left-text="返回" @click-left="onClickLeft" />
     <div class="input-box">
       <van-cell-group>
         <van-field
@@ -12,8 +12,9 @@
         />
       </van-cell-group>
       <van-cell-group class="test-code">
-        <van-field v-model="sms" label="验证码" :disabled="state"  placeholder="请输入短信验证码">
-          <van-button slot="button" size="small" type="primary" color="#999" @click="sendCode">发送验证码</van-button>
+        <van-field v-model="sms" label="验证码" placeholder="请输入短信验证码">
+          <van-button slot="button" size="small" type="primary" @click="sendCode" v-if="isSend" :disabled="state">发送验证码</van-button>
+          <van-button slot="button" size="small" disabled type="primary" v-else>{{seconds}}s后重新发送</van-button>
         </van-field>
       </van-cell-group>
       <van-cell-group class="pass-box">
@@ -47,7 +48,9 @@ export default {
       password: "",
       passSure: "",
       state: true,
-      validateId:''
+      validateId:'',
+      isSend: true,
+      seconds: 60
     };
   },
   components: {
@@ -56,6 +59,18 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.replace('/login');
+    },
+    sub() {
+      this.isSend = false;
+      var time = setInterval(() => {
+        if (this.seconds > 1) {
+          this.seconds--;
+        } else {
+          clearInterval(time);
+          this.seconds = 60;
+          this.isSend = true;
+        }
+      }, 1000)
     },
     phoneNumCheckOut() {
       if (this.phonenumber != "") {
@@ -81,6 +96,7 @@ export default {
       }
     },
     sendCode() {
+      this.sub();
       console.log(this.phonenumber);
       if (this.phonenumber == "") {
         Toast("请输入手机号！");
@@ -120,7 +136,7 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
+              
             }
           }
         )
@@ -129,7 +145,7 @@ export default {
           console.log("注册",res.data);
           if (res.status == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -138,6 +154,7 @@ export default {
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
+            sessionStorage.setItem("validateId",validateId);
             console.log(userId);
             Toast("注册成功！");
             // 获取参数（未登录时想访问的路由）

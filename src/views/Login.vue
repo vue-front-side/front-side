@@ -2,8 +2,8 @@
   <div>
     <van-nav-bar
       title="登录"
-      left-arrow
-      @click-left="onClickLeft"
+      
+      
       right-text="注册"
       @click-right="onClickRight"
     />
@@ -25,16 +25,12 @@
           <van-cell-group class="test-code">
             <van-field
               v-model="sms"
+              clearable
               label="验证码"
               placeholder="请输入短信验证码"
             >
-              <van-button
-                slot="button"
-                size="small"
-                type="primary"
-                color="#999"
-                @click="sendCode"
-              >发送验证码</van-button>
+              <van-button slot="button" size="small" type="primary" @click="sendCode" v-if="isSend" :disabled="state">发送验证码</van-button>
+              <van-button slot="button" v-else size="small" disabled type="primary">{{seconds}}s后重新发送</van-button>
             </van-field>
           </van-cell-group>
         </div>
@@ -84,7 +80,9 @@ export default {
       username: "",
       password: "",
       state: true,
-      validateId: ''
+      validateId: '',
+      isSend: true,
+      seconds: 60
     };
   },
   components: {
@@ -96,6 +94,18 @@ export default {
     },
     onClickRight() {
       this.$router.replace("/register");
+    },
+    sub() {
+      this.isSend = false;
+      var time = setInterval(() => {
+        if (this.seconds > 1) {
+          this.seconds--;
+        } else {
+          clearInterval(time);
+          this.seconds = 60;
+          this.isSend = true;
+        }
+      }, 1000)
     },
     toForgetPass() {
       this.$router.replace("/forgetpass");
@@ -109,7 +119,7 @@ export default {
           console.log(this.phonenumber);
         } else {
           console.log("Yeah you got your correct number!");
-          this.state == false;
+          this.state = false;
         }
       }
     },
@@ -127,6 +137,7 @@ export default {
       }
     },
     sendCode() {
+      this.sub();
       //发送验证码
       console.log(this.phonenumber);
       if (this.phonenumber == "") {
@@ -163,7 +174,6 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
             }
           }
         )
@@ -171,7 +181,7 @@ export default {
           console.log(res.data);
           if (res.data.code == "200") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -181,6 +191,7 @@ export default {
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
+            sessionStorage.setItem("validateId",validateId);
             var a =  sessionStorage.getItem(userState);
             console.log("用户状态",a);
             console.log(userId);
@@ -215,7 +226,7 @@ export default {
           {
             headers: {
               "content-type": "application/json",
-              validateId: this.validateId
+              
             }
           }
         )
@@ -223,7 +234,7 @@ export default {
           console.log(res.data);
           if (res.data.code == "success") {
             // var token = "njaksxbxkjasbkjcxasbjk" // 模拟后台返回的token
-            this.validateId = res.data.data.validateId;
+            var validateId = res.data.data.validateId;
             var token = res.data.data.token;
             var userId = res.data.data.user.userId;
             var userState = res.data.data.user.userState;
@@ -232,6 +243,7 @@ export default {
             sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
+            sessionStorage.setItem("validateId",validateId);
             console.log(userId);
             console.log(userState);
             // 获取参数（未登录时想访问的路由）

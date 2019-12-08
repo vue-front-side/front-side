@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <van-nav-bar title="服务" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="服务" left-arrow left-text="返回" @click-left="onClickLeft" />
     <div class="box">
       <router-link :to="{ name: 'payments'}">
         <div class="payment inner-box">
@@ -56,6 +56,9 @@ export default {
     onClickLeft() {
       this.$router.replace("/index");
     }
+  },
+  created(){
+    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
   }
 };
 </script>

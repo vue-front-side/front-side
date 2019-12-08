@@ -17,7 +17,8 @@
               label="验证码"
               placeholder="请输入短信验证码"
             >
-              <van-button slot="button" size="small" type="primary" color="#999" @click="sendSmsCode" :disabled="state">发送验证码</van-button>
+              <van-button slot="button" size="small" type="primary" @click="sendSmsCode" v-if="isSend" :disabled="state">发送验证码</van-button>
+              <van-button slot="button" size="small" disabled type="primary" v-else>{{seconds}}s后重新发送</van-button>
             </van-field>
           </van-cell-group>
           <van-cell-group class="pass-box">
@@ -44,6 +45,7 @@
 
 <script>
 import { Toast } from "vant";
+import { CountDown } from 'vant';
 import md5 from 'js-md5';
 export default {
   data() {
@@ -56,15 +58,30 @@ export default {
       username: '',
       password: '',
       passSure: '',
-      state: true
+      state: true,
+      isSend: true,
+      seconds: 60
     }
   },
    components: {
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [CountDown.name]: CountDown
   },
   methods: {
     onClickLeft() {
       this.$router.replace('/login')
+    },
+    sub() {
+      this.isSend = false;
+      var time = setInterval(() => {
+        if (this.seconds > 1) {
+          this.seconds--;
+        } else {
+          clearInterval(time);
+          this.seconds = 60;
+          this.isSend = true;
+        }
+      }, 1000)
     },
     phoneCheckOut() {
       if (this.phonenumber != "") {
@@ -90,6 +107,7 @@ export default {
       }
     },
     sendSmsCode() {
+      this.sub();
       console.log(this.phonenumber);
       if (this.phonenumber == "") {
         Toast("请输入手机号！");
