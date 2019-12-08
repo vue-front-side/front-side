@@ -1,6 +1,5 @@
 <template>
   <div id="qpp">
-     
     <van-sticky>
       <van-row>
         <van-col span="24">
@@ -55,9 +54,7 @@ export default {
         if(res.data.code==200){
           this.state=false;
           this.list = res.data.data.recycles;
-        }
-        
-        
+        }       
       })
       .catch(err => {
         console.log(err);

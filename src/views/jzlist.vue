@@ -63,7 +63,7 @@ export default {
     };
   },
   created() {
-    sessionStorage.setItem("zeroRoute",this.$route.fullPath);
+    sessionStorage.setItem("firstRoute",this.$route.fullPath);
     this.axios
       .get("/staff/getAllStaffIsJZAY", {})
 
