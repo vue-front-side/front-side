@@ -192,6 +192,7 @@ export default {
             sessionStorage.setItem("userState", userState);
             sessionStorage.setItem("userName", roleName);
             sessionStorage.setItem("validateId",validateId);
+            // sessionStorage.setItem("roleName",res.data.da)
             var a =  sessionStorage.getItem(userState);
             console.log("用户状态",a);
             console.log(userId);

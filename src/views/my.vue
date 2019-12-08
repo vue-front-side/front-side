@@ -23,7 +23,7 @@
     <van-cell title="维修记录" is-link to="wxrecord" />
     <van-cell title="回收记录" is-link to="recoverjl" />
     <van-cell title="家政记录" is-link to="jzjl" />
-    <van-cell title="成员管理" v-if="isHu==='房主'" is-link to="newcy" />
+    <van-cell title="成员管理" v-if="isHu==='业主'" is-link to="newcy" />
     <van-cell title="用户认证" v-if="!statu" is-link to="verification" />
     <van-cell title="意见反馈" is-link to="yjfk" />
     <van-cell title="关于我们" is-link to="aboutus" />

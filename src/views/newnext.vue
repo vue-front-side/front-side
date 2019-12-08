@@ -50,7 +50,6 @@ export default {
       value1: "",
       value2: "",
       telyz: "",
-      tel: "15008125180",
       miao: 60,
       isfs: true,
       userId:""
@@ -82,7 +81,7 @@ export default {
       }, 1000);
 
       this.axios
-        .post("/user/sendSmsCode", { telNum: this.tel })
+        .post("/user/sendSmsCode", { telNum: this.msg.telNum })
         .then(res => {
           console.log(res.data);
           this.telyz = res.data;
@@ -111,10 +110,10 @@ export default {
     },
 
     ok() {
-      console.log(typeof this.tel);
+      console.log(md5(this.value2));
       this.axios
         .post("/user/forgetPasswordSubmit", {
-          telNum: this.tel,
+          telNum: this.msg.telNum,
           smsCode: this.value,
           password: md5(this.value2)
         })
@@ -123,7 +122,7 @@ export default {
           if (res.data.message == "密码修改成功") {
             this.$dialog
               .confirm({
-                message: "确认删除？"
+                message: "确认修改？"
               })
               .then(() => {
                 this.$router.push("/center");

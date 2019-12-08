@@ -344,7 +344,7 @@ export default {
         concactTel:this.telNumber,
         repairAdress:this.areaPlace+this.village+this.address,
         housePropertyId:"1",
-        inhabitantId:"1",
+        inhabitantId:this.inhabitantId,
         repairContent:"hhajdj",
         recycleTime:this.appointment,
         regenerantStyle:this.catergary,
@@ -440,11 +440,13 @@ rec: [
         // { url: "https://cloud-image", isImage: true }
       ],
       catergary: "",
-      oldUrl:""
+      oldUrl:"",
+      inhabitantId:""
     };
   },
   created(){
     sessionStorage.setItem("firstRoute",this.$route.fullPath);
+    this.inhabitantId=sessionStorage.getItem("inhabitantId")
   },
   beforeRouteEnter (to, from, next){
      next(vm => {
