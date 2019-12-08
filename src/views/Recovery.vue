@@ -106,7 +106,7 @@
     <van-row class="people_title">
       <van-col span="24">
         <span class="iconfont icon-biaoqian logo"></span>
-        <span>报修类型</span>
+        <span>回收类型</span>
       </van-col>
     </van-row>
     <van-row class="catergary">

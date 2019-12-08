@@ -7,10 +7,10 @@
         <van-nav-bar
           title="开锁"
           left-text="返回"
-          right-text="开锁记录"
+         
           left-arrow
           @click-left="onClickLeft"
-          @click-right="onClickRight"
+          
           class="top_nav"
         />
       </van-col>

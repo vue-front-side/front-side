@@ -121,6 +121,9 @@ export default {
   margin-top: 5px;
   font-size: 14px;
   text-align: center;
+  img{
+    width: 100%;
+  }
 }
 .content {
   width: 250px;

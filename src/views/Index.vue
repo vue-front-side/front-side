@@ -64,7 +64,7 @@
         <span class="encyclopedia">社区活动</span>
       </van-col>
     </van-row>
-      <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in activeList" :key="index">
+      <router-link :to="{ name: 'activies'}" v-for="(item,index) in activeList" :key="index">
                 <div class="article">
                   <div>
                     <img :src="getUrl+item.img" alt />
@@ -199,7 +199,8 @@ export default {
       allText:[],
       noticeList:[],
       // noticeString:[],
-      activeList:[]
+      activeList:[],
+      
     };
   },
   created() {

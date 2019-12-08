@@ -17,11 +17,11 @@
       <van-col span="24">
         <h4>{{item.activityName}}</h4>
         <p>
-          “世界很复杂，百度更懂你”，百度翻译拥有网页版和手机APP等多种产品形态，
+          <!-- “世界很复杂，百度更懂你”，百度翻译拥有网页版和手机APP等多种产品形态，
           此外还针对开发者提供开放云接口服务，日均响应上亿次翻译请求。除文本翻译外，
           结合用户多样性的翻译需求，推出网页翻译、网络释义、海量例句、权威词典、离线翻译、语音翻译、对话翻译、实用口语、拍照翻译、AR翻译、趣味配音等功能，
-          同时还针对对译文质量要求较高的用户，提供人工翻译服务，让用户畅享每一次翻译体验。
-          <!-- {{item.content}} -->
+          同时还针对对译文质量要求较高的用户，提供人工翻译服务，让用户畅享每一次翻译体验。 -->
+          {{item.content}}
         </p>
       </van-col>
     </van-row>
@@ -54,7 +54,8 @@
       </van-col>
     </van-row>
     <div class="btn_box">
-      <van-button type="info" @click="sign" ref="btn">{{text}}</van-button>
+      <van-button type="info" @click="sign" ref="btn" :disabled="flag">{{text}}</van-button>
+      <!-- <button type="button" @click="sign" ref="btn" :disabled="flag">{{text}}</button> -->
     </div>
     
     </div>
@@ -106,7 +107,8 @@ export default {
       activeList:[],
       text:"活动报名",
       inhabitantId:"",
-      count:""
+      count:"",
+      flag:false
     };
   },
   methods: {
@@ -114,9 +116,10 @@ export default {
      this.$router.push('/index')
     },
     sign() {
+      console.log(this.activeList[0].activityId);
       this.axios.post("/activity/userJoinActivity",{
         inhabitantId:this.inhabitantId,
-        activityId:"2"
+        activityId:this.activeList[0].activityId
       })
       .then(res=>{
         console.log(res.data);
@@ -124,8 +127,11 @@ export default {
           console.log(this.$refs)
           this.text = "已报名"
           this.activeList.count = 1
-          this.$refs.disabled=true;
-          this.$refs.style.backgroundColor = "#3657be";
+          this.flag=true;
+          // this.$refs.style.backgroundColor = "#3657be";
+          this.activeList=[];
+          this.activeList.push(res.data.data.Activity);
+         
         }
       })
       .catch(err=>{
@@ -141,6 +147,7 @@ export default {
     .then(res=>{
       console.log(res.data);
       this.activeList.push(res.data.data.Activity);
+      
     })
   },
   computed:{

@@ -14,7 +14,7 @@
       </van-row>
     </van-sticky>
     <div class="msg" style="padding:0 10px;">
-      <img :src="'http://172.16.6.43:8080/'+list.photo" alt="">
+      <img :src="getUrl+list.photo" alt="">
       <p class="aaa">{{list.inhabitantName}}</p>
       <p class="aaa">{{list.telNum}}</p>
       <van-icon class="set" @click="center" name="setting-o" />
@@ -68,6 +68,11 @@ export default {
         console.log(err);
       });
   },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
+  }
 };
 </script>
 
