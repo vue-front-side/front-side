@@ -8,7 +8,7 @@
           <van-icon name="location-o" class="icon" />
         </div>
       </div>
-    </van-sticky> -->
+    </van-sticky>-->
     <!-- 轮播 -->
     <van-row class="row">
       <van-col span="24" class="col">
@@ -26,12 +26,10 @@
           <van-swipe-item v-for="(item, index) in this.noticeList" :key="index" class="swipe_item">
             <span>{{item.content}}</span>
           </van-swipe-item>
-        </van-swipe> -->
-        <van-notice-bar
-          mode="link"
-          left-icon="volume-o"
-          :scrollable="true"
-        ><span v-for="(item,index) in this.noticeList" :key="index">{{index+"、"+item.content+" "}}</span></van-notice-bar>
+        </van-swipe>-->
+        <van-notice-bar mode="link" left-icon="volume-o" :scrollable="true">
+          <span v-for="(item,index) in this.noticeList" :key="index">{{index+"、"+item.content+" "}}</span>
+        </van-notice-bar>
       </van-col>
     </van-row>
     <!-- 导航 -->
@@ -44,36 +42,36 @@
             <span class="tab_text fee">物业缴费</span>
           </van-grid-item>
 
-          <van-grid-item class="grid_item tabBar"  @click="link('/recovery')">
+          <van-grid-item class="grid_item tabBar" @click="link('/recovery')">
             <span class="iconfont icon-recycle"></span>
             <span class="tab_text">上门回收</span>
           </van-grid-item>
-          <van-grid-item class="grid_item tabBar"  @click="link('/repair')">
+          <van-grid-item class="grid_item tabBar" @click="link('/repair')">
             <span class="iconfont icon-repairfill"></span>
             <span class="tab_text">报修</span>
           </van-grid-item>
-          <van-grid-item class="grid_item tabBar"  @click="link('/service')">
+          <van-grid-item class="grid_item tabBar" @click="link('/service')">
             <span class="iconfont icon-menu"></span>
             <span class="tab_text">服务</span>
           </van-grid-item>
         </van-grid>
       </van-col>
     </van-row>
-     <van-row class="encyclopedia_box" :style="{bacground:bgcolor}">
+    <van-row class="encyclopedia_box" :style="{bacground:bgcolor}">
       <van-col span="24">
         <span class="encyclopedia">社区活动</span>
       </van-col>
     </van-row>
-      <router-link :to="{ name: 'activies'}" v-for="(item,index) in activeList" :key="index">
-                <div class="article">
-                  <div>
-                    <img :src="getUrl+item.img" alt />
-                  </div>
-                  <!-- <span class="tag">{{item.ciType}}</span> -->
-                  <p class="title">{{item.activityName}}</p>
-                  <span class="info">{{item.startTime}}-{{item.endTime}}</span>
-                </div>
-              </router-link>
+    <router-link :to="{ name: 'activies'}" v-for="(item,index) in activeList" :key="index">
+      <div class="article">
+        <div class="imgBox">
+          <img :src="getUrl+item.img" alt />
+        </div>
+        <!-- <span class="tag">{{item.ciType}}</span> -->
+        <p class="title">{{item.activityName}}</p>
+        <span class="info">{{item.startTime}}-{{item.endTime}}</span>
+      </div>
+    </router-link>
 
     <!-- 生活百科 -->
 
@@ -85,8 +83,8 @@
 
     <van-row>
       <van-col span="24">
-        <van-tabs v-model="activeName" sticky :offset-top="0">
-          <van-tab v-for="(item,index) in textType" :title="item" :key="index" class="article_box" background="gray" color="#ffa400">
+        <!-- <van-tabs v-model="activeName" sticky :offset-top="0">
+          <van-tab v-for="(item,index) in textType" :title="item" :key="index" :name="item" class="article_box" background="gray" color="#ffa400">
             <div>
               <router-link :to="{ name: 'encyclopdia'}" v-for="(item,index) in allText" :key="index">
                 <div class="article">
@@ -97,8 +95,8 @@
                   <p class="title">{{item.ciTitle}}</p>
                   <span class="info">{{item.ciDate}}</span>
                 </div>
-              </router-link>
-               <router-link :to="{ name: 'encyclopdia'}">
+        </router-link>-->
+        <!-- <router-link :to="{ name: 'encyclopdia'}">
               <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
@@ -107,16 +105,69 @@
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
               </div>
-              </router-link>
-              <!-- <div class="article">
+        </router-link>-->
+        <!-- <div class="article">
                 <div>
                   <img src="../assets/imag/index/VN.png" alt />
                 </div>
                 <span class="tag">生活常识</span>
                 <p class="title">因为有你，心存感激</p>
                 <span class="info">感恩节</span>
-              </div> -->
-            </div>
+        </div>-->
+        <!-- </div>
+          </van-tab>
+          <van-tab title="标签 2" name="书籍推荐">内容 2</van-tab>
+        </van-tabs>-->
+        <van-tabs v-model="activeName" sticky :offset-top="0">
+          <van-tab title="最新" name="a">
+             <router-link :to="'/encyclopedia/'+item.ciId" v-for="(item,index) in allText" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="getUrl+item.ciImage" alt />
+                  </div>
+                  <span class="tag">{{item.ciType}}</span>
+                  <p class="title">{{item.ciTitle}}</p>
+                  <span class="info">{{item.ciDate}}</span>
+                </div>
+              </router-link>
+          </van-tab>
+          <van-tab title="生活常识" name="b">
+            
+              <router-link  :to="'/encyclopedia/'+item.ciId" v-for="(item,index) in lifeList" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="getUrl+item.ciImage" alt />
+                  </div>
+                  <span class="tag">{{item.ciType}}</span>
+                  <p class="title">{{item.ciTitle}}</p>
+                  <span class="info">{{item.ciDate}}</span>
+                </div>
+              </router-link>
+              
+          </van-tab>
+          <van-tab title="电脑常识" name="c">
+              <router-link :to="'/encyclopedia/'+item.ciId" v-for="(item,index) in computerList" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="getUrl+item.ciImage" alt />
+                  </div>
+                  <span class="tag">{{item.ciType}}</span>
+                  <p class="title">{{item.ciTitle}}</p>
+                  <span class="info">{{item.ciDate}}</span>
+                </div>
+              </router-link>
+          </van-tab>
+          <van-tab title="旅游推荐" name="d">
+              <router-link :to="'/encyclopedia/'+item.ciId" v-for="(item,index) in recomendArticle" :key="index">
+                <div class="article">
+                  <div>
+                    <img :src="getUrl+item.ciImage" alt />
+                  </div>
+                  <span class="tag">{{item.ciType}}</span>
+                  <p class="title">{{item.ciTitle}}</p>
+                  <span class="info">{{item.ciDate}}</span>
+                </div>
+              </router-link>
           </van-tab>
         </van-tabs>
       </van-col>
@@ -127,7 +178,7 @@
 
 <script>
 // import navSlot from '../components/Nav-top'
-import '../assets/less/reset.less'
+import "../assets/less/reset.less";
 import NavBottom from "../components/NavBottom";
 import {
   Button,
@@ -148,6 +199,7 @@ import {
   Sticky,
   Toast
 } from "vant";
+// import { format } from 'path';
 export default {
   components: {
     [Button.name]: Button,
@@ -174,9 +226,9 @@ export default {
   data() {
     return {
       images: [
-        {url:require('../assets/imag/index/plante1.jpg')},
-        {url:require('../assets/imag/index/plante2.jpg')},
-        {url:require('../assets/imag/index/plante3.jpg')}
+        { url: require("../assets/imag/index/plante1.jpg") },
+        { url: require("../assets/imag/index/plante2.jpg") },
+        { url: require("../assets/imag/index/plante3.jpg") }
       ],
       lists: [
         {
@@ -188,80 +240,118 @@ export default {
       ],
 
       active: "home",
-      activeName: "a",
+      activeName: "最新",
       icon: {
         active: "https://img.yzcdn.cn/vant/user-active.png",
         inactive: "https://img.yzcdn.cn/vant/user-inactive.png"
       },
       bgcolor: "transform",
       startTime: new Date().getTime(),
-      textType:[],
-      allText:[],
-      noticeList:[],
+      textType: [],
+      allText: [],
+      noticeList: [],
       // noticeString:[],
-      activeList:[],
-      
+      activeList: [],
+      lifeList:[],
+      recomendArticle:[],
+      computerList:[]
     };
   },
   created() {
-    sessionStorage.setItem("zeroRoute",this.$route.fullPath)
-    this.axios.post("/Announcement/showAll",{
-      currentPage:"1"
-      
-    })
-    .then(res=>{
-      console.log(res.data.data.Announcements);
-      this.fomatNotice(res.data.data.Announcements);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+    sessionStorage.setItem("zeroRoute", this.$route.fullPath);
     this.axios
-      .post("/communityInfo/showType")
+      .post("/Announcement/showAll", {
+        currentPage: "1"
+      })
       .then(res => {
-        console.log("分类1",res.data);
-        this.textType=res.data.data.data;
-        this.textType.unshift("最新");
-      
+        console.log(res.data.data.Announcements);
+        this.fomatNotice(res.data.data.Announcements);
+        
       })
       .catch(err => {
         console.log(err);
       });
-        this.axios.get("/communityInfo/showAll",)
-        .then(res=>{
-          console.log("分类",res.data.data.data);
-          this.allText = res.data.data.data;
-        })
-        .catch(err=>{
-          console.log(err);
-        })
+    this.axios
+      .post("/communityInfo/showType")
+      .then(res => {
+        console.log("分类1", res.data);
+        this.textType = res.data.data.data;
+        this.textType.unshift("最新");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    this.axios
+      .get("/communityInfo/showAll")
+      .then(res => {
+        console.log("分类", res.data.data.data);
+        this.allText = res.data.data.data;
+        this.formatText(res.data.data.data);
+        this.formatComputer(res.data.data.data);
+        this.formatArticle(res.data.data.data)
+      })
+      .catch(err => {
+        console.log(err);
+      });
     this.userId = sessionStorage.getItem("userId");
-    console.log("用户Id",this.userId)
-    this.axios.post("/inhabitant/findByUserId",{userId:this.userId})
-    .then(res=>{
-      console.log("住户id",res.data);
-      sessionStorage.setItem("inhabitantId",res.data.data.data.inhabitantId);
-      
-      console.log("id:",sessionStorage.getItem("inhabitantId"));
-      console.log("tel",this.telNum)
-    });
-    this.axios.post("/activity/showAll",{
-      pageSize:"1000",
-      pageIndex:"1"
-    })
-    .then(res=>{
-      console.log(res.data);
-      this.activeList=res.data.data.Activity;
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+    console.log("用户Id", this.userId);
+    this.axios
+      .post("/inhabitant/findByUserId", { userId: this.userId })
+      .then(res => {
+        console.log("住户id", res.data);
+        sessionStorage.setItem("inhabitantId", res.data.data.data.inhabitantId);
+
+        console.log("id:", sessionStorage.getItem("inhabitantId"));
+        console.log("tel", this.telNum);
+      });
+    this.axios
+      .post("/activity/showAll", {
+        pageSize: "1000",
+        pageIndex: "1"
+      })
+      .then(res => {
+        console.log(res.data);
+        this.activeList = res.data.data.Activity;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
-    fomatNotice(arr){
-      for(var i=0;i<arr.length;i++){
-        var temp={};
-        temp.content=arr[i].content;
+
+    formatText(arr){
+     
+      this.lifeList = arr.filter((item)=>{
+        if(item.ciType=="生活常识"){
+          return item;
+        }
+      })
+      return this.lifeList;
+      // return this.recomendArticle;
+    },
+    formatArticle(arr){
+      this.recomendArticle = arr.filter((item)=>{
+        if(item.ciType == "旅游推荐") {
+          return item;
+        }
+      })
+      console.log("文章推荐",this.recomendArticle);
+      return this.recomendArticle;
+    },
+    formatComputer(arr){
+       console.log("arr",arr);
+      this.computerList = arr.filter((item)=>{
+        if(item.ciType == "电脑常识") {
+          return item;
+        }
+      })
+      console.log("电脑常识",this.computerList);
+      return this.computerList;
+    },
+    fomatNotice(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        var temp = {};
+        temp.content = arr[i].content;
         this.noticeList.push(temp);
       }
       // this.noticeString = this.noticeList.join()
@@ -270,7 +360,7 @@ export default {
     link(url) {
       const userState = sessionStorage.getItem("userState");
       console.log(userState);
-      if (userState==2) {
+      if (userState == 2) {
         this.$router.push(url);
       } else {
         Toast("请先进行用户认证！");
@@ -299,9 +389,9 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.getScrollTop); // 监听滚动事件，然后用handleScroll这个方法进行相应的处理
   },
-  computed:{
-    getUrl(){
-      return this.$store.state.url
+  computed: {
+    getUrl() {
+      return this.$store.state.url;
     }
   }
 };
@@ -336,7 +426,7 @@ export default {
 }
 .col {
   position: absolute;
-  top: 20px;
+  // top: 20px;
   width: 100%;
 }
 .pos_content {
@@ -434,5 +524,11 @@ export default {
 }
 .fee {
   margin-top: 2px;
+}
+.imgBox {
+  height: 160px;
+  img {
+    height: 100%;
+  }
 }
 </style>

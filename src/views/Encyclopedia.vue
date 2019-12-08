@@ -8,7 +8,7 @@
       <p class="publish-time">发布时间 {{item.ciDate}}</p>
       <div class="article">
          <div class="img-box">
-          <img :src="item.ciImage" alt="" class="imge2 imges">
+          <img :src="getUrl+item.ciImage" alt="" class="imge2 imges">
         </div>
         <p class="paragraph1">
           <!-- 橘常绿小乔木或灌木，高3～4m。枝细，多有刺。叶互生；叶柄长0.5～37.5px，有窄翼，顶端有关节；叶片披针形或椭圆形，长4～275px，
@@ -45,6 +45,7 @@ export default {
 
     return {
       arrLists:[],
+      cid:""
     };
   },
   methods: {
@@ -53,13 +54,19 @@ export default {
     }
   },
   created(){
+    this.cid = this.$route.params.cid;
     this.axios.post("/communityInfo/showById",{
-      id:"1"
+      id:this.cid
     })
     .then(res=>{
       console.log(res.data.data.data);
       this.arrLists.push(res.data.data.data)
     })
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.url
+    }
   }
 }
 </script>

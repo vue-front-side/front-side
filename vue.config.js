@@ -16,7 +16,7 @@ module.exports = {
   devServer: { // webpack 的一个插件，搭建本地服务器
     proxy: { // 反向代理
       '/api': {
-        target: 'http://192.168.6.157:8080', // 服务器地址
+        target: 'http://39.106.28.24:8080/', // 服务器地址
         pathRewrite: {
           '^/api': '' // 以 /api 开头的地址替换为 ''
         },

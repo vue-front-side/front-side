@@ -75,7 +75,7 @@ const routes = [
     }
   },
   {
-    path: '/encyclopedia',
+    path: '/encyclopedia/:cid',
     name: 'encyclopdia',
     component: () => import('../views/Encyclopedia.vue'),
     meta: {
@@ -317,6 +317,12 @@ const routes = [
     meta: {
       auth: true
     }
+  },
+  {
+    path:'/test',
+    name:'test',
+    component:()=>import('../views/test.vue'),
+   
   }
 ]
 
