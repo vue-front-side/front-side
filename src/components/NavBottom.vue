@@ -10,7 +10,7 @@
         <span class="iconfont icon-qitafuwu bot_text"></span>
         <span>服务</span>
       </van-tabbar-item>
-      <van-tabbar-item name="dynamic" class="bot_con"  @click="link('/dynamic')" >
+      <van-tabbar-item name="dynamic" class="bot_con"   @click="link('/dynamic')">
         <span class="iconfont icon-shoucang-moren bot_text"></span>
         <span>社区动态</span>
       </van-tabbar-item>
