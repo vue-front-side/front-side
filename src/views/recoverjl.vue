@@ -24,8 +24,13 @@
           <van-button
             style="width:100px;height:40px;margin:25px 0 5px 10px"
             type="primary"
-            :class="{red:item.recycleState=='待回收'}"
-          >{{item.recycleState}}</van-button>
+            v-if="item.recycleState==1"
+          >已回收</van-button>
+          <van-button
+            style="width:100px;height:40px;margin:25px 0 5px 10px"
+            type="danger"
+            v-if="item.recycleState==0"
+          >待回收</van-button>
         </div>
       </li>
     </ul>

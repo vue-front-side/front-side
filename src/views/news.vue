@@ -14,11 +14,7 @@
       </van-row>
     </van-sticky>
     <ul>
-      <li
-        style="overflow: hidden;position:relative;margin-top:-20px"
-        v-for="(item,index) in list"
-        :key="index"
-      >
+      <li style="overflow: hidden;position:relative;" v-for="(item,index) in list" :key="index">
         <van-icon name="volume-o" />
         <div>
           <p class="news">
@@ -34,11 +30,7 @@
           </p>
         </div>
       </li>
-      <li
-        style="overflow: hidden;position:relative;margin-top:-20px"
-        v-for="(item,index) in msg"
-        :key="index"
-      >
+      <li style="overflow: hidden;position:relative;" v-for="(item,index) in msg" :key="index">
         <van-icon name="volume-o" />
         <div>
           <p class="news">
@@ -63,11 +55,37 @@
 export default {
   data() {
     return {
-      list: [],
+      list: [
+        {
+          sugContent: "大厅过道墙壁脏了",
+          sugState: 1
+        },
+        {
+          sugContent: "园区蚊虫多",
+          sugState: 0
+        }
+      ],
       sugId: "",
       state: "",
-      msg: [],
-      userId:""
+      msg: [
+        {
+          repairsParts: [
+            {
+              partName: "大门"
+            }
+          ],
+          repairState: 1
+        },
+        {
+          repairsParts: [
+            {
+              partName: "吊灯"
+            }
+          ],
+          repairState: 2
+        }
+      ],
+      userId: ""
     };
   },
   methods: {
@@ -112,23 +130,23 @@ export default {
     }
   },
   created() {
-    this.axios
-      .post("/suggestion/showByUserId", { userId: this.userId })
-      .then(res => {
-        this.list = res.data.data.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    this.axios
-      .post("/suggestion/showRepairByUserId", { userId: this.userId })
-      .then(res => {
-        this.msg = res.data.data.data;
-        console.log(this.msg);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // this.axios
+    //   .post("/suggestion/showByUserId", { userId: this.userId })
+    //   .then(res => {
+    //     this.list = res.data.data.data;
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    // this.axios
+    //   .post("/suggestion/showRepairByUserId", { userId: this.userId })
+    //   .then(res => {
+    //     this.msg = res.data.data.data;
+    //     console.log(this.msg);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 };
 </script>

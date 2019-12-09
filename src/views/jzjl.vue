@@ -181,4 +181,7 @@ p {
   right: 20px;
   color: red;
 }
+a {
+  color: #000;
+}
 </style>
